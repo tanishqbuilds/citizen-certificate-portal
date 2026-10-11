@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${request.certificateType.label})}"></head>
+<body>
+<th:block th:replace="~{fragments/layout :: chrome('track')}"></th:block>
+<main id="main">
+  <div class="container" style="padding-top:48px">
+    <div class="row-between no-print fade-up" style="max-width:860px;margin:0 auto 18px">
+      <a class="btn btn-ghost btn-sm" th:href="${currentOfficer != null} ? @{/officer/requests/{id}(id=${request.trackingId})} : @{/track/{id}(id=${request.trackingId})}" style="margin-left:-12px">
+        <svg class="i"><use href="#i-chevron-left"/></svg> Back</a>
+      <button class="btn btn-primary btn-sm" type="button" onclick="window.print()" data-testid="print-certificate"><svg class="i"><use href="#i-printer"/></svg> Print or save as PDF</button>
+    </div>
+
+    <article class="certificate rise" data-testid="certificate">
+      <span class="specimen" aria-hidden="true">SPECIMEN</span>
+      <div class="cert-top">
+        <div>
+          <strong style="color:var(--paper-ink);font-weight:600;font-size:13px">Sanad · Citizen Certificate Portal</strong><br>
+          Academic demonstration — not a legal document
+        </div>
+        <div style="text-align:right">
+          Certificate No.<br><strong class="mono" style="color:var(--paper-ink);font-size:13px" data-testid="cert-number" th:text="${request.certificateNumber}">SND-INC-2026-000001</strong>
+        </div>
+      </div>
+
+      <h1 th:text="${request.certificateType.label}">Income certificate</h1>
+      <div class="cert-sub">Issued on application <span class="mono" th:text="${request.trackingId}">CCR-2026-AAAAAA</span></div>
+
+      <p class="cert-body" th:switch="${request.certificateType.name()}">
+        <th:block th:case="'BIRTH'">This is to certify that <strong th:text="${request.applicantName}">Name</strong> was born on
+          <strong th:text="${@fmt.date(request.dateOfBirth)}">date</strong>, as recorded from the supporting documents submitted,
+          and is resident at <span th:text="${request.address} + ', ' + ${request.district} + ' – ' + ${request.pinCode}">address</span>.</th:block>
+        <th:block th:case="'INCOME'">This is to certify that the annual family income of <strong th:text="${request.applicantName}">Name</strong>,
+          resident of <span th:text="${request.district}">district</span>, is <strong th:text="${@fmt.rupees(request.annualIncome)}">₹0</strong>
+          for the purpose stated: <em th:text="${@fmt.clause(request.purpose)}">purpose</em>.</th:block>
+        <th:block th:case="'DOMICILE'">This is to certify that <strong th:text="${request.applicantName}">Name</strong> is a permanent resident
+          of <span th:text="${request.address} + ', ' + ${request.district} + ' – ' + ${request.pinCode}">address</span> and is domiciled in the state.</th:block>
+        <th:block th:case="'MARRIAGE'">This is to certify that the marriage of <strong th:text="${request.applicantName}">Name</strong> and
+          <strong th:text="${request.spouseName}">Spouse</strong> has been registered on the basis of the documents submitted.</th:block>
+      </p>
+
+      <div class="cert-grid">
+        <div><small>Holder</small><span th:text="${request.applicantName}">Name</span></div>
+        <div><small>National ID</small><span class="mono" th:text="${request.nationalIdMasked}">XXXX</span></div>
+        <div><small>Date of issue</small><span th:text="${@fmt.date(request.decidedAt)}">date</span></div>
+      </div>
+
+      <div class="cert-foot">
+        <div>
+          <small style="display:block;color:#8a857c;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Verification hash (SHA-256)</small>
+          <div class="hash" data-testid="cert-hash" th:text="${request.certificateHash}">hash</div>
+          <div class="hash" style="margin-top:8px" th:text="'Verify: GET /api/v1/certificates/' + ${request.certificateNumber} + '/verify'">Verify</div>
+        </div>
+        <svg class="stamp" viewBox="0 0 120 120" aria-hidden="true">
+          <defs><path id="ring" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+          <circle cx="60" cy="60" r="56" fill="none" stroke="#5b55e6" stroke-opacity=".55" stroke-width="2"/>
+          <circle cx="60" cy="60" r="34" fill="none" stroke="#5b55e6" stroke-opacity=".4" stroke-width="1"/>
+          <text font-family="Inter, sans-serif" font-size="9.5" letter-spacing="3" fill="#5b55e6" fill-opacity=".75">
+            <textPath href="#ring">SANAD · DIGITALLY ISSUED · SANAD · DIGITALLY ISSUED ·</textPath></text>
+          <path d="M47 61l9 9 17-19" fill="none" stroke="#5b55e6" stroke-opacity=".8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </article>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
