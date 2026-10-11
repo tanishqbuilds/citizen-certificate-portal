@@ -1,0 +1,70 @@
+# Jenkins Configuration as Code for the Sanad CI controller.
+# Secrets come from environment variables (ci/.env, never committed).
+jenkins:
+  systemMessage: "Sanad CI · configured as code from ci/jenkins/casc/jenkins.yaml"
+  numExecutors: 2
+  mode: NORMAL
+  labelString: "built-in docker maven"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "${JENKINS_ADMIN_ID:-admin}"
+          name: "Sanad CI Administrator"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  crumbIssuer: "standard"
+  markupFormatter: plainText
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: CCRP_REPO_URL
+            value: "${CCRP_REPO_URL}"
+          - key: DOCKER_NETWORK
+            value: "ccrp-ci"
+          - key: REGISTRY
+            value: "localhost:5000"
+          - key: TOMCAT_CONTAINER
+            value: "ccrp-tomcat"
+          - key: SELENIUM_URL
+            value: "http://ccrp-selenium:4444"
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - string:
+              scope: GLOBAL
+              id: "github-token"
+              description: "GitHub token used only to publish commit statuses (optional)"
+              secret: "${GITHUB_TOKEN:-none}"
+          - string:
+              scope: GLOBAL
+              id: "officer-password"
+              description: "Officer password injected into deployed environments"
+              secret: "${APP_OFFICER_PASSWORD}"
+          - usernamePassword:
+              scope: GLOBAL
+              id: "tomcat-deployer"
+              description: "Tomcat Manager (manager-script role)"
+              username: "deployer"
+              password: "${TOMCAT_DEPLOYER_PASSWORD}"
+
+unclassified:
+  location:
+    url: "http://localhost:8090/"
+    adminAddress: "Sanad CI <ci@sanad.local>"
+  timestamper:
+    allPipelines: true
+  buildDiscarders:
+    configuredBuildDiscarders:
+      - "jobBuildDiscarder"
+
+security:
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+
+jobs:
+  - file: /usr/share/jenkins/ref/casc/jobs.groovy
