@@ -79,6 +79,15 @@
       <artifactId>spring-boot-starter-tomcat-runtime</artifactId>
       <scope>provided</scope>
     </dependency>
+    <!--
+      Maven's nearest-wins rule would otherwise make this provided too (via the runtime starter above),
+      but spring-boot-tomcat stays in WEB-INF/lib and needs it on external Tomcat.
+      It only contains web-server abstractions, no embedded server.
+    -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-web-server</artifactId>
+    </dependency>
 
     <!-- Tests -->
     <dependency>

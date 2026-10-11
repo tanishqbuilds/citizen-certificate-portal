@@ -31,4 +31,5 @@ docker compose -f ci/docker-compose.yml --env-file "$ENV_FILE" ps
 cat <<INFO
 
   Jenkins   http://localhost:8090   (user: admin, password: see JENKINS_ADMIN_PASSWORD in $ENV_FILE)
+  Tomcat    http://localhost:8888   (staging: /certportal-staging, production: /certportal-production)
 INFO

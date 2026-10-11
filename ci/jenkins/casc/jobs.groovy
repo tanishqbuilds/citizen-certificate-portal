@@ -36,3 +36,30 @@ java -version
         }
     }
 }
+
+// Phase 8+: pipeline as code. The stages live in the Jenkinsfile at the repository root.
+pipelineJob('ccrp-pipeline') {
+    displayName('CCRP · Delivery pipeline (Jenkinsfile)')
+    description('Pipeline as code: checkout → build & test → package → deploy to Tomcat → smoke test. Definition: Jenkinsfile in the repository.')
+    logRotator { numToKeep(30); artifactNumToKeep(10) }
+    properties {
+        pipelineTriggers {
+            triggers {
+                pollSCM { scmpoll_spec('H/2 * * * *') }
+            }
+        }
+        disableConcurrentBuilds()
+    }
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url(repo) }
+                    branch('*/develop')
+                }
+            }
+            scriptPath('Jenkinsfile')
+            lightweight(true)
+        }
+    }
+}
