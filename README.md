@@ -5,6 +5,15 @@ progress with a tracking ID. Officers review requests and approve or reject them
 
 > Work in progress. See [`docs/`](docs/) for the problem definition, the agile plan and the architecture.
 
+## Features
+
+- **Apply** for a Birth, Income, Domicile or Marriage certificate with one supporting document
+- **Validation** at the door: Verhoeff-checked national ID, type-specific rules, documents verified by magic bytes
+- **Track** a request with its tracking ID and email: progress stepper and activity timeline
+- **Officer workspace**: sign-in, KPI cards, filterable queue, start review / approve / reject with reason
+- **Certificates**: numbered, SHA-256 verification hash, printable
+- **Audit trail** of every status change with actor and time
+
 ## Repository layout
 
 ```
