@@ -1,0 +1,26 @@
+# --- What to deploy -----------------------------------------------------------------------------
+# A released version on GitHub (WAR + .sha256 asset). Override per run: -e app_version=1.0.0
+app_version: "1.1.0"
+app_release_base_url: "https://github.com/tanishqbuilds/citizen-certificate-portal/releases/download"
+
+# --- How it runs --------------------------------------------------------------------------------
+app_name: ccrp
+app_user: ccrp
+app_group: ccrp
+app_port: 8080
+app_environment: ansible-node
+app_heap: "-Xms128m -Xmx512m"
+app_keep_releases: 3
+
+# --- Where things live (see docs/09-configuration-management.md) --------------------------------
+app_home: /opt/ccrp                 # releases/<version>/ccrp.war, current -> releases/<version>
+app_config_dir: /etc/ccrp           # application.env (secrets, 0640)
+app_data_dir: /var/lib/ccrp         # H2 database + uploaded documents
+
+# --- Base system --------------------------------------------------------------------------------
+base_packages: [ca-certificates, curl, jq, tzdata]
+java_package: openjdk-21-jre-headless
+node_timezone: Asia/Kolkata
+
+# --- Secrets (encrypted in vault.yml) -----------------------------------------------------------
+app_officer_password: "{{ vault_app_officer_password }}"

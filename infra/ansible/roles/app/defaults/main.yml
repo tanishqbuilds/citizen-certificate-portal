@@ -1,0 +1,4 @@
+---
+# Health check tuning
+app_health_retries: 40
+app_health_delay: 3

@@ -1,0 +1,28 @@
+---
+# Read-only health and version check of every node.
+#   scripts/ansible.sh healthcheck.yml
+- name: Check Sanad portal health
+  hosts: portal_nodes
+  gather_facts: false
+  tasks:
+    - name: Service status
+      ansible.builtin.systemd_service:
+        name: "{{ app_name }}"
+      register: svc
+      become: true
+
+    - name: Report the service state
+      ansible.builtin.debug:
+        msg: "{{ app_name }}.service is {{ svc.status.ActiveState }} ({{ svc.status.SubState }}), enabled={{ svc.status.UnitFileState }}"
+
+    - name: Read the deployed release
+      ansible.builtin.stat:
+        path: "{{ app_home }}/current"
+      register: current_link
+
+    - name: Health and version
+      ansible.builtin.include_role:
+        name: app
+        tasks_from: healthcheck.yml
+      vars:
+        expected_version: "{{ current_link.stat.lnk_target | basename }}"

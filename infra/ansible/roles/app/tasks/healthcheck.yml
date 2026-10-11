@@ -1,0 +1,26 @@
+---
+- name: Wait until /actuator/health reports UP
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ app_port }}/actuator/health"
+    return_content: true
+  register: app_health
+  until: app_health.status == 200 and (app_health.json.status | default('')) == 'UP'
+  retries: "{{ app_health_retries }}"
+  delay: "{{ app_health_delay }}"
+  check_mode: false
+
+- name: Read /actuator/info
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ app_port }}/actuator/info"
+    return_content: true
+  register: app_info
+  check_mode: false
+
+- name: The running version is the one requested
+  ansible.builtin.assert:
+    that: app_info.json.build.version == (expected_version | default(app_version))
+    success_msg: >-
+      {{ inventory_hostname }} healthy · version {{ app_info.json.build.version }}
+      · commit {{ app_info.json.git.commit.id | default('n/a') }}
+      · environment {{ app_info.json.app.environment }}
+    fail_msg: "Expected {{ expected_version | default(app_version) }}, running {{ app_info.json.build.version }}"
