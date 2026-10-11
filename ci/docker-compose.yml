@@ -1,0 +1,32 @@
+# Sanad CI/CD toolchain. Phase 7: the Jenkins controller.
+#   scripts/ci-up.sh      creates ci/.env (random secrets) and starts everything
+#   docker compose -f ci/docker-compose.yml --env-file ci/.env down
+name: ccrp-ci
+
+services:
+  jenkins:
+    build: ./jenkins
+    image: sanad/jenkins:2.580.1
+    container_name: ccrp-jenkins
+    restart: unless-stopped
+    ports:
+      - "8090:8080"
+    env_file: .env
+    group_add:
+      - "${DOCKER_GID}"          # access to the host Docker socket
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks: [ccrp-ci]
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/login"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  jenkins_home:
+
+networks:
+  ccrp-ci:
+    name: ccrp-ci
