@@ -2,6 +2,7 @@ package com.sanad.portal.service;
 
 import com.sanad.portal.domain.CertificateRequest;
 import com.sanad.portal.domain.CertificateRequestRepository;
+import com.sanad.portal.domain.RequestStatus;
 import com.sanad.portal.web.form.ApplicationForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,12 @@ public class CertificateRequestService {
     @Transactional(readOnly = true)
     public Optional<CertificateRequest> findByTrackingId(String trackingId) {
         return repository.findByTrackingId(trackingId);
+    }
+
+    /** CCR-11/13: public verification only ever matches approved requests. */
+    @Transactional(readOnly = true)
+    public Optional<CertificateRequest> findIssuedCertificate(String certificateNumber) {
+        return repository.findByCertificateNumberAndStatus(certificateNumber, RequestStatus.APPROVED);
     }
 
     private Instant now() {

@@ -11,4 +11,6 @@ public interface CertificateRequestRepository extends JpaRepository<CertificateR
     Optional<CertificateRequest> findByTrackingId(String trackingId);
 
     boolean existsByTrackingId(String trackingId);
+
+    Optional<CertificateRequest> findByCertificateNumberAndStatus(String certificateNumber, RequestStatus status);
 }

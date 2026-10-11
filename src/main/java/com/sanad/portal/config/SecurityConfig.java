@@ -13,7 +13,10 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .csrf(csrf -> csrf.csrfTokenRequestHandler(eagerCsrfTokens()));
+                .csrf(csrf -> csrf
+                        .csrfTokenRequestHandler(eagerCsrfTokens())
+                        // The JSON API is stateless, read-only and cookie-free; CSRF does not apply.
+                        .ignoringRequestMatchers("/api/**"));
         return http.build();
     }
 
