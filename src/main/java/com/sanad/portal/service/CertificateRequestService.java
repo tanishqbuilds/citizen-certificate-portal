@@ -94,11 +94,13 @@ public class CertificateRequestService {
                 repository.countByStatus(RequestStatus.REJECTED));
     }
 
-    /** Oldest first, so requests are handled in arrival order. Capped at 200 rows for the MVP. */
+    public static final int QUEUE_LIMIT = 200;
+
+    /** Oldest first, so requests are handled in arrival order. Capped at {@link #QUEUE_LIMIT} rows for the MVP. */
     @Transactional(readOnly = true)
     public List<CertificateRequest> queue(RequestStatus status, String query) {
         String q = query == null || query.isBlank() ? null : "%" + query.trim().toUpperCase() + "%";
-        return repository.search(status, q, PageRequest.of(0, 200));
+        return repository.search(status, q, PageRequest.of(0, QUEUE_LIMIT));
     }
 
     @Transactional(readOnly = true)

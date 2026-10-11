@@ -53,6 +53,12 @@
         </tbody>
       </table>
 
+      <div class="alert alert-info" style="margin:12px;border-radius:12px" th:if="${truncated}" data-testid="queue-truncated">
+        <svg class="i"><use href="#i-alert"/></svg>
+        <div><strong th:text="'Showing the oldest ' + ${queueLimit} + ' requests.'">Showing the oldest 200 requests.</strong>
+          <p>Filter by status or search to narrow the list.</p></div>
+      </div>
+
       <div class="empty" th:if="${#lists.isEmpty(requests)}" data-testid="queue-empty">
         <div class="icon-tile"><svg class="i"><use href="#i-inbox"/></svg></div>
         <strong style="color:var(--text);font-weight:500">Nothing here</strong>

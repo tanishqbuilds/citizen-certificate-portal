@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,8 +40,8 @@ public class OfficerController {
 
     @GetMapping("/login")
     public String login(Authentication auth) {
-        return auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())
-                ? "redirect:/officer" : "officer/login";
+        boolean signedIn = auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken);
+        return signedIn ? "redirect:/officer" : "officer/login";
     }
 
     @GetMapping
@@ -48,7 +49,10 @@ public class OfficerController {
                         @RequestParam(name = "q", required = false) String q,
                         Model model) {
         model.addAttribute("dashboard", service.dashboard());
-        model.addAttribute("requests", service.queue(status, q));
+        var requests = service.queue(status, q);
+        model.addAttribute("requests", requests);
+        model.addAttribute("truncated", requests.size() >= CertificateRequestService.QUEUE_LIMIT);
+        model.addAttribute("queueLimit", CertificateRequestService.QUEUE_LIMIT);
         model.addAttribute("filter", status);
         model.addAttribute("q", q == null ? "" : q.trim());
         model.addAttribute("statuses", RequestStatus.values());
