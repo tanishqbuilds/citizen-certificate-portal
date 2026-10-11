@@ -1,0 +1,4 @@
+# Final state 2026-10-11T16:41:36Z
+Production container   http://localhost:8085  {"env":"production","version":"1.2.0-SNAPSHOT"}
+Tomcat production      http://localhost:8888/certportal-production  {"env":"production","version":"1.2.0-SNAPSHOT"}
+Ansible node           http://localhost:8095  {"env":"ansible-node","version":"1.2.0"}
