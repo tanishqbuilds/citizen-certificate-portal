@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Manager is reachable from loopback and private (container) networks only. -->
+<Context antiResourceLocking="false" privileged="true" ignoreAnnotations="true">
+  <Valve className="org.apache.catalina.valves.RemoteCIDRValve"
+         allow="127.0.0.0/8, ::1/128, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16"/>
+  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+</Context>
