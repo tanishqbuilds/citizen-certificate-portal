@@ -1,0 +1,2 @@
+# Production BEFORE the defect (after build #6)
+{"env":"production","version":"1.1.0-SNAPSHOT","commit":"e82599b"}

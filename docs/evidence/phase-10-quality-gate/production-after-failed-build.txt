@@ -1,0 +1,4 @@
+# Production AFTER failed build #7 (defect 9663913 must NOT be here)
+{"env":"production","version":"1.1.0-SNAPSHOT","commit":"e82599b"}
+# Staging (where the gate ran) has the defective build
+{"env":"staging","commit":"9663913"}
