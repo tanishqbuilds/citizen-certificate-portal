@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Apply for a certificate')}"></head>
+<body>
+<th:block th:replace="~{fragments/layout :: chrome('apply')}"></th:block>
+
+<main id="main">
+  <div class="container">
+    <header class="page-head fade-up">
+      <span class="eyebrow glass"><span class="dot-tag">Step 1 of 2</span> About 3 minutes</span>
+      <h1>Apply for a <span class="serif">certificate</span></h1>
+      <p class="lede">Every field is checked as soon as you submit, so problems surface now — not after a week in the queue.</p>
+    </header>
+
+    <div class="split">
+      <form class="card glass stack fade-up d1" th:action="@{/apply}" th:object="${form}" method="post"
+            enctype="multipart/form-data" novalidate data-apply-form data-testid="apply-form">
+
+        <div class="alert alert-error" th:if="${uploadError != null}" role="alert" data-testid="upload-error">
+          <svg class="i"><use href="#i-alert"/></svg><div><strong th:text="${uploadError}">Too large</strong></div>
+        </div>
+        <div class="alert alert-error" th:if="${errorCount != null}" role="alert" data-testid="form-errors">
+          <svg class="i"><use href="#i-alert"/></svg>
+          <div>
+            <strong th:text="${errorCount == 1} ? 'One thing needs your attention' : ${errorCount} + ' things need your attention'">Fix errors</strong>
+            <p>The fields are highlighted below. Everything you typed has been kept — only the document needs to be attached again.</p>
+          </div>
+        </div>
+
+        <!-- 1. Certificate -->
+        <section>
+          <div class="section-label">Certificate</div>
+          <fieldset class="field" th:classappend="${#fields.hasErrors('certificateType')} ? 'has-error'" style="border:0;padding:0;margin:0">
+            <legend class="sr-only">Certificate type</legend>
+            <div class="type-picker">
+              <label class="type-option" th:each="t : ${types}">
+                <input type="radio" name="certificateType" th:value="${t.name()}" th:id="'type-' + ${t.name()}"
+                       th:checked="${form.certificateType == t}"
+                       th:attr="data-label=${t.label},data-sla=${t.slaDays},data-doc=${t.requiredDocument}">
+                <span class="tile">
+                  <span class="icon-tile"><svg class="i"><use th:href="'#' + ${t.icon}"/></svg></span>
+                  <strong th:text="${t.shortLabel}">Income</strong>
+                  <span th:text="${t.slaDays} + ' working days'">5 working days</span>
+                </span>
+                <span class="check"><svg class="i"><use href="#i-check"/></svg></span>
+              </label>
+            </div>
+            <p class="field-error" th:if="${#fields.hasErrors('certificateType')}" th:errors="*{certificateType}" data-testid="error-certificateType">Choose one</p>
+          </fieldset>
+        </section>
+
+        <!-- 2. Applicant -->
+        <section>
+          <div class="section-label">Applicant</div>
+          <div class="form-grid">
+            <div class="field span-2" th:classappend="${#fields.hasErrors('applicantName')} ? 'has-error'">
+              <label for="applicantName">Full name <span class="opt">as on your ID</span></label>
+              <input class="input" th:field="*{applicantName}" autocomplete="name" placeholder="Aarav Sharma" maxlength="100">
+              <p class="field-error" th:if="${#fields.hasErrors('applicantName')}" th:errors="*{applicantName}" data-testid="error-applicantName"></p>
+            </div>
+            <div class="field" th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'has-error'">
+              <label for="dateOfBirth">Date of birth</label>
+              <input class="input" type="date" th:field="*{dateOfBirth}" autocomplete="bday">
+              <p class="field-error" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}" data-testid="error-dateOfBirth"></p>
+            </div>
+            <div class="field" th:classappend="${#fields.hasErrors('nationalId')} ? 'has-error'">
+              <label for="nationalId">National ID <span class="opt">12 digits</span></label>
+              <input class="input mono" th:field="*{nationalId}" inputmode="numeric" placeholder="2345 6789 0124" maxlength="14" autocomplete="off">
+              <p class="field-hint" th:unless="${#fields.hasErrors('nationalId')}">Only the last 4 digits are stored.</p>
+              <p class="field-error" th:if="${#fields.hasErrors('nationalId')}" th:errors="*{nationalId}" data-testid="error-nationalId"></p>
+            </div>
+            <div class="field" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+              <label for="email">Email</label>
+              <input class="input" type="email" th:field="*{email}" autocomplete="email" placeholder="you@example.com">
+              <p class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" data-testid="error-email"></p>
+            </div>
+            <div class="field" th:classappend="${#fields.hasErrors('phone')} ? 'has-error'">
+              <label for="phone">Mobile number</label>
+              <input class="input" type="tel" th:field="*{phone}" inputmode="numeric" autocomplete="tel-national" placeholder="9876543210" maxlength="10">
+              <p class="field-error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" data-testid="error-phone"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Address -->
+        <section>
+          <div class="section-label">Address</div>
+          <div class="form-grid">
+            <div class="field span-2" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
+              <label for="address">Residential address</label>
+              <textarea class="textarea" th:field="*{address}" rows="2" maxlength="300" autocomplete="street-address" placeholder="Flat 4B, Lotus Residency, MG Road"></textarea>
+              <p class="field-error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}" data-testid="error-address"></p>
+            </div>
+            <div class="field" th:classappend="${#fields.hasErrors('district')} ? 'has-error'">
+              <label for="district">District</label>
+              <input class="input" th:field="*{district}" placeholder="Pune" maxlength="60">
+              <p class="field-error" th:if="${#fields.hasErrors('district')}" th:errors="*{district}" data-testid="error-district"></p>
+            </div>
+            <div class="field" th:classappend="${#fields.hasErrors('pinCode')} ? 'has-error'">
+              <label for="pinCode">PIN code</label>
+              <input class="input mono" th:field="*{pinCode}" inputmode="numeric" placeholder="411001" maxlength="6" autocomplete="postal-code">
+              <p class="field-error" th:if="${#fields.hasErrors('pinCode')}" th:errors="*{pinCode}" data-testid="error-pinCode"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Details -->
+        <section>
+          <div class="section-label">Details</div>
+          <div class="form-grid">
+            <div class="field span-2" th:classappend="${#fields.hasErrors('purpose')} ? 'has-error'">
+              <label for="purpose">Purpose <span class="counter" data-count-for="purpose">0 / 300</span></label>
+              <textarea class="textarea" th:field="*{purpose}" rows="3" maxlength="300" data-count placeholder="Required for a post-graduate scholarship application."></textarea>
+              <p class="field-error" th:if="${#fields.hasErrors('purpose')}" th:errors="*{purpose}" data-testid="error-purpose"></p>
+            </div>
+            <div class="field span-2" data-show-for="INCOME"
+                 th:classappend="(${form.certificateType == null or form.certificateType.name() != 'INCOME'} ? 'is-hidden' : '') + (${#fields.hasErrors('annualIncome')} ? ' has-error' : '')">
+              <label for="annualIncome">Annual family income <span class="opt">in rupees</span></label>
+              <input class="input" type="number" min="0" step="1" th:field="*{annualIncome}" placeholder="450000">
+              <p class="field-error" th:if="${#fields.hasErrors('annualIncome')}" th:errors="*{annualIncome}" data-testid="error-annualIncome"></p>
+            </div>
+            <div class="field span-2" data-show-for="MARRIAGE"
+                 th:classappend="(${form.certificateType == null or form.certificateType.name() != 'MARRIAGE'} ? 'is-hidden' : '') + (${#fields.hasErrors('spouseName')} ? ' has-error' : '')">
+              <label for="spouseName">Spouse's full name</label>
+              <input class="input" th:field="*{spouseName}" placeholder="Diya Sharma" maxlength="100">
+              <p class="field-error" th:if="${#fields.hasErrors('spouseName')}" th:errors="*{spouseName}" data-testid="error-spouseName"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. Document -->
+        <section>
+          <div class="section-label">Supporting document</div>
+          <div class="field" th:classappend="${documentError != null} ? 'has-error'">
+            <div class="dropzone" data-dropzone th:attr="data-max-bytes=${maxBytes}">
+              <input type="file" id="document" name="document" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" data-testid="document-input">
+              <div class="dz-prompt">
+                <div class="icon-tile"><svg class="i"><use href="#i-upload"/></svg></div>
+                <strong>Drop your document here</strong> or <span class="browse">browse</span>
+                <p class="field-hint" th:text="'PDF, PNG or JPEG · up to ' + ${maxSize}">PDF, PNG or JPEG · up to 2 MB</p>
+              </div>
+              <div class="file-chip"><svg class="i" style="color:var(--ok)"><use href="#i-file"/></svg><span data-file-name>file.pdf</span></div>
+            </div>
+            <p class="field-error is-hidden" data-file-error role="alert"></p>
+            <p class="field-error" th:if="${documentError != null}" th:text="${documentError}" data-testid="error-document">Bad document</p>
+          </div>
+        </section>
+
+        <hr class="divider" style="margin:4px 0">
+
+        <div class="field" th:classappend="${#fields.hasErrors('declaration')} ? 'has-error'">
+          <label class="checkbox" for="declaration">
+            <input type="checkbox" th:field="*{declaration}">
+            <span class="box"><svg class="i"><use href="#i-check"/></svg></span>
+            <span>I confirm the information is true and the document is genuine. False declarations can lead to rejection.</span>
+          </label>
+          <p class="field-error" th:if="${#fields.hasErrors('declaration')}" th:errors="*{declaration}" data-testid="error-declaration"></p>
+        </div>
+
+        <div class="row-between">
+          <span class="subtle" style="font-size:13px"><svg class="i i-sm" style="display:inline;vertical-align:-3px"><use href="#i-lock"/></svg> Your document is visible only to the reviewing officer.</span>
+          <button type="submit" class="btn btn-primary btn-lg" data-testid="submit-application">
+            <span data-btn-label>Submit application</span> <svg class="i i-shift"><use href="#i-arrow-right"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Summary rail -->
+      <aside class="stack sticky fade-up d2">
+        <div class="card card-sm glass">
+          <div class="section-label" style="margin-bottom:10px">You're applying for</div>
+          <h2 style="font-size:20px" data-summary-type th:text="${form.certificateType != null} ? ${form.certificateType.label} : 'Choose a certificate'">Choose a certificate</h2>
+          <dl class="kv" style="grid-template-columns:110px 1fr;margin-top:10px">
+            <dt>Processing</dt><dd data-summary-sla th:text="${form.certificateType != null} ? ${form.certificateType.slaDays} + ' working days' : '—'">—</dd>
+            <dt>Document</dt><dd data-summary-doc th:text="${form.certificateType != null} ? ${form.certificateType.requiredDocument} : '—'">—</dd>
+          </dl>
+        </div>
+        <div class="card card-sm glass">
+          <div class="section-label" style="margin-bottom:12px">What we check</div>
+          <ul class="check-list">
+            <li><svg class="i"><use href="#i-check"/></svg>National ID checksum (Verhoeff)</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Mobile number and PIN code format</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Document type from its real contents, not just its name</li>
+            <li><svg class="i"><use href="#i-check"/></svg><span th:text="'Document size up to ' + ${maxSize} + ', fingerprinted with SHA-256'">Document size up to 2 MB, fingerprinted with SHA-256</span></li>
+          </ul>
+        </div>
+        <a class="card card-sm glass row" th:href="@{/track}" style="gap:14px">
+          <span class="icon-tile"><svg class="i"><use href="#i-search"/></svg></span>
+          <span style="flex:1"><strong style="font-weight:500">Already applied?</strong><br><span class="subtle" style="font-size:13px">Track an existing request</span></span>
+          <svg class="i subtle"><use href="#i-chevron-right"/></svg>
+        </a>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

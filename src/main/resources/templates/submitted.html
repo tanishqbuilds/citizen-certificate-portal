@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Application received')}"></head>
+<body>
+<th:block th:replace="~{fragments/layout :: chrome('apply')}"></th:block>
+
+<main id="main">
+  <div class="container container-narrow" style="padding-top:64px">
+    <section class="card glass ticket-hero fade-up" data-testid="acknowledgement">
+      <div class="seal"><svg class="i"><use href="#i-check"/></svg></div>
+      <span class="eyebrow glass"><span class="dot-tag">Step 2 of 2</span> Application received</span>
+      <h1 style="font-size:clamp(28px,4vw,40px);letter-spacing:-.035em;margin-top:18px">You're in the queue.</h1>
+      <p class="muted" style="margin-top:8px">Keep this tracking ID. You'll need it, with your email, to check the status.</p>
+
+      <div class="ticket-id glass mono" data-testid="tracking-id-box">
+        <span data-testid="tracking-id" th:text="${ack.trackingId}">CCR-2026-7K4QXZ</span>
+        <button type="button" class="btn btn-ghost btn-sm copy-btn" th:attr="data-copy=${ack.trackingId}" aria-label="Copy tracking ID">
+          <svg class="i"><use href="#i-copy"/></svg><span data-copy-label>Copy</span>
+        </button>
+      </div>
+
+      <dl class="kv" style="max-width:460px;margin:22px auto 0;text-align:left">
+        <dt>Certificate</dt><dd data-testid="ack-type" th:text="${ack.type.label}">Income certificate</dd>
+        <dt>Submitted</dt><dd th:text="${@fmt.dateTime(ack.submittedAt)}">12 Oct 2026, 10:42</dd>
+        <dt>Email on file</dt><dd th:text="${@fmt.maskEmail(ack.email)}">a••••@example.com</dd>
+        <dt>Expected decision</dt><dd th:text="'Within ' + ${ack.type.slaDays} + ' working days'">Within 5 working days</dd>
+      </dl>
+
+      <div class="row" style="justify-content:center;margin-top:28px">
+        <a class="btn btn-primary" th:href="@{/track/{id}(id=${ack.trackingId})}" data-testid="go-track">Track status <svg class="i i-shift"><use href="#i-arrow-right"/></svg></a>
+        <a class="btn btn-glass" th:href="@{/apply}">New application</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
