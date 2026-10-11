@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Review queue')}"></head>
+<body>
+<th:block th:replace="~{fragments/layout :: chrome('officer')}"></th:block>
+<main id="main">
+  <div class="container" style="padding-bottom:40px">
+    <header class="page-head fade-up row-between" style="align-items:flex-end;padding-bottom:22px">
+      <div>
+        <span class="eyebrow glass"><span class="dot-tag" th:text="${dashboard.pending()} + ' pending'">3 pending</span> Oldest first</span>
+        <h1 style="margin-bottom:0">Review <span class="serif">queue</span></h1>
+      </div>
+      <form class="search" th:action="@{/officer}" method="get" role="search">
+        <input type="hidden" name="status" th:if="${filter != null}" th:value="${filter}">
+        <svg class="i"><use href="#i-search"/></svg>
+        <input class="input" type="search" name="q" th:value="${q}" placeholder="Search ID or name" data-search data-testid="queue-search" aria-label="Search requests">
+        <span class="kbd" style="position:absolute;right:10px;top:50%;transform:translateY(-50%)">/</span>
+      </form>
+    </header>
+
+    <section class="kpis fade-up d1" data-testid="kpis">
+      <a class="kpi glass" th:href="@{/officer(status='SUBMITTED')}" th:classappend="${filter?.name() == 'SUBMITTED'} ? 'is-active'" style="--k:var(--info)">
+        <span class="label">New</span><span class="value" data-testid="kpi-submitted" th:text="${dashboard.submitted}">0</span></a>
+      <a class="kpi glass" th:href="@{/officer(status='UNDER_REVIEW')}" th:classappend="${filter?.name() == 'UNDER_REVIEW'} ? 'is-active'" style="--k:var(--warn)">
+        <span class="label">Under review</span><span class="value" data-testid="kpi-under-review" th:text="${dashboard.underReview}">0</span></a>
+      <a class="kpi glass" th:href="@{/officer(status='APPROVED')}" th:classappend="${filter?.name() == 'APPROVED'} ? 'is-active'" style="--k:var(--ok)">
+        <span class="label">Approved</span><span class="value" data-testid="kpi-approved" th:text="${dashboard.approved}">0</span></a>
+      <a class="kpi glass" th:href="@{/officer(status='REJECTED')}" th:classappend="${filter?.name() == 'REJECTED'} ? 'is-active'" style="--k:var(--danger)">
+        <span class="label">Rejected</span><span class="value" data-testid="kpi-rejected" th:text="${dashboard.rejected}">0</span></a>
+    </section>
+
+    <section class="glass list-panel fade-up d2">
+      <div class="toolbar">
+        <nav class="seg" aria-label="Filter by status">
+          <a th:href="@{/officer(q=${q})}" th:classappend="${filter == null} ? 'is-active'">All <span class="count" th:text="${dashboard.total()}">0</span></a>
+          <a th:each="s : ${statuses}" th:href="@{/officer(status=${s.name()},q=${q})}" th:classappend="${filter == s} ? 'is-active'"
+             th:attr="data-testid='filter-' + ${s.name()}" th:text="${s.label}">Submitted</a>
+        </nav>
+        <span class="subtle" style="font-size:13px" th:text="${#lists.size(requests)} + (${#lists.size(requests) == 1} ? ' request' : ' requests')">0 requests</span>
+      </div>
+
+      <table class="list" th:if="${!#lists.isEmpty(requests)}" data-testid="queue-table">
+        <thead><tr><th>Tracking ID</th><th>Applicant</th><th class="hide-sm">Certificate</th><th class="hide-sm">Submitted</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr th:each="r : ${requests}" th:attr="data-href=@{/officer/requests/{id}(id=${r.trackingId})},data-testid='row-' + ${r.trackingId}">
+            <td><a class="mono" th:href="@{/officer/requests/{id}(id=${r.trackingId})}" th:text="${r.trackingId}">CCR-2026-AAAAAA</a></td>
+            <td><span class="who"><span th:text="${r.applicantName}">Name</span><small th:text="${r.district}">Pune</small></span></td>
+            <td class="hide-sm"><span class="badge" th:text="${r.certificateType.shortLabel}">Income</span></td>
+            <td class="hide-sm subtle" th:text="${@fmt.relative(r.submittedAt)}" th:title="${@fmt.dateTime(r.submittedAt)}">2 h ago</td>
+            <td><span class="status" th:classappend="'status-' + ${r.status.name()}" th:text="${r.status.label}">Submitted</span></td>
+            <td><svg class="i arrow"><use href="#i-chevron-right"/></svg></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty" th:if="${#lists.isEmpty(requests)}" data-testid="queue-empty">
+        <div class="icon-tile"><svg class="i"><use href="#i-inbox"/></svg></div>
+        <strong style="color:var(--text);font-weight:500">Nothing here</strong>
+        <p th:text="${q != ''} ? 'No requests match “' + ${q} + '”.' : 'New applications will appear here.'">New applications will appear here.</p>
+      </div>
+    </section>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
