@@ -1,0 +1,9 @@
+$ scripts/ansible-node.sh --recreate     # 2026-10-11T16:27:42Z
+ccrp-node-1 is up: ssh -i infra/ansible/.ssh/id_ed25519 -p 2222 ansible@127.0.0.1
+
+# The node is clean: no Java, no service user, nothing in /opt
+$ docker exec ccrp-node-1 sh -c "command -v java || echo java: not installed; id ccrp || true; ls -A /opt | wc -l; systemctl is-system-running"
+java: not installed
+id: 'ccrp': no such user
+/opt entries: 0
+running

@@ -151,7 +151,45 @@ ccrp-node-1 : ok=27  changed=14  unreachable=0  failed=0  skipped=2
 
 ## 9. Phase 14: provisioning, idempotency, health check, rollback and recovery
 
-*Filled in by Phase 14 (see below).*
+All logs: [`evidence/phase-14-reliability/`](evidence/phase-14-reliability/).
+
+| # | Step | Command | Result |
+|---|---|---|---|
+| 1 | **Clean environment** | `scripts/ansible-node.sh --recreate` | Fresh node: `java: not installed`, no `ccrp` user, `/opt` empty, systemd `running` ([01](evidence/phase-14-reliability/01-clean-node.log)) |
+| 2 | **Provision** | `site.yml -e app_version=1.0.0` | `ok=27 changed=14 failed=0`, healthy 1.0.0 ([02](evidence/phase-14-reliability/02-provision-1.0.0.log)) |
+| 3 | **Idempotency** | same command again | **`changed=0`** ([03](evidence/phase-14-reliability/03-idempotency-rerun-1.0.0.log)) |
+| 4 | Upgrade | `site.yml -e app_version=1.1.0` | `changed=5` (release dir, download, previous marker, symlink, restart), healthy 1.1.0 ([04](evidence/phase-14-reliability/04-upgrade-to-1.1.0.log)) |
+| 5 | **Idempotency** | same command again | **`changed=0`** ([05](evidence/phase-14-reliability/05-idempotency-rerun-1.1.0.log)) |
+| 6 | **Health check** | `healthcheck.yml` | `ccrp.service is active (running), enabled`; healthy 1.1.0 ([06](evidence/phase-14-reliability/06-healthcheck.log)) |
+| 7 | Data before rollback | `POST /apply` on 1.1.0 | `CCR-2026-ZCGFVR` SUBMITTED ([07](evidence/phase-14-reliability/07-data-before-rollback.txt)) |
+| 8 | **Rollback** | `rollback.yml` | `Switch current: 1.1.0 → 1.0.0`, healthy 1.0.0, `changed=3` ([08](evidence/phase-14-reliability/08-rollback.log)) |
+| 9 | Data after rollback | `POST /api/v1/status` | Same request still `SUBMITTED`; `.previous_release=1.1.0` ([09](evidence/phase-14-reliability/09-after-rollback.txt)) |
+| 10 | **Recovery** from a crash | `kill -9 <java pid>` | systemd `Restart=on-failure`: `NRestarts=1`, **UP again after ~17 s** ([10](evidence/phase-14-reliability/10-recovery-after-crash.log)) |
+| 11 | Final health | `healthcheck.yml` | healthy 1.0.0 ([11](evidence/phase-14-reliability/11-final-healthcheck.log)) |
+| 12 | **Container rollback** | `deploy-container.sh …:broken-demo` | New container fails (`Failed to load driver class org.postgresql.Driver`), **automatic rollback** to `1.2.0-SNAPSHOT-b14`, production healthy ([12](evidence/phase-14-reliability/12-container-auto-rollback.log)) |
+
+```text
+# idempotency, run 2 and run 4
+ccrp-node-1 : ok=25  changed=0  unreachable=0  failed=0  skipped=2
+
+# rollback
+TASK [Switch current: 1.1.0 → 1.0.0]
+ok: [ccrp-node-1] => msg: ccrp-node-1 healthy · version 1.0.0 · commit df0f8cf · environment ansible-node
+
+# crash recovery (journalctl -u ccrp)
+ccrp.service: Main process exited, code=killed, status=9/KILL
+ccrp.service: Scheduled restart job, restart counter is at 1.
+Started ccrp.service - Sanad — Citizen Certificate Request Portal.
+```
+
+**Recovery levels covered**
+
+| Failure | Mechanism | Time to recover |
+|---|---|---|
+| Process crash | systemd `Restart=on-failure` (node), Docker `--restart unless-stopped` (container) | ~17 s (JVM start) |
+| Bad release on a node | `rollback.yml`: previous release kept on disk, symlink switch | < 1 min |
+| Bad container image | `deploy-container.sh`: health-gated, automatic rollback to the previous image | ~2 min (bounded by the health timeout) |
+| Bad code reaching CI | Selenium quality gate: nothing is published or deployed | n/a (prevented) |
 
 ## 10. Commands
 

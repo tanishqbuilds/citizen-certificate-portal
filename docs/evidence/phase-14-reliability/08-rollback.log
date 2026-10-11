@@ -1,0 +1,48 @@
+$ scripts/ansible.sh rollback.yml     # 2026-10-11T16:31:47Z
+
+PLAY [Roll back the Sanad portal] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ccrp-node-1]
+
+TASK [Read the release currently running] **************************************
+ok: [ccrp-node-1]
+
+TASK [Read the recorded previous release] **************************************
+ok: [ccrp-node-1]
+
+TASK [Decide the target release] ***********************************************
+ok: [ccrp-node-1]
+
+TASK [The target release is installed and differs from the current one] ********
+ok: [ccrp-node-1]
+
+TASK [Switch current: 1.1.0 → 1.0.0] *******************************************
+changed: [ccrp-node-1]
+
+TASK [Make the release we left the new rollback target] ************************
+changed: [ccrp-node-1]
+
+TASK [Restart the service on the rolled-back release] **************************
+changed: [ccrp-node-1]
+
+TASK [Health check after rollback] *********************************************
+included: app for ccrp-node-1
+
+TASK [app : Wait until /actuator/health reports UP] ****************************
+FAILED - RETRYING: [ccrp-node-1]: Wait until /actuator/health reports UP (40 retries left).
+FAILED - RETRYING: [ccrp-node-1]: Wait until /actuator/health reports UP (39 retries left).
+FAILED - RETRYING: [ccrp-node-1]: Wait until /actuator/health reports UP (38 retries left).
+ok: [ccrp-node-1]
+
+TASK [app : Read /actuator/info] ***********************************************
+ok: [ccrp-node-1]
+
+TASK [app : The running version is the one requested] **************************
+ok: [ccrp-node-1] => 
+    changed: false
+    msg: ccrp-node-1 healthy · version 1.0.0 · commit df0f8cf · environment ansible-node
+
+PLAY RECAP *********************************************************************
+ccrp-node-1                : ok=12   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
