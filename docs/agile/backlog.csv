@@ -1,0 +1,54 @@
+Key,Type,Title,Story,AcceptanceCriteria,Priority,StoryPoints,Sprint,Status,Labels
+EP-1,Epic,Citizen services,"A citizen can apply online with a validated document, receive a tracking ID and follow status.",All EP-1 stories Done,Must,,Sprint 0-1,Done,"epic,citizen"
+EP-2,Epic,Officer workflow,"An officer can authenticate, triage a queue, decide applications and issue verifiable certificates with a full audit trail.",All EP-2 stories Done,Must,,Sprint 2,Done,"epic,officer"
+EP-3,Epic,Platform & DevOps,"The product is built, tested, packaged, deployed, provisioned and monitored automatically.",All EP-3 stories Done,Must,,Sprint 0-4,Done,"epic,devops"
+CCR-1,Story,Repository & project skeleton,"As a developer, I want a version-controlled Spring Boot project skeleton with a reproducible build, so that every subsequent feature starts from a consistent, buildable base.","Given a fresh clone, when I run ./mvnw verify, then the build succeeds on Java 21 and produces an executable WAR.
+Given the application starts, when Flyway runs, then the baseline migration is applied to the H2 file database in PostgreSQL mode.
+Given the repository, when I open a PR, then the PR template and .gitignore are present and no build artefacts or secrets are tracked.",Must,3,Sprint 0,Done,"EP-3,platform,build"
+CCR-2,Story,"Design system & UI shell (grainy gradients, liquid glass, theming)","As a citizen, I want a clean, consistent and readable interface, so that I can complete tasks without confusion on any device.","Given any page, when it renders, then it uses the shared layout with grainy gradient background and liquid-glass components.
+Given I toggle the theme, when I reload, then my light/dark preference persists and system preference is the default.
+Given a 360 px viewport, when I view any page, then there is no horizontal scrolling and contrast meets WCAG AA.",Should,5,Sprint 0,Done,"EP-1,frontend,ui"
+CCR-3,Story,Certificate request submission form,"As a citizen, I want to fill an online application for a BIRTH, INCOME, DOMICILE or MARRIAGE certificate, so that I do not need to visit the office to apply.","Given I open the apply page, when I choose a type, then common and type-specific fields (annual income for INCOME, spouse name for MARRIAGE) are shown.
+Given a complete valid form, when the server accepts it, then an application is persisted with status SUBMITTED.
+Given an invalid form, when the page re-renders, then entered values are retained and field errors are shown.",Must,5,Sprint 1,Done,"EP-1,citizen,frontend,backend"
+CCR-4,Story,Applicant data validation,"As an officer, I want every application validated on the server before it reaches me, so that I only review complete and well-formed data.","Given a name outside 3-100 chars or with characters other than letters, spaces, . ' -, when I submit, then it is rejected.
+Given a future DOB or age > 120, an invalid email, a mobile not matching 10 digits starting 6-9, or a PIN not matching 6 digits without leading 0, when I submit, then the field error is shown.
+Given a 12-digit national ID failing the Verhoeff checksum, when I submit, then it is rejected.
+Given INCOME without annual income 0-1,00,00,000, MARRIAGE without spouse name, or purpose outside 10-300 chars, when I submit, then it is rejected.",Must,5,Sprint 1,Done,"EP-1,citizen,backend,validation"
+CCR-5,Story,Supporting document upload & validation,"As a citizen, I want to upload one supporting document with my application, so that the officer has the evidence needed without a physical visit.","Given no file, when I submit, then it is rejected with 'document required'.
+Given a file larger than 2 MB, when I submit, then it is rejected with a size error.
+Given a file that is not PDF/PNG/JPEG by magic bytes, when I submit, then it is rejected regardless of extension.
+Given a valid file, when saved, then it is stored outside the web root and its SHA-256, media type and size are recorded.",Must,5,Sprint 1,Done,"EP-1,citizen,backend,security"
+CCR-6,Story,Tracking ID generation & acknowledgement,"As a citizen, I want a unique tracking ID and an acknowledgement after submitting, so that I have proof of submission and a reference for follow-up.","Given a successful submission, when the acknowledgement loads, then it shows a tracking ID matching CCR-2026-[A-Z0-9]{6}, type and submission time.
+Given many submissions, when IDs are generated, then each is unique (DB unique constraint with retry).
+Given the acknowledgement page, when I refresh, then the application is not submitted twice (Post/Redirect/Get).",Must,3,Sprint 1,Done,"EP-1,citizen,backend"
+CCR-7,Story,Status tracking with timeline,"As a citizen, I want to look up my application by tracking ID and see its status history, so that I know where it stands without calling or visiting.","Given a valid tracking ID, when I search, then I see current status and a timestamped timeline.
+Given an unknown or malformed ID, when I search, then a neutral not-found message is shown.
+Given a REJECTED application, when I view it, then the reason is shown; given APPROVED, then a certificate link is shown.",Must,3,Sprint 1,Done,"EP-1,citizen,frontend"
+CCR-8,Story,Officer authentication,"As an officer, I want to log in securely, so that only authorised staff can view and decide applications.","Given I am not logged in, when I request /officer/**, then I am redirected to login.
+Given valid seeded credentials, when I log in, then I land on the queue; invalid credentials show a generic error.
+Given I log out, when I request a protected page, then access is denied; passwords are BCrypt-hashed and forms CSRF-protected.",Must,3,Sprint 2,Done,"EP-2,officer,security"
+CCR-9,Story,Officer review queue with filters & KPIs,"As an officer, I want a queue of applications with filters and summary KPIs, so that I can prioritise my workload.","Given I open the queue, when it loads, then KPI cards show counts per status.
+Given filters for status, type and search on tracking ID or name, when applied, then only matching applications are listed oldest first with pagination.
+Given no matches, when the list renders, then an empty state is shown.",Must,5,Sprint 2,Done,"EP-2,officer,frontend"
+CCR-10,Story,Review actions — start review / approve / reject (state machine),"As an officer, I want to start review, approve or reject an application through enforced transitions, so that decisions are consistent and cannot skip steps.","Given SUBMITTED, when I start review, then status becomes UNDER_REVIEW and I am recorded as reviewer.
+Given UNDER_REVIEW, when I approve, then status becomes APPROVED and certificate number SND-<TYPE-CODE>-2026-NNNNNN is issued.
+Given UNDER_REVIEW, when I reject without a reason, then it is refused; with a reason, status becomes REJECTED and the reason is stored.
+Given an illegal transition, when requested, then it is refused and state is unchanged.",Must,8,Sprint 2,Done,"EP-2,officer,backend,workflow"
+CCR-11,Story,Certificate issuance & verification view,"As a citizen, I want to view and print a digitally verifiable certificate, so that I can present it and third parties can confirm it is genuine.","Given APPROVED, when I open the certificate page, then it shows certificate number, applicant details, type, issue date and SHA-256 verification hash.
+Given the verification page, when a verifier enters number and hash, then the system confirms whether they match.
+Given a non-APPROVED application, when its certificate URL is requested, then no certificate is shown; print uses a print-optimised layout.",Must,5,Sprint 2,Done,"EP-2,citizen,backend,frontend"
+CCR-12,Story,Audit trail of status changes,"As a department head, I want every status change recorded with who, when and why, so that decisions are accountable and disputes can be resolved.","Given any status transition, when it occurs, then an audit entry (actor, timestamp, from, to, note) is written in the same transaction.
+Given an application, when an officer opens its detail, then the audit trail is shown chronologically.
+Given the audit table, when the code runs, then no update or delete operations exist for audit entries (append-only).",Must,3,Sprint 2,Done,"EP-2,officer,backend,compliance"
+CCR-13,Story,"Health, info & JSON status API","As a DevOps engineer, I want health, info and a JSON status endpoint, so that deployments can be verified automatically and status can be queried by other systems.","Given the running app, when I call /actuator/health, then it returns UP with HTTP 200; /actuator/info returns version and Git commit.
+Given a valid tracking ID, when I call the JSON status API, then it returns ID, type, status and last-updated without personal data; unknown IDs return 404.
+Given non-public Actuator endpoints, when requested anonymously, then they are not exposed.",Should,2,Sprint 2,Done,"EP-3,api,observability"
+CCR-14,Story,Selenium E2E suite for critical journeys,"As a DevOps engineer, I want an automated browser test suite for the critical journeys, so that a broken user journey blocks the release.","Given the suite, when it runs, then it covers citizen submit, validation errors, invalid document, status lookup, officer login, start review, approve, reject.
+Given a failing test, when it fails, then a screenshot and page source are archived by Jenkins.
+Given ./mvnw verify -Pe2e, when run locally or in Jenkins against Selenium Grid, then tests run via Failsafe with Page Object Model and failures fail the build.
+Given a deliberate defect, when the pipeline runs, then the gate fails and passes again after the fix.",Must,8,Sprint 3,Done,"EP-3,testing,selenium,jenkins"
+CCR-15,Story,Containerised CI/CD & provisioning (Jenkins → Docker → Ansible),"As a DevOps engineer, I want an automated pipeline from commit to provisioned, health-checked deployment, so that releases are repeatable, fast and reversible.","Given a push, when Jenkins polls SCM, then the Jenkinsfile builds, tests, packages the WAR, builds the Docker image and runs the Selenium gate on an ephemeral staging container.
+Given the gate passes, when the pipeline continues, then a versioned image is pushed to localhost:5000, deployed to Tomcat 11 (parameterised env) and as a production container, then health-checked.
+Given a clean Ubuntu 24.04 node, when the Ansible playbook runs, then the app is healthy and a re-run reports changed=0.
+Given a faulty release, when rollback runs, then the previous release is healthy within 2 minutes.",Must,13,Sprint 4,Done,"EP-3,ci-cd,docker,ansible,jenkins"
