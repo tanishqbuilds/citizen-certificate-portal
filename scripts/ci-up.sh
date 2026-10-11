@@ -32,4 +32,5 @@ cat <<INFO
 
   Jenkins   http://localhost:8090   (user: admin, password: see JENKINS_ADMIN_PASSWORD in $ENV_FILE)
   Tomcat    http://localhost:8888   (staging: /certportal-staging, production: /certportal-production)
+  Selenium  http://localhost:4444/ui  ·  live browser: http://localhost:7900 (password: secret)
 INFO

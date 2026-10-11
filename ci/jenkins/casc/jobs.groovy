@@ -40,12 +40,12 @@ java -version
 // Phase 8+: pipeline as code. The stages live in the Jenkinsfile at the repository root.
 pipelineJob('ccrp-pipeline') {
     displayName('CCRP · Delivery pipeline (Jenkinsfile)')
-    description('Pipeline as code: checkout → build & test → package → deploy to Tomcat → smoke test. Definition: Jenkinsfile in the repository.')
+    description('Pipeline as code: checkout → build & test → package → deploy to staging → Selenium quality gate → deploy to production. Definition: Jenkinsfile in the repository.')
     logRotator { numToKeep(30); artifactNumToKeep(10) }
     // Declared here as well as in the Jenkinsfile so the very first (polled) build already has them.
     parameters {
-        choiceParam('TARGET_ENV', ['staging', 'production'], 'Tomcat environment: /certportal-<env>')
-        booleanParam('DEPLOY', true, 'Deploy to Tomcat after a green build')
+        choiceParam('TARGET_ENV', ['production', 'staging'], 'Promote to this environment after the Selenium quality gate')
+        booleanParam('DEPLOY', true, 'Deploy after a green build and quality gate')
     }
     properties {
         pipelineTriggers {

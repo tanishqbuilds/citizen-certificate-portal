@@ -1,4 +1,4 @@
-# Sanad CI/CD toolchain: Jenkins controller and the Tomcat 11 deployment target.
+# Sanad CI/CD toolchain: Jenkins controller, Tomcat 11 deployment target and a Selenium Grid.
 #   scripts/ci-up.sh      creates ci/.env (random secrets) and starts everything
 #   docker compose -f ci/docker-compose.yml --env-file ci/.env down
 name: ccrp-ci
@@ -35,6 +35,22 @@ services:
       TOMCAT_DEPLOYER_PASSWORD: "${TOMCAT_DEPLOYER_PASSWORD}"
     volumes:
       - tomcat_data:/usr/local/tomcat/data
+    networks: [ccrp-ci]
+
+  selenium:
+    image: selenium/standalone-chrome:4.49.0-20260909
+    container_name: ccrp-selenium
+    restart: unless-stopped
+    shm_size: 2gb
+    ports:
+      - "4444:4444"   # Grid UI/API
+      - "7900:7900"   # noVNC: watch the browser at http://localhost:7900 (password: secret)
+    environment:
+      SE_NODE_MAX_SESSIONS: "2"
+      SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
+      SE_NODE_SESSION_TIMEOUT: "120"
+      SE_SCREEN_WIDTH: "1440"
+      SE_SCREEN_HEIGHT: "900"
     networks: [ccrp-ci]
 
 volumes:
