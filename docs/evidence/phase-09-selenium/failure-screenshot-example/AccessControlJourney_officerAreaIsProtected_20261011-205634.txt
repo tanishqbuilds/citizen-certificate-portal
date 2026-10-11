@@ -1,0 +1,8 @@
+URL: http://localhost:18080/officer
+Failure: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.cssSelector: [data-testid='login-form'], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"css selector","selector":"[data-testid='login-form']"}.
+(tried for 15 seconds with 500 milliseconds interval)
+Build info: version: '4.51.0', revision: '35c5fab 35c5fab4a58fa5878edb255eb7747b04ca51a015'
+System info: os.name: 'Linux', os.arch: 'amd64', os.version: '7.0.0-38-generic', java.version: '21.0.12.1'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 151.0.7922.137, chrome: {chromedriverVersion: 151.0.7922.138 (41fa8244239..., userDataDir: /tmp/org.chromium.Chromium....}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:38671}, goog:processID: 364494, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: linux, proxy: Proxy(), se:cdp: ws://localhost:38671/devtoo..., se:cdpVersion: 151.0.7922.137, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 2c1f8af4c1e1584beacee8864cfc3954

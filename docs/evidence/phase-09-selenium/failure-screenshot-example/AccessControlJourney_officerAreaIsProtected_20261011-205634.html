@@ -1,0 +1,173 @@
+<html lang="en" class="has-liquid"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Review queue · Sanad</title>
+  <meta name="description" content="Apply for government certificates online, upload one document and track every step until it is issued.">
+  <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#07080a" media="(prefers-color-scheme: dark)">
+  <!-- Apply the saved theme before first paint to avoid a flash -->
+  <script>try{var t=localStorage.getItem('ccrp-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+</head>
+<body>
+
+  <a href="#main" class="sr-only">Skip to content</a>
+
+  <!-- Atmosphere: drifting gradient orbs + film grain + hairline grid -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="grid"></div>
+    <span class="orb orb-1"></span><span class="orb orb-2"></span>
+    <span class="orb orb-3"></span><span class="orb orb-4"></span>
+    <div class="grain"></div>
+  </div>
+
+  <!-- SVG defs: refraction filter for liquid glass + icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="liquid-lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.009 0.014" numOctaves="2" seed="11" result="noise"></feTurbulence>
+        <feGaussianBlur in="noise" stdDeviation="2.4" result="soft"></feGaussianBlur>
+        <feDisplacementMap in="SourceGraphic" in2="soft" scale="34" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+      </filter>
+      <linearGradient id="brand-grad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#5b55e6"></stop><stop offset=".55" stop-color="#b56cff"></stop><stop offset="1" stop-color="#ff8a5c"></stop>
+      </linearGradient>
+    </defs>
+    <symbol id="i-logo" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="url(#brand-grad)"></rect><path d="M10.5 9.5h8l3.5 3.5v9.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 9 22.5v-11.5A1.5 1.5 0 0 1 10.5 9.5Z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path><path d="m12.5 17.5 2.5 2.5 4.5-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m17 8-5-5-5 5"></path><path d="M12 3v12"></path></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path><path d="M12 15V3"></path></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"></rect><path d="M8 21h8"></path><path d="M12 17v4"></path></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"></path><rect x="6" y="14" width="12" height="8" rx="1"></rect></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M4 15h16"></path><path d="M10 3 8 21"></path><path d="M16 3l-2 18"></path></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"></path><circle cx="12" cy="12" r="3"></circle></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 3l14 9-14 9z"></path></symbol>
+    <symbol id="i-baby" viewBox="0 0 24 24"><path d="M9 12h.01"></path><path d="M15 12h.01"></path><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"></path><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"></path></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path></symbol>
+  </svg>
+
+  <div class="nav-wrap">
+    <nav class="nav glass liquid" aria-label="Primary">
+      <a class="brand" href="/" aria-label="Sanad home">
+        <svg class="brand-mark" aria-hidden="true"><use href="#i-logo"></use></svg>
+        Sanad <small>Certificate Portal</small>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="/apply" data-testid="nav-apply">Apply</a>
+        <a class="nav-link" href="/track" data-testid="nav-track">Track<span class="label-long">&nbsp;status</span></a>
+        <a class="nav-link is-active" href="/officer" data-testid="nav-queue">Review queue</a>
+      </div>
+      <span class="nav-spacer"></span>
+      <div class="theme-toggle" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-set="light" aria-pressed="false" title="Light"><svg class="i"><use href="#i-sun"></use></svg></button>
+        <button type="button" data-theme-set="system" aria-pressed="true" title="System"><svg class="i"><use href="#i-monitor"></use></svg></button>
+        <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark"><svg class="i"><use href="#i-moon"></use></svg></button>
+      </div>
+      
+      
+        <span class="nav-user" data-testid="nav-user">
+          <span class="avatar">O</span>
+          <span class="name">officer</span>
+        </span>
+        <form action="/officer/logout" method="post"><input type="hidden" name="_csrf" value="Y-n2lQtZacxs_NpSo9N3jPoE3L7KSXJhxR4yn4rjD9fDavz5AIyU8W5pWflBzLlixf5DtZxn8Yb_fUFMpigKrLzUauCiWcma">
+          <button type="submit" class="btn btn-ghost btn-sm" data-testid="nav-logout" title="Sign out"><svg class="i"><use href="#i-logout"></use></svg></button>
+        </form>
+      
+    </nav>
+  </div>
+
+<main id="main">
+  <div class="container" style="padding-bottom:40px">
+    <header class="page-head fade-up row-between" style="align-items:flex-end;padding-bottom:22px">
+      <div>
+        <span class="eyebrow glass"><span class="dot-tag">0 pending</span> Oldest first</span>
+        <h1 style="margin-bottom:0">Review <span class="serif">queue</span></h1>
+      </div>
+      <form class="search" action="/officer" method="get" role="search">
+        
+        <svg class="i"><use href="#i-search"></use></svg>
+        <input class="input" type="search" name="q" value="" placeholder="Search ID or name" data-search="" data-testid="queue-search" aria-label="Search requests">
+        <span class="kbd" style="position:absolute;right:10px;top:50%;transform:translateY(-50%)">/</span>
+      </form>
+    </header>
+
+    <section class="kpis fade-up d1" data-testid="kpis">
+      <a class="kpi glass" href="/officer?status=SUBMITTED" style="--k:var(--info)">
+        <span class="label">New</span><span class="value" data-testid="kpi-submitted">0</span></a>
+      <a class="kpi glass" href="/officer?status=UNDER_REVIEW" style="--k:var(--warn)">
+        <span class="label">Under review</span><span class="value" data-testid="kpi-under-review">0</span></a>
+      <a class="kpi glass" href="/officer?status=APPROVED" style="--k:var(--ok)">
+        <span class="label">Approved</span><span class="value" data-testid="kpi-approved">0</span></a>
+      <a class="kpi glass" href="/officer?status=REJECTED" style="--k:var(--danger)">
+        <span class="label">Rejected</span><span class="value" data-testid="kpi-rejected">0</span></a>
+    </section>
+
+    <section class="glass list-panel fade-up d2">
+      <div class="toolbar">
+        <nav class="seg" aria-label="Filter by status">
+          <a href="/officer?q=" class="is-active">All <span class="count">0</span></a>
+          <a href="/officer?status=SUBMITTED&amp;q=" data-testid="filter-SUBMITTED">Submitted</a><a href="/officer?status=UNDER_REVIEW&amp;q=" data-testid="filter-UNDER_REVIEW">Under review</a><a href="/officer?status=APPROVED&amp;q=" data-testid="filter-APPROVED">Approved</a><a href="/officer?status=REJECTED&amp;q=" data-testid="filter-REJECTED">Rejected</a>
+        </nav>
+        <span class="subtle" style="font-size:13px">0 requests</span>
+      </div>
+
+      
+
+      
+
+      <div class="empty" data-testid="queue-empty">
+        <div class="icon-tile"><svg class="i"><use href="#i-inbox"></use></svg></div>
+        <strong style="color:var(--text);font-weight:500">Nothing here</strong>
+        <p>New applications will appear here.</p>
+      </div>
+    </section>
+  </div>
+</main>
+<footer class="footer">
+  <div class="container row-between">
+    <div class="stack" style="gap:6px">
+      <span class="row" style="gap:8px">
+        <svg class="i" style="width:18px;height:18px" aria-hidden="true"><use href="#i-logo"></use></svg>
+        <strong style="color:var(--text);font-weight:600">Sanad</strong> — Citizen Certificate Request Portal
+      </span>
+      <span>Academic DevOps project. Not an official government service; certificates issued here have no legal validity.</span>
+    </div>
+    <div class="build" data-testid="build-info">
+      <span class="badge env-badge env-e2e">e2e</span>
+      <span class="mono">v1.1.0-SNAPSHOT</span>
+      <span class="mono">479f090</span>
+      <a class="health" href="/actuator/health">Health</a>
+    </div>
+  </div>
+</footer>
+
+  <script src="/js/app.js" defer=""></script>
+
+
+
+</body></html>
