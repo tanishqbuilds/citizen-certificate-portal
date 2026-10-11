@@ -1,0 +1,15 @@
+{
+    "_class": "hudson.model.FreeStyleBuild",
+    "artifacts": [
+        {
+            "fileName": "citizen-certificate-portal-1.1.0-SNAPSHOT.war",
+            "relativePath": "target/citizen-certificate-portal-1.1.0-SNAPSHOT.war"
+        }
+    ],
+    "fingerprint": [
+        {
+            "fileName": "citizen-certificate-portal-1.1.0-SNAPSHOT.war",
+            "hash": "f9dd7693f606062547d21c83abb6654a"
+        }
+    ]
+}

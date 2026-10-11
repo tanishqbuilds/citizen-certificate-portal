@@ -1,0 +1,209 @@
+Started by an SCM change
+Running as SYSTEM
+Building in workspace /var/jenkins_home/jobs/ccrp-ci-build/workspace
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/jobs/ccrp-ci-build/workspace/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/tanishqbuilds/citizen-certificate-portal.git # timeout=10
+Cleaning workspace
+ > git rev-parse --verify HEAD # timeout=10
+Resetting working tree
+ > git reset --hard # timeout=10
+ > git clean -fdx # timeout=10
+Fetching upstream changes from https://github.com/tanishqbuilds/citizen-certificate-portal.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/tanishqbuilds/citizen-certificate-portal.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/develop^{commit} # timeout=10
+Checking out Revision debded13bb8b197603a4d383088d412bfcc438df (refs/remotes/origin/develop)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f debded13bb8b197603a4d383088d412bfcc438df # timeout=10
+Commit message: "Merge pull request #22 from fix/CCR-8-isolate-tests-from-ci-env"
+ > git rev-list --no-walk 27977e4c5abc903b40e4ace5f8603f45794dee77 # timeout=10
+[workspace] $ /bin/sh -xe /tmp/jenkins13765121985662232904.sh
++ set -eu
++ java -version
+openjdk version "21.0.12.1" 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode)
++ ./mvnw -B -ntp -v
+Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)
+Maven home: /var/jenkins_home/.m2/wrapper/dists/apache-maven-3.9.16/56ba1f9f
+Java version: 21.0.12.1, vendor: Eclipse Adoptium, runtime: /opt/java/openjdk
+Default locale: en, platform encoding: UTF-8
+OS name: "linux", version: "7.0.0-38-generic", arch: "amd64", family: "unix"
++ ./mvnw -B -ntp clean verify
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------< com.sanad:citizen-certificate-portal >----------------
+[INFO] Building Sanad — Citizen Certificate Request Portal 1.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ citizen-certificate-portal ---
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ citizen-certificate-portal ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- git-commit-id:10.0.1:revision (default) @ citizen-certificate-portal ---
+[INFO] dotGitDirectory '/var/jenkins_home/jobs/ccrp-ci-build/workspace/.git'
+[INFO] Using environment variable based branch name. GIT_BRANCH = origin/develop
+[INFO] Collected git.branch with value origin/develop
+[INFO] Collected git.commit.id.abbrev with value debded1
+[INFO] Collected git.commit.time with value 2026-10-11T15:04:43Z
+[INFO] Collected git.tags with value 
+[INFO] including property 'git.tags' in results
+[INFO] including property 'git.commit.id.abbrev' in results
+[INFO] including property 'git.branch' in results
+[INFO] including property 'git.commit.time' in results
+[INFO] Writing properties file [/var/jenkins_home/jobs/ccrp-ci-build/workspace/target/classes/git.properties] (for project Sanad — Citizen Certificate Request Portal)...
+[INFO] 
+[INFO] --- jacoco:0.8.15:prepare-agent (prepare-agent) @ citizen-certificate-portal ---
+[INFO] argLine set to -javaagent:/var/jenkins_home/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/var/jenkins_home/jobs/ccrp-ci-build/workspace/target/jacoco.exec
+[INFO] 
+[INFO] --- spring-boot:4.1.1:build-info (build-info) @ citizen-certificate-portal ---
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ citizen-certificate-portal ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 14 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ citizen-certificate-portal ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 36 source files with javac [debug parameters release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ citizen-certificate-portal ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ citizen-certificate-portal ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 11 source files with javac [debug parameters release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ citizen-certificate-portal ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.sanad.portal.web.CitizenFlowIntegrationTest
+15:06:18.993 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sanad.portal.web.CitizenFlowIntegrationTest]: CitizenFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:06:19.245 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sanad.portal.PortalApplication for test class com.sanad.portal.web.CitizenFlowIntegrationTest
+15:06:19.440 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sanad.portal.web.CitizenFlowIntegrationTest]: CitizenFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:06:19.444 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sanad.portal.PortalApplication for test class com.sanad.portal.web.CitizenFlowIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-11T15:06:20.202Z  INFO 3140 --- [ccrp] [           main] c.s.p.web.CitizenFlowIntegrationTest     : Starting CitizenFlowIntegrationTest using Java 21.0.12.1 with PID 3140 (started by jenkins in /var/jenkins_home/jobs/ccrp-ci-build/workspace)
+2026-10-11T15:06:20.205Z  INFO 3140 --- [ccrp] [           main] c.s.p.web.CitizenFlowIntegrationTest     : The following 1 profile is active: "test"
+2026-10-11T15:06:23.548Z  WARN 3140 --- [ccrp] [           main] o.f.c.internal.database.base.Database    : Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2026-10-11T15:06:29.760Z  INFO 3140 --- [ccrp] [           main] c.s.p.web.CitizenFlowIntegrationTest     : Started CitizenFlowIntegrationTest in 10.193 seconds (process running for 12.418)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/var/jenkins_home/.m2/repository/net/bytebuddy/byte-buddy-agent/1.18.11/byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-11T15:06:30.819Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-5TQQ8S (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:30.938Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-5TQQ8S submitted (INCOME)
+2026-10-11T15:06:32.218Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-J5SD76 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:32.224Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-J5SD76 submitted (INCOME)
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.68 s -- in com.sanad.portal.web.CitizenFlowIntegrationTest
+[INFO] Running com.sanad.portal.web.StatusApiIntegrationTest
+2026-10-11T15:06:32.344Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-285CVN (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:32.351Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-285CVN submitted (INCOME)
+2026-10-11T15:06:32.634Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-2RS39S (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:32.640Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2RS39S submitted (INCOME)
+2026-10-11T15:06:32.662Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2RS39S under review by officer
+2026-10-11T15:06:32.725Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2RS39S approved by officer — certificate SND-INC-2026-000004
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.457 s -- in com.sanad.portal.web.StatusApiIntegrationTest
+[INFO] Running com.sanad.portal.web.ViewFormatterTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.118 s -- in com.sanad.portal.web.ViewFormatterTest
+[INFO] Running com.sanad.portal.web.OfficerWorkflowIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-11T15:06:32.948Z  INFO 3140 --- [ccrp] [           main] c.s.p.w.OfficerWorkflowIntegrationTest   : Starting OfficerWorkflowIntegrationTest using Java 21.0.12.1 with PID 3140 (started by jenkins in /var/jenkins_home/jobs/ccrp-ci-build/workspace)
+2026-10-11T15:06:32.948Z  INFO 3140 --- [ccrp] [           main] c.s.p.w.OfficerWorkflowIntegrationTest   : The following 1 profile is active: "test"
+2026-10-11T15:06:33.450Z  WARN 3140 --- [ccrp] [           main] o.f.c.internal.database.base.Database    : Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2026-10-11T15:06:34.019Z  INFO 3140 --- [ccrp] [           main] c.s.p.w.OfficerWorkflowIntegrationTest   : Started OfficerWorkflowIntegrationTest in 1.106 seconds (process running for 16.677)
+2026-10-11T15:06:34.046Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-KJD5JJ (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:34.051Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-KJD5JJ submitted (INCOME)
+2026-10-11T15:06:34.177Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-4GQQGF (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:34.181Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-4GQQGF submitted (INCOME)
+2026-10-11T15:06:34.202Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-BEPNGK (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:34.205Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-BEPNGK submitted (INCOME)
+2026-10-11T15:06:34.235Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-2SK3RE (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:34.239Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2SK3RE submitted (INCOME)
+2026-10-11T15:06:34.262Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-YM99DQ (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:34.266Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-YM99DQ submitted (INCOME)
+2026-10-11T15:06:34.481Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-W2B5M2 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:34.484Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-W2B5M2 submitted (INCOME)
+2026-10-11T15:06:34.493Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-W2B5M2 under review by officer
+2026-10-11T15:06:34.520Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-W2B5M2 rejected by officer
+2026-10-11T15:06:34.572Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-WN5EYY (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:34.577Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-WN5EYY submitted (INCOME)
+2026-10-11T15:06:34.599Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-2YR9DS (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:34.604Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2YR9DS submitted (INCOME)
+2026-10-11T15:06:34.613Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2YR9DS under review by officer
+2026-10-11T15:06:34.625Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2YR9DS approved by officer — certificate SND-INC-2026-000012
+2026-10-11T15:06:34.686Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-X8RRCF (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T15:06:34.689Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-X8RRCF submitted (INCOME)
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.813 s -- in com.sanad.portal.web.OfficerWorkflowIntegrationTest
+[INFO] Running com.sanad.portal.domain.CertificateRequestLifecycleTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.sanad.portal.domain.CertificateRequestLifecycleTest
+[INFO] Running com.sanad.portal.PortalApplicationTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.066 s -- in com.sanad.portal.PortalApplicationTests
+[INFO] Running com.sanad.portal.service.VerhoeffTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.sanad.portal.service.VerhoeffTest
+[INFO] Running com.sanad.portal.service.CertificateRequestServiceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.848 s -- in com.sanad.portal.service.CertificateRequestServiceTest
+[INFO] Running com.sanad.portal.service.DocumentStorageServiceTest
+2026-10-11T15:06:35.739Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-ABCDEG (16 bytes, PNG, sha256=02a3e298f1533f62558c58e4c70edcab9af5a50d62d925fd5390942020fb0fb8)
+2026-10-11T15:06:35.747Z  INFO 3140 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-ABCDEF (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.089 s -- in com.sanad.portal.service.DocumentStorageServiceTest
+[INFO] Running com.sanad.portal.service.NationalIdsTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.sanad.portal.service.NationalIdsTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 65, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.15:report (report) @ citizen-certificate-portal ---
+[INFO] Loading execution data file /var/jenkins_home/jobs/ccrp-ci-build/workspace/target/jacoco.exec
+[INFO] Analyzed bundle 'Sanad — Citizen Certificate Request Portal' with 46 classes
+[INFO] 
+[INFO] --- war:3.5.1:war (default-war) @ citizen-certificate-portal ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [citizen-certificate-portal] in [/var/jenkins_home/jobs/ccrp-ci-build/workspace/target/citizen-certificate-portal-1.1.0-SNAPSHOT]
+[INFO] Processing war project
+[INFO] Building war: /var/jenkins_home/jobs/ccrp-ci-build/workspace/target/citizen-certificate-portal-1.1.0-SNAPSHOT.war
+[INFO] 
+[INFO] --- spring-boot:4.1.1:repackage (repackage) @ citizen-certificate-portal ---
+[INFO] Replacing main artifact /var/jenkins_home/jobs/ccrp-ci-build/workspace/target/citizen-certificate-portal-1.1.0-SNAPSHOT.war with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /var/jenkins_home/jobs/ccrp-ci-build/workspace/target/citizen-certificate-portal-1.1.0-SNAPSHOT.war.original
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  31.174 s
+[INFO] Finished at: 2026-10-11T15:06:44Z
+[INFO] ------------------------------------------------------------------------
+Recording test results
+[Checks API] No suitable checks publisher found.
+Archiving artifacts
+Recording fingerprints
+Finished: SUCCESS
