@@ -1,0 +1,17 @@
+# Container-level automatic rollback: deploy a release that cannot start
+$ docker ps --filter name=ccrp-prod
+ccrp-prod  localhost:5000/sanad-ccrp:1.2.0-SNAPSHOT-b14  Up 2 minutes (healthy)
+$ scripts/deploy-container.sh localhost:5000/sanad-ccrp:broken-demo ccrp-prod 8085     # 16:32:47
+==> Deploying localhost:5000/sanad-ccrp:broken-demo as ccrp-prod on :8085 (previous: localhost:5000/sanad-ccrp:1.2.0-SNAPSHOT-b14)
+==> pull skipped (image is local)
+==> New container is NOT healthy, last log lines:
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to load driver class org.postgresql.Driver
+Caused by: java.lang.RuntimeException: Failed to load driver class org.postgresql.Driver
+Caused by: java.lang.RuntimeException: Failed to load class org.postgresql.Driver
+==> Rolling back to localhost:5000/sanad-ccrp:1.2.0-SNAPSHOT-b14
+==> Rollback healthy: localhost:5000/sanad-ccrp:1.2.0-SNAPSHOT-b14
+(deploy-container.sh exits 1 by design here: the release failed even though the rollback succeeded, so a pipeline marks the deploy red)
+$ docker ps --filter name=ccrp-prod   (after the automatic rollback)
+ccrp-prod  localhost:5000/sanad-ccrp:1.2.0-SNAPSHOT-b14  Up 12 seconds (healthy)
+$ curl http://localhost:8085/actuator/info
+{"env":"production","version":"1.2.0-SNAPSHOT","commit":"944172f"}

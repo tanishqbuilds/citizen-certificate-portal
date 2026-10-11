@@ -1,0 +1,21 @@
+$ curl -s http://localhost:5000/v2/_catalog
+{"repositories":["sanad-ccrp"]}
+
+$ curl -s http://localhost:5000/v2/sanad-ccrp/tags/list
+{"name":"sanad-ccrp","tags":["1.2.0-SNAPSHOT-b12","1.2.0-SNAPSHOT-b13","git-249c529","latest"]}
+
+$ docker manifest digest of :latest
+Docker-Content-Digest: sha256:da2230f38a10b591b8973586a100fe6d41ca73f6b453e4a7c5ede3068a8d03a6
+
+$ docker ps --filter name=ccrp-prod
+NAMES       IMAGE                                          STATUS                        PORTS
+ccrp-prod   localhost:5000/sanad-ccrp:1.2.0-SNAPSHOT-b13   Up About a minute (healthy)   0.0.0.0:8085->8080/tcp, [::]:8085->8080/tcp
+
+$ docker inspect ccrp-prod (image, labels, restart policy, volume)
+image=localhost:5000/sanad-ccrp:1.2.0-SNAPSHOT-b13 restart=unless-stopped deployed-by=jenkins-ccrp-pipeline-13 revision=249c529 mounts=ccrp-prod-data:/var/lib/ccrp
+
+$ curl -s http://localhost:8085/actuator/info
+{"env":"production","version":"1.2.0-SNAPSHOT","commit":"249c529"}
+
+$ docker ps -a --filter label=ccrp.ephemeral=true   (staging containers are removed after each build)
+0
