@@ -26,4 +26,5 @@ public interface CertificateRequestRepository extends JpaRepository<CertificateR
             order by r.submittedAt asc
             """)
     List<CertificateRequest> search(@Param("status") RequestStatus status, @Param("q") String q, Pageable page);
+    Optional<CertificateRequest> findByCertificateNumberAndStatus(String certificateNumber, RequestStatus status);
 }

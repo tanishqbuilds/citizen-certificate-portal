@@ -139,6 +139,12 @@ public class CertificateRequestService {
         return documents.load(r.getDocumentPath());
     }
 
+    /** CCR-11/13: public verification only ever matches approved requests. */
+    @Transactional(readOnly = true)
+    public Optional<CertificateRequest> findIssuedCertificate(String certificateNumber) {
+        return repository.findByCertificateNumberAndStatus(certificateNumber, RequestStatus.APPROVED);
+    }
+
     private Instant now() {
         return clock.instant();
     }

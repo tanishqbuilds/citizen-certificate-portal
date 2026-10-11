@@ -13,6 +13,7 @@ progress with a tracking ID. Officers review requests and approve or reject them
 - **Officer workspace**: sign-in, KPI cards, filterable queue, start review / approve / reject with reason
 - **Certificates**: numbered, SHA-256 verification hash, printable
 - **Audit trail** of every status change with actor and time
+- **JSON API** (`/api/v1`): certificate types, request status, public certificate verification
 
 ## Repository layout
 

@@ -40,7 +40,10 @@ public class SecurityConfig {
                 .headers(headers -> headers
                         .referrerPolicy(referrer -> referrer.policy(
                                 org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN)))
-                .csrf(csrf -> csrf.csrfTokenRequestHandler(eagerCsrfTokens()));
+                .csrf(csrf -> csrf
+                        .csrfTokenRequestHandler(eagerCsrfTokens())
+                        // The JSON API is stateless, read-only and cookie-free; CSRF does not apply.
+                        .ignoringRequestMatchers("/api/**"));
         return http.build();
     }
 
