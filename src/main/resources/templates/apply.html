@@ -45,7 +45,7 @@
                 <span class="check"><svg class="i"><use href="#i-check"/></svg></span>
               </label>
             </div>
-            <p class="field-error" th:if="${#fields.hasErrors('certificateType')}" th:errors="*{certificateType}" data-testid="error-certificateType">Choose one</p>
+            <p class="field-error" th:if="${#fields.hasErrors('certificateType')}" th:text="${#fields.errors('certificateType')[0]}" data-testid="error-certificateType">Choose one</p>
           </fieldset>
         </section>
 
@@ -56,28 +56,28 @@
             <div class="field span-2" th:classappend="${#fields.hasErrors('applicantName')} ? 'has-error'">
               <label for="applicantName">Full name <span class="opt">as on your ID</span></label>
               <input class="input" th:field="*{applicantName}" autocomplete="name" placeholder="Aarav Sharma" maxlength="100">
-              <p class="field-error" th:if="${#fields.hasErrors('applicantName')}" th:errors="*{applicantName}" data-testid="error-applicantName"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('applicantName')}" th:text="${#fields.errors('applicantName')[0]}" data-testid="error-applicantName"></p>
             </div>
             <div class="field" th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'has-error'">
               <label for="dateOfBirth">Date of birth</label>
               <input class="input" type="date" th:field="*{dateOfBirth}" autocomplete="bday">
-              <p class="field-error" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}" data-testid="error-dateOfBirth"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('dateOfBirth')}" th:text="${#fields.errors('dateOfBirth')[0]}" data-testid="error-dateOfBirth"></p>
             </div>
             <div class="field" th:classappend="${#fields.hasErrors('nationalId')} ? 'has-error'">
               <label for="nationalId">National ID <span class="opt">12 digits</span></label>
               <input class="input mono" th:field="*{nationalId}" inputmode="numeric" placeholder="2345 6789 0124" maxlength="14" autocomplete="off">
               <p class="field-hint" th:unless="${#fields.hasErrors('nationalId')}">Only the last 4 digits are stored.</p>
-              <p class="field-error" th:if="${#fields.hasErrors('nationalId')}" th:errors="*{nationalId}" data-testid="error-nationalId"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('nationalId')}" th:text="${#fields.errors('nationalId')[0]}" data-testid="error-nationalId"></p>
             </div>
             <div class="field" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
               <label for="email">Email</label>
               <input class="input" type="email" th:field="*{email}" autocomplete="email" placeholder="you@example.com">
-              <p class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" data-testid="error-email"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('email')}" th:text="${#fields.errors('email')[0]}" data-testid="error-email"></p>
             </div>
             <div class="field" th:classappend="${#fields.hasErrors('phone')} ? 'has-error'">
               <label for="phone">Mobile number</label>
               <input class="input" type="tel" th:field="*{phone}" inputmode="numeric" autocomplete="tel-national" placeholder="9876543210" maxlength="10">
-              <p class="field-error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" data-testid="error-phone"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('phone')}" th:text="${#fields.errors('phone')[0]}" data-testid="error-phone"></p>
             </div>
           </div>
         </section>
@@ -89,17 +89,17 @@
             <div class="field span-2" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
               <label for="address">Residential address</label>
               <textarea class="textarea" th:field="*{address}" rows="2" maxlength="300" autocomplete="street-address" placeholder="Flat 4B, Lotus Residency, MG Road"></textarea>
-              <p class="field-error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}" data-testid="error-address"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('address')}" th:text="${#fields.errors('address')[0]}" data-testid="error-address"></p>
             </div>
             <div class="field" th:classappend="${#fields.hasErrors('district')} ? 'has-error'">
               <label for="district">District</label>
               <input class="input" th:field="*{district}" placeholder="Pune" maxlength="60">
-              <p class="field-error" th:if="${#fields.hasErrors('district')}" th:errors="*{district}" data-testid="error-district"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('district')}" th:text="${#fields.errors('district')[0]}" data-testid="error-district"></p>
             </div>
             <div class="field" th:classappend="${#fields.hasErrors('pinCode')} ? 'has-error'">
               <label for="pinCode">PIN code</label>
               <input class="input mono" th:field="*{pinCode}" inputmode="numeric" placeholder="411001" maxlength="6" autocomplete="postal-code">
-              <p class="field-error" th:if="${#fields.hasErrors('pinCode')}" th:errors="*{pinCode}" data-testid="error-pinCode"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('pinCode')}" th:text="${#fields.errors('pinCode')[0]}" data-testid="error-pinCode"></p>
             </div>
           </div>
         </section>
@@ -111,19 +111,19 @@
             <div class="field span-2" th:classappend="${#fields.hasErrors('purpose')} ? 'has-error'">
               <label for="purpose">Purpose <span class="counter" data-count-for="purpose">0 / 300</span></label>
               <textarea class="textarea" th:field="*{purpose}" rows="3" maxlength="300" data-count placeholder="Required for a post-graduate scholarship application."></textarea>
-              <p class="field-error" th:if="${#fields.hasErrors('purpose')}" th:errors="*{purpose}" data-testid="error-purpose"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('purpose')}" th:text="${#fields.errors('purpose')[0]}" data-testid="error-purpose"></p>
             </div>
             <div class="field span-2" data-show-for="INCOME"
                  th:classappend="(${form.certificateType == null or form.certificateType.name() != 'INCOME'} ? 'is-hidden' : '') + (${#fields.hasErrors('annualIncome')} ? ' has-error' : '')">
               <label for="annualIncome">Annual family income <span class="opt">in rupees</span></label>
               <input class="input" type="number" min="0" step="1" th:field="*{annualIncome}" placeholder="450000">
-              <p class="field-error" th:if="${#fields.hasErrors('annualIncome')}" th:errors="*{annualIncome}" data-testid="error-annualIncome"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('annualIncome')}" th:text="${#fields.errors('annualIncome')[0]}" data-testid="error-annualIncome"></p>
             </div>
             <div class="field span-2" data-show-for="MARRIAGE"
                  th:classappend="(${form.certificateType == null or form.certificateType.name() != 'MARRIAGE'} ? 'is-hidden' : '') + (${#fields.hasErrors('spouseName')} ? ' has-error' : '')">
               <label for="spouseName">Spouse's full name</label>
               <input class="input" th:field="*{spouseName}" placeholder="Diya Sharma" maxlength="100">
-              <p class="field-error" th:if="${#fields.hasErrors('spouseName')}" th:errors="*{spouseName}" data-testid="error-spouseName"></p>
+              <p class="field-error" th:if="${#fields.hasErrors('spouseName')}" th:text="${#fields.errors('spouseName')[0]}" data-testid="error-spouseName"></p>
             </div>
           </div>
         </section>
@@ -154,7 +154,7 @@
             <span class="box"><svg class="i"><use href="#i-check"/></svg></span>
             <span>I confirm the information is true and the document is genuine. False declarations can lead to rejection.</span>
           </label>
-          <p class="field-error" th:if="${#fields.hasErrors('declaration')}" th:errors="*{declaration}" data-testid="error-declaration"></p>
+          <p class="field-error" th:if="${#fields.hasErrors('declaration')}" th:text="${#fields.errors('declaration')[0]}" data-testid="error-declaration"></p>
         </div>
 
         <div class="row-between">

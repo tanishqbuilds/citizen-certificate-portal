@@ -83,7 +83,8 @@ public class ApplyController {
 
         if (result.hasErrors() || documentError != null) {
             model.addAttribute("documentError", documentError);
-            model.addAttribute("errorCount", result.getErrorCount() + (documentError != null ? 1 : 0));
+            long invalidFields = result.getFieldErrors().stream().map(e -> e.getField()).distinct().count();
+            model.addAttribute("errorCount", invalidFields + (documentError != null ? 1 : 0));
             response.setStatus(HttpStatus.UNPROCESSABLE_CONTENT.value());
             return "apply";
         }

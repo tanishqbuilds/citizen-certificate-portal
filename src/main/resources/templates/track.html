@@ -25,12 +25,12 @@
         <div class="field" th:classappend="${#fields.hasErrors('trackingId')} ? 'has-error'">
           <label for="trackingId">Tracking ID</label>
           <input class="input mono" th:field="*{trackingId}" placeholder="CCR-2026-7K4QXZ" autocomplete="off" autocapitalize="characters" spellcheck="false">
-          <p class="field-error" th:if="${#fields.hasErrors('trackingId')}" th:errors="*{trackingId}" data-testid="error-trackingId"></p>
+          <p class="field-error" th:if="${#fields.hasErrors('trackingId')}" th:text="${#fields.errors('trackingId')[0]}" data-testid="error-trackingId"></p>
         </div>
         <div class="field" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
           <label for="email">Email used on the application</label>
           <input class="input" type="email" th:field="*{email}" placeholder="you@example.com" autocomplete="email">
-          <p class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" data-testid="error-email"></p>
+          <p class="field-error" th:if="${#fields.hasErrors('email')}" th:text="${#fields.errors('email')[0]}" data-testid="error-email"></p>
         </div>
         <button type="submit" class="btn btn-primary btn-lg btn-block" data-testid="track-submit">
           <svg class="i"><use href="#i-search"/></svg> Check status

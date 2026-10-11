@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NationalId {
-    String message() default "Enter a valid 12-digit national ID — the check digit doesn't match.";
+    String message() default "Enter a valid 12-digit national ID — the check digit does not match.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

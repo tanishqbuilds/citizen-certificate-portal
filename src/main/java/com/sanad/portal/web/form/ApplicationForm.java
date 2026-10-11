@@ -25,7 +25,7 @@ public class ApplicationForm {
     @NotNull(message = "Choose the certificate you need.")
     private CertificateType certificateType;
 
-    @NotBlank(message = "Enter the applicant's full name.")
+    @NotBlank(message = "Enter the applicant’s full name.")
     @Size(min = 3, max = 100, message = "The name must be between 3 and 100 characters.")
     @Pattern(regexp = NAME_PATTERN, message = "The name can contain letters, spaces, dots, apostrophes and hyphens only.")
     private String applicantName;
@@ -35,7 +35,7 @@ public class ApplicationForm {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dateOfBirth;
 
-    @NotBlank(message = "Enter an email address — you'll need it to track the request.")
+    @NotBlank(message = "Enter an email address — you will need it to track the request.")
     @Email(message = "Enter a valid email address, like name@example.com.")
     @Size(max = 254, message = "The email address is too long.")
     private String email;
@@ -68,8 +68,8 @@ public class ApplicationForm {
     @Max(value = 100_000_000, message = "Annual income must be at most ₹10,00,00,000.")
     private Long annualIncome;
 
-    @Size(max = 100, message = "The spouse's name must be at most 100 characters.")
-    @Pattern(regexp = "^$|" + NAME_PATTERN, message = "The spouse's name can contain letters, spaces, dots, apostrophes and hyphens only.")
+    @Size(max = 100, message = "The spouse’s name must be at most 100 characters.")
+    @Pattern(regexp = "^$|" + NAME_PATTERN, message = "The spouse’s name can contain letters, spaces, dots, apostrophes and hyphens only.")
     private String spouseName;
 
     @AssertTrue(message = "Please confirm that the information is true.")
