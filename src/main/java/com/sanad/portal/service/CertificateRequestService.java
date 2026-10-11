@@ -44,8 +44,15 @@ public class CertificateRequestService {
                 NationalIds.mask(form.getNationalId()), NationalIds.fingerprint(form.getNationalId()),
                 form.getAddress(), form.getDistrict(), form.getPinCode(), form.getPurpose(),
                 form.getAnnualIncome(), form.getSpouseName());
-        CertificateRequest saved = repository.save(
-                CertificateRequest.submit(trackingId, form.getCertificateType(), applicant, stored, now()));
+        CertificateRequest saved;
+        try {
+            // Flush now so constraint violations surface here, while we can still clean up the file.
+            saved = repository.saveAndFlush(
+                    CertificateRequest.submit(trackingId, form.getCertificateType(), applicant, stored, now()));
+        } catch (RuntimeException e) {
+            documents.delete(stored.path());
+            throw e;
+        }
         log.info("Request {} submitted ({})", saved.getTrackingId(), saved.getCertificateType());
         return saved;
     }

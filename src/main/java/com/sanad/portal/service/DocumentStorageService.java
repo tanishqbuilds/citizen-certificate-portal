@@ -129,12 +129,27 @@ public class DocumentStorageService {
         }
     }
 
+    /** Best-effort removal, used to avoid orphaned personal data when a submission fails after upload. */
+    public void delete(String relativePath) {
+        try {
+            Path p = resolveInside(relativePath);
+            Files.deleteIfExists(p);
+            Files.deleteIfExists(p.getParent()); // only succeeds when the request folder is now empty
+        } catch (IOException | IllegalArgumentException e) {
+            log.warn("Could not delete document {}: {}", relativePath, e.getMessage());
+        }
+    }
+
     public Resource load(String relativePath) {
+        return new FileSystemResource(resolveInside(relativePath));
+    }
+
+    private Path resolveInside(String relativePath) {
         Path p = root.resolve(relativePath).normalize();
         if (!p.startsWith(root)) {
             throw new IllegalArgumentException("Path escapes the document store");
         }
-        return new FileSystemResource(p);
+        return p;
     }
 
     private static Kind detect(MultipartFile file) {
