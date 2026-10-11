@@ -40,12 +40,12 @@ java -version
 // Phase 8+: pipeline as code. The stages live in the Jenkinsfile at the repository root.
 pipelineJob('ccrp-pipeline') {
     displayName('CCRP · Delivery pipeline (Jenkinsfile)')
-    description('Pipeline as code: checkout → build & test → package → deploy to staging → Selenium quality gate → deploy to production. Definition: Jenkinsfile in the repository.')
+    description('Pipeline as code: build & test → WAR → image → staging container → Selenium quality gate → push to registry → production container + Tomcat. Definition: Jenkinsfile in the repository.')
     logRotator { numToKeep(30); artifactNumToKeep(10) }
     // Declared here as well as in the Jenkinsfile so the very first (polled) build already has them.
     parameters {
-        choiceParam('TARGET_ENV', ['production', 'staging'], 'Promote to this environment after the Selenium quality gate')
-        booleanParam('DEPLOY', true, 'Deploy after a green build and quality gate')
+        choiceParam('TARGET_ENV', ['production', 'staging'], 'Tomcat context that receives the WAR after the quality gate')
+        booleanParam('DEPLOY', true, 'Publish and deploy after a green build and quality gate')
     }
     properties {
         pipelineTriggers {

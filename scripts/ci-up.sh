@@ -31,6 +31,8 @@ docker compose -f ci/docker-compose.yml --env-file "$ENV_FILE" ps
 cat <<INFO
 
   Jenkins   http://localhost:8090   (user: admin, password: see JENKINS_ADMIN_PASSWORD in $ENV_FILE)
+  Registry  http://localhost:5000/v2/_catalog
+  Prod app  http://localhost:8085   (container ccrp-prod, created by the pipeline)
   Tomcat    http://localhost:8888   (staging: /certportal-staging, production: /certportal-production)
   Selenium  http://localhost:4444/ui  ·  live browser: http://localhost:7900 (password: secret)
 INFO
