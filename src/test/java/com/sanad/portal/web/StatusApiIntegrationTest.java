@@ -10,6 +10,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -61,6 +63,25 @@ class StatusApiIntegrationTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error").value("validation_failed"))
                 .andExpect(jsonPath("$.fields.email").exists());
+    }
+
+    @Test
+    void approvedCertificateVerifiesWithInitialsOnly() throws Exception {
+        String location = mvc.perform(CitizenFlowIntegrationTest.validIncomeApplication(TestDocuments.pdf("slip.pdf")))
+                .andReturn().getResponse().getRedirectedUrl();
+        String id = location.substring(location.lastIndexOf('/') + 1);
+        mvc.perform(post("/officer/requests/" + id + "/start-review").with(user("officer").roles("OFFICER")).with(csrf()));
+        String flash = (String) mvc.perform(post("/officer/requests/" + id + "/approve")
+                        .with(user("officer").roles("OFFICER")).with(csrf()))
+                .andReturn().getFlashMap().get("success");
+        String number = flash.replaceAll(".*(SND-INC-\\d{4}-\\d{6}).*", "$1");
+
+        mvc.perform(get("/api/v1/certificates/" + number + "/verify"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.valid").value(true))
+                .andExpect(jsonPath("$.certificateType").value("INCOME"))
+                .andExpect(jsonPath("$.holderInitials").value("A.S."))
+                .andExpect(jsonPath("$.verificationHash").isString());
     }
 
     @Test

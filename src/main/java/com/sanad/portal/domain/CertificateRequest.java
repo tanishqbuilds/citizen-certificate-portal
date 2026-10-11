@@ -174,6 +174,37 @@ public class CertificateRequest {
         return candidateEmail != null && email.equalsIgnoreCase(candidateEmail.trim());
     }
 
+    /** SUBMITTED → UNDER_REVIEW (CCR-10). */
+    public void startReview(String officer, Instant now) {
+        transition(RequestStatus.UNDER_REVIEW, officer, "Review started", now);
+        this.reviewedBy = officer;
+    }
+
+    /** UNDER_REVIEW → APPROVED, issuing the certificate (CCR-10, CCR-11). */
+    public void approve(String officer, String remarks, String certificateNumber, String certificateHash, Instant now) {
+        transition(RequestStatus.APPROVED, officer, blankToNull(remarks) == null ? "Approved" : remarks.trim(), now);
+        this.reviewedBy = officer;
+        this.decisionRemarks = blankToNull(remarks);
+        this.certificateNumber = certificateNumber;
+        this.certificateHash = certificateHash;
+        this.decidedAt = now;
+    }
+
+    /** UNDER_REVIEW → REJECTED. A reason is mandatory so the citizen knows what to fix (CCR-10). */
+    public void reject(String officer, String reason, Instant now) {
+        if (blankToNull(reason) == null) {
+            throw new IllegalArgumentException("A rejection reason is required");
+        }
+        transition(RequestStatus.REJECTED, officer, reason.trim(), now);
+        this.reviewedBy = officer;
+        this.decisionRemarks = reason.trim();
+        this.decidedAt = now;
+    }
+
+    private static String blankToNull(String s) {
+        return s == null || s.isBlank() ? null : s;
+    }
+
     void transition(RequestStatus next, String actor, String remarks, Instant now) {
         if (!status.canTransitionTo(next)) {
             throw new IllegalStatusTransitionException(status, next);

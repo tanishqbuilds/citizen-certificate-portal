@@ -30,7 +30,7 @@ public final class NationalIds {
         return sha256Hex(normalize(raw));
     }
 
-    static String sha256Hex(String value) {
+    public static String sha256Hex(String value) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             return HexFormat.of().formatHex(md.digest(value.getBytes(StandardCharsets.UTF_8)));

@@ -3,7 +3,6 @@ package com.sanad.portal.web;
 import com.sanad.portal.config.Zones;
 import org.springframework.stereotype.Component;
 
-import java.text.NumberFormat;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
@@ -19,7 +18,6 @@ public class ViewFormatter {
     private static final ZoneId ZONE = Zones.BUSINESS;
     private static final DateTimeFormatter DATE_TIME = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm", Locale.ENGLISH);
     private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
-    private static final Locale INDIA = Locale.of("en", "IN");
 
     private final Clock clock;
 
@@ -50,10 +48,25 @@ public class ViewFormatter {
         return date(instant);
     }
 
+    /** Indian digit grouping: 4,50,000 and 1,00,00,000 (lakh / crore), which java.text cannot express. */
     public String rupees(Long amount) {
         if (amount == null) return "—";
-        NumberFormat nf = NumberFormat.getNumberInstance(INDIA);
-        return "₹" + nf.format(amount);
+        String digits = Long.toString(Math.abs(amount));
+        StringBuilder sb = new StringBuilder();
+        int len = digits.length();
+        for (int i = 0; i < len; i++) {
+            sb.append(digits.charAt(i));
+            int remaining = len - i - 1;
+            if (remaining > 0 && (remaining == 3 || (remaining > 3 && (remaining - 3) % 2 == 0))) {
+                sb.append(',');
+            }
+        }
+        return (amount < 0 ? "-₹" : "₹") + sb;
+    }
+
+    /** Drops trailing punctuation so text can be embedded mid-sentence. */
+    public String clause(String text) {
+        return text == null ? "" : text.strip().replaceAll("[.!;,\\s]+$", "");
     }
 
     public String size(long bytes) {
@@ -65,6 +78,10 @@ public class ViewFormatter {
         if (email == null || !email.contains("@")) return "—";
         int at = email.indexOf('@');
         return email.charAt(0) + "•".repeat(Math.max(1, Math.min(at - 1, 5))) + email.substring(at);
+    }
+
+    public int age(LocalDate dateOfBirth) {
+        return dateOfBirth == null ? 0 : java.time.Period.between(dateOfBirth, LocalDate.now(clock.withZone(ZONE))).getYears();
     }
 
     public String initials(String name) {

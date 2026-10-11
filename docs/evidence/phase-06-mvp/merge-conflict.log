@@ -1,0 +1,95 @@
+$ git merge origin/develop
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Auto-merging src/main/java/com/sanad/portal/config/SecurityConfig.java
+CONFLICT (content): Merge conflict in src/main/java/com/sanad/portal/config/SecurityConfig.java
+Auto-merging src/main/java/com/sanad/portal/domain/CertificateRequestRepository.java
+CONFLICT (content): Merge conflict in src/main/java/com/sanad/portal/domain/CertificateRequestRepository.java
+Auto-merging src/main/java/com/sanad/portal/service/CertificateRequestService.java
+CONFLICT (content): Merge conflict in src/main/java/com/sanad/portal/service/CertificateRequestService.java
+Automatic merge failed; fix conflicts and then commit the result.
+
+$ git status --short
+UU README.md
+UU src/main/java/com/sanad/portal/config/SecurityConfig.java
+UU src/main/java/com/sanad/portal/domain/CertificateRequestRepository.java
+UU src/main/java/com/sanad/portal/service/CertificateRequestService.java
+A  src/main/java/com/sanad/portal/web/api/ApiExceptionHandler.java
+A  src/main/java/com/sanad/portal/web/api/StatusApiController.java
+A  src/test/java/com/sanad/portal/web/StatusApiIntegrationTest.java
+
+$ git diff --name-only --diff-filter=U
+README.md
+src/main/java/com/sanad/portal/config/SecurityConfig.java
+src/main/java/com/sanad/portal/domain/CertificateRequestRepository.java
+src/main/java/com/sanad/portal/service/CertificateRequestService.java
+diff --cc README.md
+index c7e65ab,1bdb69b..0000000
+--- a/README.md
++++ b/README.md
+@@@ -10,9 -10,7 +10,13 @@@ progress with a tracking ID. Officers r
+  - **Apply** for a Birth, Income, Domicile or Marriage certificate with one supporting document
+  - **Validation** at the door: Verhoeff-checked national ID, type-specific rules, documents verified by magic bytes
+  - **Track** a request with its tracking ID and email: progress stepper and activity timeline
+++<<<<<<< HEAD
+ +- **Officer workspace**: sign-in, KPI cards, filterable queue, start review / approve / reject with reason
+ +- **Certificates**: numbered, SHA-256 verification hash, printable
+ +- **Audit trail** of every status change with actor and time
+++=======
++ - **JSON API** (`/api/v1`): certificate types, request status, public certificate verification
+++>>>>>>> origin/develop
+  
+  ## Repository layout
+  
+diff --cc src/main/java/com/sanad/portal/config/SecurityConfig.java
+index b01f063,d5eab63..0000000
+--- a/src/main/java/com/sanad/portal/config/SecurityConfig.java
++++ b/src/main/java/com/sanad/portal/config/SecurityConfig.java
+@@@ -18,29 -9,14 +18,37 @@@ import org.springframework.security.web
+  @Configuration
+  public class SecurityConfig {
+  
+ -    /** Officer authentication (CCR-8) arrives in a later feature; citizen pages are public. */
+ +    public static final String ROLE_OFFICER = "OFFICER";
+ +
+      @Bean
+      SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+++<<<<<<< HEAD
+ +        http.authorizeHttpRequests(auth -> auth
+ +                        .requestMatchers("/officer/login").permitAll()
+ +                        .requestMatchers("/officer/**").hasRole(ROLE_OFFICER)
+ +                        .anyRequest().permitAll())
+ +                .formLogin(form -> form
+ +                        .loginPage("/officer/login")
+ +                        .loginProcessingUrl("/officer/login")
+ +                        .defaultSuccessUrl("/officer", true)
+ +                        .failureUrl("/officer/login?error")
+ +                        .permitAll())
+ +                .logout(logout -> logout
+ +                        .logoutUrl("/officer/logout")
+ +                        .logoutSuccessUrl("/officer/login?signedOut")
+ +                        .deleteCookies("JSESSIONID"))
+ +                .sessionManagement(session -> session.sessionFixation(fixation -> fixation.changeSessionId()))
+ +                .headers(headers -> headers
+ +                        .referrerPolicy(referrer -> referrer.policy(
+ +                                org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN)))
+ +                .csrf(csrf -> csrf.csrfTokenRequestHandler(eagerCsrfTokens()));
+++=======
++         http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
++                 .csrf(csrf -> csrf
++                         .csrfTokenRequestHandler(eagerCsrfTokens())
++                         // The JSON API is stateless, read-only and cookie-free; CSRF does not apply.
++                         .ignoringRequestMatchers("/api/**"));
+++>>>>>>> origin/develop
+          return http.build();
+      }
+  
+total tests:  failures:  errors: 
+after resolution — total tests: 64 failures: 0 errors: 0
+
+# Resolution notes
+# README.md                         kept both feature lists (officer bullets + JSON API bullet)
+# SecurityConfig.java               officer form login from HEAD + `/api/**` CSRF exemption from develop
+# CertificateRequestRepository.java kept countByStatus/search (HEAD) and findByCertificateNumberAndStatus (develop)
+# CertificateRequestService.java    kept officer methods (HEAD) and findIssuedCertificate (develop)
+# First attempt dropped the closing brace of document(); `./mvnw clean verify` caught it before commit.

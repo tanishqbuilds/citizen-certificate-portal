@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${request.trackingId})}"></head>
+<body>
+<th:block th:replace="~{fragments/layout :: chrome('officer')}"></th:block>
+<main id="main" th:with="s=${request.status.name()}">
+  <div class="container">
+    <header class="page-head fade-up" style="padding-bottom:22px">
+      <a class="btn btn-ghost btn-sm" th:href="@{/officer}" style="margin-left:-12px"><svg class="i"><use href="#i-chevron-left"/></svg> Queue</a>
+      <div class="row-between" style="margin-top:14px;align-items:flex-end">
+        <div>
+          <span class="subtle" th:text="${request.certificateType.label} + ' · submitted ' + ${@fmt.relative(request.submittedAt)}">Income certificate</span>
+          <h1 class="mono" style="font-family:var(--font-mono);font-weight:500;letter-spacing:-.02em;margin:8px 0 0" data-testid="detail-tracking-id" th:text="${request.trackingId}">CCR-2026-AAAAAA</h1>
+        </div>
+        <span class="status status-lg" th:classappend="'status-' + ${s}" data-testid="detail-status" th:text="${request.status.label}">Submitted</span>
+      </div>
+    </header>
+
+    <div class="alert alert-success fade-up" style="margin-bottom:16px" th:if="${success != null}" role="status" data-testid="flash-success">
+      <svg class="i"><use href="#i-check"/></svg><div><strong th:text="${success}">Done</strong></div>
+    </div>
+    <div class="alert alert-error fade-up" style="margin-bottom:16px" th:if="${failure != null}" role="alert" data-testid="flash-failure">
+      <svg class="i"><use href="#i-alert"/></svg><div><strong th:text="${failure}">Failed</strong></div>
+    </div>
+
+    <div class="split">
+      <div class="stack">
+        <section class="card glass fade-up d1">
+          <div class="card-head"><div><h2>Applicant</h2><p>Data as submitted and validated at intake.</p></div>
+            <span class="avatar" style="width:40px;height:40px;font-size:14px" th:text="${@fmt.initials(request.applicantName)}">AS</span></div>
+          <dl class="kv">
+            <dt>Full name</dt><dd data-testid="detail-name" th:text="${request.applicantName}">Aarav Sharma</dd>
+            <dt>Date of birth</dt><dd th:text="${@fmt.date(request.dateOfBirth)} + ' · ' + ${@fmt.age(request.dateOfBirth)} + ' years'">12 Apr 1998</dd>
+            <dt>National ID</dt><dd class="mono" th:text="${request.nationalIdMasked}">XXXX XXXX 0124</dd>
+            <dt>Email</dt><dd th:text="${request.email}">a@b.in</dd>
+            <dt>Mobile</dt><dd class="mono" th:text="${request.phone}">9876543210</dd>
+            <dt>Address</dt><dd th:text="${request.address} + ', ' + ${request.district} + ' – ' + ${request.pinCode}">Address</dd>
+            <dt th:if="${request.annualIncome != null}">Annual income</dt><dd th:if="${request.annualIncome != null}" th:text="${@fmt.rupees(request.annualIncome)}">₹4,50,000</dd>
+            <dt th:if="${request.spouseName != null}">Spouse</dt><dd th:if="${request.spouseName != null}" th:text="${request.spouseName}">Spouse</dd>
+            <dt>Purpose</dt><dd th:text="${request.purpose}">Purpose</dd>
+          </dl>
+        </section>
+
+        <section class="card glass fade-up d2">
+          <div class="card-head"><div><h2>Supporting document</h2><p th:text="'Expected: ' + ${request.certificateType.requiredDocument}">Expected</p></div></div>
+          <div class="doc-card">
+            <span class="icon-tile"><svg class="i"><use href="#i-file"/></svg></span>
+            <div class="meta">
+              <strong th:text="${request.documentName}">salary-slip.pdf</strong>
+              <small th:text="${request.documentContentType} + ' · ' + ${@fmt.size(request.documentSize)}">application/pdf · 12 KB</small>
+            </div>
+            <a class="btn btn-glass btn-sm" th:href="@{/officer/requests/{id}/document(id=${request.trackingId})}" target="_blank" rel="noopener" data-testid="open-document">
+              <svg class="i"><use href="#i-eye"/></svg> Open</a>
+          </div>
+          <ul class="check-list" style="margin-top:18px">
+            <li><svg class="i"><use href="#i-check"/></svg>National ID checksum verified at intake (Verhoeff)</li>
+            <li><svg class="i"><use href="#i-check"/></svg><span th:text="'File signature matches ' + ${request.documentContentType}">File signature matches</span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>SHA-256 <span class="hash" th:text="${request.documentSha256}">hash</span></span></li>
+          </ul>
+        </section>
+
+        <section class="card glass fade-up d3">
+          <div class="card-head"><div><h2>Audit trail</h2><p>Every status change, who made it and when.</p></div></div>
+          <ul class="timeline" data-testid="audit-trail">
+            <li th:each="e : ${request.historyNewestFirst}">
+              <span class="dot" th:classappend="${e.toStatus.name()}"></span>
+              <div class="t-title" th:text="${e.fromStatus == null} ? 'Submitted' : ${e.fromStatus.label} + ' → ' + ${e.toStatus.label}">Submitted</div>
+              <div class="t-meta" th:text="${e.actor} + ' · ' + ${@fmt.dateTime(e.occurredAt)}">citizen · date</div>
+              <div class="t-note" th:if="${e.remarks != null}" th:text="${e.remarks}">note</div>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <aside class="stack sticky fade-up d2">
+        <!-- SUBMITTED: pick it up -->
+        <div class="card card-sm glass" th:if="${s == 'SUBMITTED'}" data-testid="panel-submitted">
+          <div class="section-label" style="margin-bottom:10px">Next step</div>
+          <p class="muted" style="font-size:14px;margin-bottom:16px">Start the review to let the citizen know an officer is looking at their request.</p>
+          <form th:action="@{/officer/requests/{id}/start-review(id=${request.trackingId})}" method="post">
+            <button class="btn btn-primary btn-block" type="submit" data-testid="start-review"><svg class="i"><use href="#i-play"/></svg> Start review</button>
+          </form>
+        </div>
+
+        <!-- UNDER_REVIEW: decide -->
+        <form class="card card-sm glass stack action-panel" th:if="${s == 'UNDER_REVIEW'}" th:object="${decision}"
+              th:action="@{/officer/requests/{id}/approve(id=${request.trackingId})}" method="post" data-testid="panel-decide">
+          <div class="section-label" style="margin-bottom:0">Decision</div>
+          <div class="field" th:classappend="${#fields.hasErrors('remarks')} ? 'has-error'">
+            <label for="remarks">Remarks <span class="opt">required to reject</span></label>
+            <textarea class="textarea" th:field="*{remarks}" maxlength="500" placeholder="e.g. Income proof matches the declared amount."></textarea>
+            <p class="field-error" th:if="${#fields.hasErrors('remarks')}" th:text="${#fields.errors('remarks')[0]}" data-testid="error-remarks"></p>
+          </div>
+          <div class="grid-2" style="gap:10px">
+            <button class="btn btn-danger" type="submit" th:formaction="@{/officer/requests/{id}/reject(id=${request.trackingId})}" data-testid="reject">
+              <svg class="i"><use href="#i-x"/></svg> Reject</button>
+            <button class="btn btn-success" type="submit" data-testid="approve"><svg class="i"><use href="#i-check"/></svg> Approve</button>
+          </div>
+          <p class="subtle" style="font-size:12.5px">Approving issues a certificate number and a verification hash immediately.</p>
+        </form>
+
+        <!-- APPROVED -->
+        <div class="card card-sm glass" th:if="${s == 'APPROVED'}" data-testid="panel-approved">
+          <div class="section-label" style="margin-bottom:10px">Certificate issued</div>
+          <div class="mono" style="font-size:17px;font-weight:500" data-testid="certificate-number" th:text="${request.certificateNumber}">SND-INC-2026-000001</div>
+          <p class="subtle" style="font-size:13px;margin:6px 0 16px" th:text="'By ' + ${request.reviewedBy} + ' · ' + ${@fmt.dateTime(request.decidedAt)}">By officer</p>
+          <a class="btn btn-glass btn-block" th:href="@{/certificate/{id}(id=${request.trackingId})}" data-testid="officer-view-certificate"><svg class="i"><use href="#i-file"/></svg> View certificate</a>
+        </div>
+
+        <!-- REJECTED -->
+        <div class="card card-sm glass" th:if="${s == 'REJECTED'}" data-testid="panel-rejected">
+          <div class="section-label" style="margin-bottom:10px">Rejected</div>
+          <p style="font-size:14px" th:text="${request.decisionRemarks}">Reason</p>
+          <p class="subtle" style="font-size:13px;margin-top:8px" th:text="'By ' + ${request.reviewedBy} + ' · ' + ${@fmt.dateTime(request.decidedAt)}">By officer</p>
+        </div>
+
+        <div class="card card-sm glass">
+          <div class="section-label" style="margin-bottom:6px">Service level</div>
+          <dl class="kv" style="grid-template-columns:110px 1fr">
+            <dt>Target</dt><dd th:text="${request.certificateType.slaDays} + ' working days'">5 days</dd>
+            <dt>Submitted</dt><dd th:text="${@fmt.dateTime(request.submittedAt)}">date</dd>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
