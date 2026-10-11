@@ -11,8 +11,10 @@ COPY setenv.sh             $CATALINA_HOME/bin/setenv.sh
 COPY docker-entrypoint.sh  /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh "$CATALINA_HOME/bin/setenv.sh"
 
+# There is no ROOT application, so "/" answers 404. Any HTTP status means Catalina is serving;
+# only a connection failure (curl exit ≠ 0 without -f) marks the container unhealthy.
 HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=5 \
-  CMD curl -fsS -o /dev/null http://localhost:8080/ || exit 1
+  CMD curl -sS -o /dev/null http://localhost:8080/ || exit 1
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["catalina.sh", "run"]
