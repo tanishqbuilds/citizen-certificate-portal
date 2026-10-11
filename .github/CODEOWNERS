@@ -1,0 +1,5 @@
+# Every change requires review from the project owner.
+*                    @tanishqbuilds
+/Jenkinsfile         @tanishqbuilds
+/ci/                 @tanishqbuilds
+/infra/              @tanishqbuilds

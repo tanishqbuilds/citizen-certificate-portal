@@ -1,0 +1,52 @@
+name: User story
+description: A user-facing capability written from the perspective of a citizen or officer.
+title: "[Story] "
+labels: ["type:story", "status:backlog"]
+body:
+  - type: input
+    id: key
+    attributes:
+      label: Backlog key
+      description: Jira-style key from docs/agile/backlog.csv
+      placeholder: CCR-7
+    validations:
+      required: true
+  - type: dropdown
+    id: epic
+    attributes:
+      label: Epic
+      options:
+        - EP-1 Citizen services
+        - EP-2 Officer workflow
+        - EP-3 Platform & DevOps
+    validations:
+      required: true
+  - type: textarea
+    id: story
+    attributes:
+      label: Story
+      value: |
+        As a <role>
+        I want <capability>
+        So that <benefit>
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria (Given / When / Then)
+      value: |
+        - [ ] Given … When … Then …
+        - [ ] Given … When … Then …
+    validations:
+      required: true
+  - type: dropdown
+    id: points
+    attributes:
+      label: Story points
+      options: ["1", "2", "3", "5", "8", "13"]
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority (MoSCoW)
+      options: ["Must", "Should", "Could", "Won't (this release)"]

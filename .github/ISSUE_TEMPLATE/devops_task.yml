@@ -1,0 +1,25 @@
+name: DevOps / engineering task
+description: Pipeline, infrastructure, tooling or documentation work with no direct user-facing change.
+title: "[Task] "
+labels: ["type:task", "status:backlog"]
+body:
+  - type: input
+    id: key
+    attributes:
+      label: Backlog key
+      placeholder: CCR-15
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      value: |
+        - [ ] …
+        - [ ] Evidence captured under docs/evidence/
+    validations:
+      required: true
