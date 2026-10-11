@@ -1,0 +1,3 @@
+# Allow-list: the build context contains only the tested WAR.
+*
+!target/citizen-certificate-portal-*.war
