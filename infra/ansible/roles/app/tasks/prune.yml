@@ -1,0 +1,15 @@
+---
+- name: List installed releases
+  ansible.builtin.find:
+    paths: "{{ app_home }}/releases"
+    file_type: directory
+  register: installed_releases
+
+- name: Remove releases beyond the newest {{ app_keep_releases }} (never the current or previous one)
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ (installed_releases.files | sort(attribute='mtime', reverse=true))[app_keep_releases:] }}"
+  loop_control:
+    label: "{{ item.path | basename }}"
+  when: (item.path | basename) not in [app_version, app_previous_release | default('')]

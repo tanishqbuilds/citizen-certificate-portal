@@ -1,0 +1,15 @@
+---
+- name: Install the Java 21 runtime
+  ansible.builtin.apt:
+    name: "{{ java_package }}"
+    state: present
+    install_recommends: false
+
+- name: Check the Java version
+  ansible.builtin.command: java -version
+  register: java_version
+  changed_when: false
+
+- name: Java runtime in use
+  ansible.builtin.debug:
+    msg: "{{ java_version.stderr_lines[0] }}"

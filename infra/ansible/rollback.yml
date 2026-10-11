@@ -1,0 +1,55 @@
+---
+# Return to the previously deployed release (or a specific one with -e rollback_to=x.y.z).
+#   scripts/ansible.sh rollback.yml
+- name: Roll back the Sanad portal
+  hosts: portal_nodes
+  become: true
+  vars_files:
+    - inventory/group_vars/portal_nodes/vars.yml
+  tasks:
+    - name: Read the release currently running
+      ansible.builtin.stat:
+        path: "{{ app_home }}/current"
+      register: current_link
+
+    - name: Read the recorded previous release
+      ansible.builtin.slurp:
+        src: "{{ app_home }}/.previous_release"
+      register: previous_file
+      when: rollback_to is not defined
+
+    - name: Decide the target release
+      ansible.builtin.set_fact:
+        from_release: "{{ current_link.stat.lnk_target | basename }}"
+        to_release: "{{ rollback_to | default(previous_file.content | b64decode | trim) }}"
+
+    - name: The target release is installed and differs from the current one
+      ansible.builtin.stat:
+        path: "{{ app_home }}/releases/{{ to_release }}/ccrp.war"
+      register: target_war
+      failed_when: not target_war.stat.exists or to_release == from_release
+
+    - name: "Switch current: {{ from_release }} → {{ to_release }}"
+      ansible.builtin.file:
+        src: "{{ app_home }}/releases/{{ to_release }}"
+        dest: "{{ app_home }}/current"
+        state: link
+        force: true
+
+    - name: Make the release we left the new rollback target
+      ansible.builtin.copy:
+        content: "{{ from_release }}\n"
+        dest: "{{ app_home }}/.previous_release"
+        mode: "0644"
+
+    - name: Restart the service on the rolled-back release
+      ansible.builtin.systemd_service:
+        name: "{{ app_name }}"
+        state: restarted
+
+    - name: Health check after rollback
+      ansible.builtin.include_role:
+        name: app
+        tasks_from: healthcheck.yml
+      vars:
+        expected_version: "{{ to_release }}"

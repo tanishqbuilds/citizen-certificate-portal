@@ -1,0 +1,124 @@
+---
+# Deploys the Sanad portal as a systemd service with versioned releases:
+#   /opt/ccrp/releases/<version>/ccrp.war   immutable, checksum-verified downloads
+#   /opt/ccrp/current -> releases/<version> the running release
+#   /opt/ccrp/.previous_release             what rollback.yml returns to
+
+- name: Validate input
+  ansible.builtin.assert:
+    that:
+      - app_version is match('^[0-9]+\.[0-9]+\.[0-9]+$')
+      - app_officer_password | length >= 8
+    fail_msg: "app_version must be a released x.y.z and the officer password at least 8 characters"
+    quiet: true
+
+- name: Create the service group
+  ansible.builtin.group:
+    name: "{{ app_group }}"
+    system: true
+
+- name: Create the service user (no login shell)
+  ansible.builtin.user:
+    name: "{{ app_user }}"
+    group: "{{ app_group }}"
+    system: true
+    shell: /usr/sbin/nologin
+    home: "{{ app_home }}"
+    create_home: false
+
+- name: Create the directory layout
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ app_group }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - { path: "{{ app_home }}", owner: root, mode: "0755" }
+    - { path: "{{ app_home }}/releases", owner: root, mode: "0755" }
+    - { path: "{{ app_config_dir }}", owner: root, mode: "0750" }
+    - { path: "{{ app_data_dir }}", owner: "{{ app_user }}", mode: "0750" }
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Write the runtime configuration
+  ansible.builtin.template:
+    src: application.env.j2
+    dest: "{{ app_config_dir }}/application.env"
+    owner: root
+    group: "{{ app_group }}"
+    mode: "0640"
+  diff: false   # contains the officer password; never print it, even with --diff
+  notify: Restart ccrp
+
+- name: Install the systemd unit
+  ansible.builtin.template:
+    src: ccrp.service.j2
+    dest: /etc/systemd/system/{{ app_name }}.service
+    mode: "0644"
+  notify:
+    - Reload systemd
+    - Restart ccrp
+
+# ---- Release ----------------------------------------------------------------------------------
+- name: Look up the published checksum of {{ app_version }}
+  ansible.builtin.uri:
+    url: "{{ app_release_base_url }}/v{{ app_version }}/citizen-certificate-portal-{{ app_version }}.war.sha256"
+    return_content: true
+  register: release_checksum
+  check_mode: false
+
+- name: Create the release directory
+  ansible.builtin.file:
+    path: "{{ app_home }}/releases/{{ app_version }}"
+    state: directory
+    mode: "0755"
+
+- name: Download release {{ app_version }} (verified against its SHA-256)
+  ansible.builtin.get_url:
+    url: "{{ app_release_base_url }}/v{{ app_version }}/citizen-certificate-portal-{{ app_version }}.war"
+    dest: "{{ app_home }}/releases/{{ app_version }}/ccrp.war"
+    checksum: "sha256:{{ release_checksum.content.split()[0] }}"
+    mode: "0644"
+
+- name: Inspect the current release
+  ansible.builtin.stat:
+    path: "{{ app_home }}/current"
+  register: current_link
+
+- name: Note the release currently running
+  ansible.builtin.set_fact:
+    app_previous_release: "{{ current_link.stat.lnk_target | basename if current_link.stat.exists else '' }}"
+
+- name: Remember the release being replaced (for rollback)
+  ansible.builtin.copy:
+    content: "{{ app_previous_release }}\n"
+    dest: "{{ app_home }}/.previous_release"
+    mode: "0644"
+  when:
+    - app_previous_release | length > 0
+    - app_previous_release != app_version
+
+- name: Activate release {{ app_version }}
+  ansible.builtin.file:
+    src: "{{ app_home }}/releases/{{ app_version }}"
+    dest: "{{ app_home }}/current"
+    state: link
+    force: true
+  notify: Restart ccrp
+
+- name: Enable and start the service
+  ansible.builtin.systemd_service:
+    name: "{{ app_name }}"
+    enabled: true
+    state: started
+    daemon_reload: true
+
+- name: Apply pending restarts before checking health
+  ansible.builtin.meta: flush_handlers
+
+- name: Health check
+  ansible.builtin.import_tasks: healthcheck.yml
+
+- name: Keep only the newest {{ app_keep_releases }} releases
+  ansible.builtin.import_tasks: prune.yml
