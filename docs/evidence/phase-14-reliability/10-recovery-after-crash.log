@@ -1,0 +1,19 @@
+# Recovery: the JVM is killed (simulated crash); systemd Restart=on-failure brings it back
+$ systemctl show ccrp -p MainPID -p NRestarts -p ActiveState
+MainPID=2468
+NRestarts=0
+ActiveState=active
+$ kill -9 2468    # 16:32:15
+$ curl http://localhost:8095/actuator/health   (immediately after the crash)
+000
+UP again after ~17s
+$ systemctl show ccrp -p MainPID -p NRestarts -p ActiveState
+MainPID=2645
+NRestarts=1
+ActiveState=active
+$ journalctl -u ccrp (process events)
+2026-10-11T22:01:52+05:30 ccrp-node-1 systemd[1]: Started ccrp.service - Sanad — Citizen Certificate Request Portal.
+2026-10-11T22:02:15+05:30 ccrp-node-1 systemd[1]: ccrp.service: Main process exited, code=killed, status=9/KILL
+2026-10-11T22:02:15+05:30 ccrp-node-1 systemd[1]: ccrp.service: Failed with result 'signal'.
+2026-10-11T22:02:20+05:30 ccrp-node-1 systemd[1]: ccrp.service: Scheduled restart job, restart counter is at 1.
+2026-10-11T22:02:20+05:30 ccrp-node-1 systemd[1]: Started ccrp.service - Sanad — Citizen Certificate Request Portal.

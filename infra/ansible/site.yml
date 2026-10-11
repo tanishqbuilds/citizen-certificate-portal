@@ -1,0 +1,13 @@
+---
+# Provision a node from scratch and deploy the portal. Safe to re-run: a second run reports changed=0.
+#   scripts/ansible.sh site.yml [-e app_version=1.1.0]
+- name: Provision Sanad portal nodes
+  hosts: portal_nodes
+  become: true
+  roles:
+    - role: common
+      tags: [common]
+    - role: java
+      tags: [java]
+    - role: app
+      tags: [app]

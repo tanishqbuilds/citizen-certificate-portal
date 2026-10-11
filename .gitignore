@@ -37,3 +37,5 @@ infra/ansible/.ssh/
 
 # Evidence logs are deliverables
 !docs/evidence/**/*.log
+infra/ansible/node/authorized_keys
+infra/ansible/.vault-pass

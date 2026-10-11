@@ -1,0 +1,31 @@
+$ scripts/ansible.sh healthcheck.yml     # 2026-10-11T16:31:30Z
+
+PLAY [Check Sanad portal health] ***********************************************
+
+TASK [Service status] **********************************************************
+ok: [ccrp-node-1]
+
+TASK [Report the service state] ************************************************
+ok: [ccrp-node-1] => 
+    msg: ccrp.service is active (running), enabled=enabled
+
+TASK [Read the deployed release] ***********************************************
+ok: [ccrp-node-1]
+
+TASK [Health and version] ******************************************************
+included: app for ccrp-node-1
+
+TASK [app : Wait until /actuator/health reports UP] ****************************
+ok: [ccrp-node-1]
+
+TASK [app : Read /actuator/info] ***********************************************
+ok: [ccrp-node-1]
+
+TASK [app : The running version is the one requested] **************************
+ok: [ccrp-node-1] => 
+    changed: false
+    msg: ccrp-node-1 healthy · version 1.1.0 · commit bb1a9a5 · environment ansible-node
+
+PLAY RECAP *********************************************************************
+ccrp-node-1                : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

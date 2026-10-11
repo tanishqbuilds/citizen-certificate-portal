@@ -3,6 +3,16 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-10-11 · Containers and configuration management
+
+### Added
+- Layered, non-root Docker image; container lifecycle script (#33)
+- Pipeline builds versioned images, gates them with Selenium on an ephemeral staging container, pushes to a private registry and deploys a fresh production container with automatic rollback (#34)
+- Ansible roles and playbooks (`site.yml`, `rollback.yml`, `healthcheck.yml`) for a clean Ubuntu 24.04 node; checksum-verified releases, ansible-vault secrets (#35)
+
+### Fixed
+- Tomcat health check and persistence of deployed contexts (#37)
+
 ## [1.1.0] — 2026-10-11 · CI and quality gate
 
 ### Added
@@ -49,6 +59,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Problem definition, agile plan, SRS and architecture documents
 - Spring Boot 4.1 skeleton with Maven wrapper, executable WAR, build/git info at `/actuator/info`
 
+[1.2.0]: https://github.com/tanishqbuilds/citizen-certificate-portal/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/tanishqbuilds/citizen-certificate-portal/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/tanishqbuilds/citizen-certificate-portal/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/tanishqbuilds/citizen-certificate-portal/releases/tag/v0.1.0

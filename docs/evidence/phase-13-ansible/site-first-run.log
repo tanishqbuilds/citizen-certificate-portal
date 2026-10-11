@@ -1,0 +1,106 @@
+$ scripts/ansible.sh site.yml -e app_version=1.0.0     # first run on a clean node (2026-10-11T16:24:13Z)
+
+PLAY [Provision Sanad portal nodes] ********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ccrp-node-1]
+
+TASK [common : Refresh the apt cache (at most once an hour)] *******************
+ok: [ccrp-node-1]
+
+TASK [common : Install base packages] ******************************************
+changed: [ccrp-node-1]
+
+TASK [common : Set the time zone to Asia/Kolkata] ******************************
+changed: [ccrp-node-1]
+
+TASK [common : Record the time zone name] **************************************
+changed: [ccrp-node-1]
+
+TASK [java : Install the Java 21 runtime] **************************************
+changed: [ccrp-node-1]
+
+TASK [java : Check the Java version] *******************************************
+ok: [ccrp-node-1]
+
+TASK [java : Java runtime in use] **********************************************
+ok: [ccrp-node-1] => 
+    msg: openjdk version "21.0.12.1" 2026-08-18
+
+TASK [app : Validate input] ****************************************************
+ok: [ccrp-node-1]
+
+TASK [app : Create the service group] ******************************************
+changed: [ccrp-node-1]
+
+TASK [app : Create the service user (no login shell)] **************************
+changed: [ccrp-node-1]
+
+TASK [app : Create the directory layout] ***************************************
+changed: [ccrp-node-1] => (item=/opt/ccrp)
+changed: [ccrp-node-1] => (item=/opt/ccrp/releases)
+changed: [ccrp-node-1] => (item=/etc/ccrp)
+changed: [ccrp-node-1] => (item=/var/lib/ccrp)
+
+TASK [app : Write the runtime configuration] ***********************************
+changed: [ccrp-node-1]
+
+TASK [app : Install the systemd unit] ******************************************
+changed: [ccrp-node-1]
+
+TASK [app : Look up the published checksum of 1.0.0] ***************************
+ok: [ccrp-node-1]
+
+TASK [app : Create the release directory] **************************************
+changed: [ccrp-node-1]
+
+TASK [app : Download release 1.0.0 (verified against its SHA-256)] *************
+[WARNING]: Module remote_tmp /root/.ansible/tmp did not exist and was created with a mode of 0700, this may cause issues when running as another user. To avoid this, create the remote_tmp dir with the correct permissions manually
+changed: [ccrp-node-1]
+
+TASK [app : Inspect the current release] ***************************************
+ok: [ccrp-node-1]
+
+TASK [app : Note the release currently running] ********************************
+ok: [ccrp-node-1]
+
+TASK [app : Remember the release being replaced (for rollback)] ****************
+skipping: [ccrp-node-1]
+
+TASK [app : Activate release 1.0.0] ********************************************
+changed: [ccrp-node-1]
+
+TASK [app : Enable and start the service] **************************************
+changed: [ccrp-node-1]
+
+TASK [app : Apply pending restarts before checking health] *********************
+
+RUNNING HANDLER [app : Reload systemd] *****************************************
+ok: [ccrp-node-1]
+
+RUNNING HANDLER [app : Restart ccrp] *******************************************
+changed: [ccrp-node-1]
+
+TASK [app : Wait until /actuator/health reports UP] ****************************
+FAILED - RETRYING: [ccrp-node-1]: Wait until /actuator/health reports UP (40 retries left).
+FAILED - RETRYING: [ccrp-node-1]: Wait until /actuator/health reports UP (39 retries left).
+FAILED - RETRYING: [ccrp-node-1]: Wait until /actuator/health reports UP (38 retries left).
+ok: [ccrp-node-1]
+
+TASK [app : Read /actuator/info] ***********************************************
+ok: [ccrp-node-1]
+
+TASK [app : The running version is the one requested] **************************
+ok: [ccrp-node-1] => 
+    changed: false
+    msg: ccrp-node-1 healthy · version 1.0.0 · commit df0f8cf · environment ansible-node
+
+TASK [app : List installed releases] *******************************************
+ok: [ccrp-node-1]
+
+TASK [app : Remove releases beyond the newest 3 (never the current or previous one)] ***
+skipping: [ccrp-node-1]
+
+PLAY RECAP *********************************************************************
+ccrp-node-1                : ok=27   changed=14   unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+

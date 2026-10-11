@@ -1,0 +1,29 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Sanad — Citizen Certificate Request Portal
+Documentation=https://github.com/tanishqbuilds/citizen-certificate-portal
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User={{ app_user }}
+Group={{ app_group }}
+EnvironmentFile={{ app_config_dir }}/application.env
+WorkingDirectory={{ app_data_dir }}
+ExecStart=/usr/bin/java $JAVA_OPTS -jar {{ app_home }}/current/ccrp.war
+# Spring Boot exits with 143 after a graceful SIGTERM shutdown
+SuccessExitStatus=143
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=5
+
+# Hardening: read-only system, writable data directory only
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths={{ app_data_dir }}
+
+[Install]
+WantedBy=multi-user.target

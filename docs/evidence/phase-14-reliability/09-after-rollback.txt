@@ -1,0 +1,14 @@
+# After rollback: same request, served by the previous release
+{"trackingId":"CCR-2026-ZCGFVR","status":"SUBMITTED","certificateType":"DOMICILE"}
+{"running":"1.0.0","commit":"df0f8cf"}
+$ ls -l /opt/ccrp ; cat /opt/ccrp/.previous_release
+/opt/ccrp:
+total 4
+lrwxrwxrwx 1 root root   24 Oct 11 22:01 current -> /opt/ccrp/releases/1.0.0
+drwxr-xr-x 4 root ccrp 4096 Oct 11 21:59 releases
+
+/opt/ccrp/releases:
+total 8
+drwxr-xr-x 2 root root 4096 Oct 11 21:58 1.0.0
+drwxr-xr-x 2 root root 4096 Oct 11 22:00 1.1.0
+previous_release=1.1.0

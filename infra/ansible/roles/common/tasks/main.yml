@@ -1,0 +1,24 @@
+---
+- name: Refresh the apt cache (at most once an hour)
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name: "{{ base_packages }}"
+    state: present
+    install_recommends: false
+
+- name: Set the time zone to {{ node_timezone }}
+  ansible.builtin.file:
+    src: "/usr/share/zoneinfo/{{ node_timezone }}"
+    dest: /etc/localtime
+    state: link
+    force: true
+
+- name: Record the time zone name
+  ansible.builtin.copy:
+    content: "{{ node_timezone }}\n"
+    dest: /etc/timezone
+    mode: "0644"

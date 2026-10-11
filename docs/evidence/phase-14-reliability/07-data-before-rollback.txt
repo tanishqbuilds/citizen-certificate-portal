@@ -1,0 +1,5 @@
+# Data created on 1.1.0 before the rollback
+submitted CCR-2026-ZCGFVR
+$ curl -X POST http://localhost:8095/api/v1/status
+{"trackingId":"CCR-2026-ZCGFVR","status":"SUBMITTED","certificateType":"DOMICILE"}
+{"running":"1.1.0"}

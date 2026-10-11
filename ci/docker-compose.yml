@@ -1,4 +1,5 @@
-# Sanad CI/CD toolchain: Jenkins controller, Tomcat 11 deployment target and a Selenium Grid.
+# Sanad CI/CD toolchain: Jenkins, a private Docker registry, the Tomcat 11 target and a Selenium Grid.
+# The production container (ccrp-prod, :8085) is created by the pipeline, not by this file.
 #   scripts/ci-up.sh      creates ci/.env (random secrets) and starts everything
 #   docker compose -f ci/docker-compose.yml --env-file ci/.env down
 name: ccrp-ci
@@ -24,6 +25,18 @@ services:
       timeout: 5s
       retries: 20
 
+  registry:
+    image: registry:3.1.2
+    container_name: ccrp-registry
+    restart: unless-stopped
+    ports:
+      - "5000:5000"      # the Docker daemon trusts localhost registries without TLS
+    environment:
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+    volumes:
+      - registry_data:/var/lib/registry
+    networks: [ccrp-ci]
+
   tomcat:
     build: ../infra/tomcat
     image: sanad/tomcat:11.0.26
@@ -34,7 +47,11 @@ services:
     environment:
       TOMCAT_DEPLOYER_PASSWORD: "${TOMCAT_DEPLOYER_PASSWORD}"
     volumes:
+      # Deployed apps and their context descriptors must survive container re-creation.
       - tomcat_data:/usr/local/tomcat/data
+      - tomcat_webapps:/usr/local/tomcat/webapps
+      - tomcat_contexts:/usr/local/tomcat/conf/Catalina/localhost
+      - tomcat_deployments:/usr/local/tomcat/deployments
     networks: [ccrp-ci]
 
   selenium:
@@ -55,7 +72,11 @@ services:
 
 volumes:
   jenkins_home:
+  registry_data:
   tomcat_data:
+  tomcat_webapps:
+  tomcat_contexts:
+  tomcat_deployments:
 
 networks:
   ccrp-ci:
