@@ -90,11 +90,13 @@ class CitizenFlowIntegrationTest {
         assertThat(saved.getDocumentSha256()).hasSize(64);
         assertThat(saved.getHistory()).hasSize(1);
 
-        // The flash attribute carries the acknowledgement to the next page.
+        // The flash attribute carries the acknowledgement to the next page, whose "Track status"
+        // button must open this request's own status page (regression: ccrp-pipeline #7).
         mvc.perform(get(result.getResponse().getRedirectedUrl())
                         .flashAttrs(result.getFlashMap()).session(session))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(trackingId)));
+                .andExpect(content().string(containsString(trackingId)))
+                .andExpect(content().string(containsString("href=\"/track/" + trackingId + "\" data-testid=\"go-track\"")));
 
         // The same session can open the status page straight away.
         mvc.perform(get("/track/" + trackingId).session(session))
