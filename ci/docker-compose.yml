@@ -47,7 +47,11 @@ services:
     environment:
       TOMCAT_DEPLOYER_PASSWORD: "${TOMCAT_DEPLOYER_PASSWORD}"
     volumes:
+      # Deployed apps and their context descriptors must survive container re-creation.
       - tomcat_data:/usr/local/tomcat/data
+      - tomcat_webapps:/usr/local/tomcat/webapps
+      - tomcat_contexts:/usr/local/tomcat/conf/Catalina/localhost
+      - tomcat_deployments:/usr/local/tomcat/deployments
     networks: [ccrp-ci]
 
   selenium:
@@ -70,6 +74,9 @@ volumes:
   jenkins_home:
   registry_data:
   tomcat_data:
+  tomcat_webapps:
+  tomcat_contexts:
+  tomcat_deployments:
 
 networks:
   ccrp-ci:
