@@ -3,6 +3,23 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-10-11 · CI and quality gate
+
+### Added
+- **Jenkins as code** (`ci/`): Dockerised Jenkins 2.580.1 LTS with Configuration-as-Code, pinned plugins and Job DSL (#21)
+- `ccrp-ci-build`: SCM-polled Maven job with JUnit results and an archived, fingerprinted WAR (#21)
+- **Jenkinsfile**: checkout → build & test → package → deploy → smoke test, with the `TARGET_ENV` parameter (#23, #24)
+- **Tomcat 11 deployment** through the Manager text API; per-environment settings as context parameters (#23)
+- **Selenium WebDriver suite**: 8 journey tests, Page Object Model, CSV test data, failure screenshots, HTML report (#26)
+- **Quality gate**: journeys run against staging through a Selenium Grid; failures stop promotion to production (#27)
+- Commit statuses on GitHub from Jenkins
+
+### Fixed
+- External Tomcat failed with `NoClassDefFoundError: …/WebServer` (Maven nearest-wins moved `spring-boot-web-server` to `lib-provided`) (#23)
+- Declaration label did not toggle its checkbox (#26)
+- Officer login test depended on the build machine's environment (#22)
+- "Track status" on the acknowledgement page opened the empty lookup form, a deliberate defect caught by the gate (#28 → #29)
+
 ## [1.0.0] — 2026-10-11 · MVP release
 
 ### Added
@@ -32,5 +49,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Problem definition, agile plan, SRS and architecture documents
 - Spring Boot 4.1 skeleton with Maven wrapper, executable WAR, build/git info at `/actuator/info`
 
+[1.1.0]: https://github.com/tanishqbuilds/citizen-certificate-portal/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/tanishqbuilds/citizen-certificate-portal/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/tanishqbuilds/citizen-certificate-portal/releases/tag/v0.1.0

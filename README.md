@@ -3,7 +3,7 @@
 Citizens apply online for government certificates, upload one supporting document and track
 progress with a tracking ID. Officers review requests and approve or reject them.
 
-> **v1.0.0** — MVP complete. CI/CD (Jenkins, Selenium, Docker, Ansible) lands in v1.1.0 and v1.2.0. See [`docs/`](docs/) and the [CHANGELOG](CHANGELOG.md).
+> **v1.1.0**: MVP plus Jenkins CI/CD, Tomcat deployment and a Selenium quality gate. Docker and Ansible land in v1.2.0. See [`docs/`](docs/) and the [CHANGELOG](CHANGELOG.md).
 
 ## Features
 
