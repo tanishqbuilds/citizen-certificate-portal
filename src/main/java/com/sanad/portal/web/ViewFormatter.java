@@ -1,5 +1,6 @@
 package com.sanad.portal.web;
 
+import com.sanad.portal.config.Zones;
 import org.springframework.stereotype.Component;
 
 import java.text.NumberFormat;
@@ -15,7 +16,7 @@ import java.util.Locale;
 @Component("fmt")
 public class ViewFormatter {
 
-    private static final ZoneId ZONE = ZoneId.of("Asia/Kolkata");
+    private static final ZoneId ZONE = Zones.BUSINESS;
     private static final DateTimeFormatter DATE_TIME = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm", Locale.ENGLISH);
     private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.ENGLISH);
     private static final Locale INDIA = Locale.of("en", "IN");

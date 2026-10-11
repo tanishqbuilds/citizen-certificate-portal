@@ -1,5 +1,6 @@
 package com.sanad.portal.web.validation;
 
+import com.sanad.portal.config.Zones;
 import com.sanad.portal.domain.CertificateType;
 import com.sanad.portal.web.form.ApplicationForm;
 import jakarta.validation.ConstraintValidator;
@@ -26,12 +27,13 @@ public class ConsistentApplicationValidator implements ConstraintValidator<Consi
             ok = fail(ctx, "annualIncome", "Annual income is required for an income certificate.");
         }
         if (type == CertificateType.MARRIAGE && (form.getSpouseName() == null || form.getSpouseName().isBlank())) {
-            ok = fail(ctx, "spouseName", "Spouse's name is required for a marriage certificate.");
+            ok = fail(ctx, "spouseName", "Spouse’s name is required for a marriage certificate.");
         }
 
         LocalDate dob = form.getDateOfBirth();
-        if (dob != null && dob.isBefore(LocalDate.now())) {
-            int age = Period.between(dob, LocalDate.now()).getYears();
+        LocalDate today = LocalDate.now(Zones.BUSINESS);
+        if (dob != null && dob.isBefore(today)) {
+            int age = Period.between(dob, today).getYears();
             if (age > MAX_AGE) {
                 ok = fail(ctx, "dateOfBirth", "Please check the date of birth — the applicant would be over 120.");
             } else if (type == CertificateType.MARRIAGE && age < MARRIAGE_MIN_AGE) {
