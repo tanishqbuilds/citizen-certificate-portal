@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.1.1</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.sanad</groupId>
+  <artifactId>citizen-certificate-portal</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>Sanad — Citizen Certificate Request Portal</name>
+  <description>Citizens request certificates online; officers review, approve or reject them.</description>
+
+  <properties>
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <selenium.version>4.51.0</selenium.version>
+    <git-commit-id-plugin.version>10.0.1</git-commit-id-plugin.version>
+    <jacoco.version>0.8.15</jacoco.version>
+
+    <!-- Selenium E2E settings, overridable from the command line / Jenkins -->
+    <e2e.baseUrl>http://localhost:${e2e.port}</e2e.baseUrl>
+    <e2e.port>18080</e2e.port>
+    <e2e.remoteUrl></e2e.remoteUrl>
+    <e2e.headless>true</e2e.headless>
+    <!-- true = the app is already running somewhere (CI staging container); don't boot it locally -->
+    <e2e.external>false</e2e.external>
+  </properties>
+
+  <dependencies>
+    <!-- Web, views, security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!-- Persistence -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-flyway</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- WAR deployable to an external Tomcat 11; still runnable with `java -jar` -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat-runtime</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Tests -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-toolchain</id>
+            <goals><goal>enforce</goal></goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion><version>[21,)</version></requireJavaVersion>
+                <requireMavenVersion><version>[3.9,)</version></requireMavenVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Exposes commit id / branch at /actuator/info and in the footer -->
+      <plugin>
+        <groupId>io.github.git-commit-id</groupId>
+        <artifactId>git-commit-id-maven-plugin</artifactId>
+        <version>${git-commit-id-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals><goal>revision</goal></goals>
+          </execution>
+        </executions>
+        <configuration>
+          <failOnNoGitDirectory>false</failOnNoGitDirectory>
+          <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
+          <generateGitPropertiesFile>true</generateGitPropertiesFile>
+          <includeOnlyProperties>
+            <includeOnlyProperty>^git.branch$</includeOnlyProperty>
+            <includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
+            <includeOnlyProperty>^git.commit.time$</includeOnlyProperty>
+            <includeOnlyProperty>^git.tags$</includeOnlyProperty>
+          </includeOnlyProperties>
+          <commitIdGenerationMode>full</commitIdGenerationMode>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>build-info</id>
+            <goals><goal>build-info</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Unit + Spring integration tests; Selenium journeys are excluded here and run by failsafe -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/e2e/**</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals><goal>prepare-agent</goal></goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals><goal>report</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <!--
+      Selenium end-to-end journeys.
+        Local:  ./mvnw verify -Pe2e
+                boots the packaged app on port 18080, runs the journeys in headless Chrome, stops the app.
+        CI:     ./mvnw verify -Pe2e -De2e.external=true -De2e.baseUrl=http://staging:8080 -De2e.remoteUrl=http://selenium:4444
+                runs against an already deployed container through a Selenium Grid.
+    -->
+    <profile>
+      <id>e2e</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>start-app-for-e2e</id>
+                <phase>pre-integration-test</phase>
+                <goals><goal>start</goal></goals>
+                <configuration>
+                  <skip>${e2e.external}</skip>
+                  <arguments>
+                    <argument>--server.port=${e2e.port}</argument>
+                    <argument>--app.data-dir=${project.build.directory}/e2e-data</argument>
+                    <argument>--app.environment=e2e</argument>
+                  </arguments>
+                  <maxAttempts>120</maxAttempts>
+                  <wait>1000</wait>
+                </configuration>
+              </execution>
+              <execution>
+                <id>stop-app-after-e2e</id>
+                <phase>post-integration-test</phase>
+                <goals><goal>stop</goal></goals>
+                <configuration>
+                  <skip>${e2e.external}</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <includes>
+                <include>**/e2e/**/*Journey*.java</include>
+              </includes>
+              <systemPropertyVariables>
+                <e2e.baseUrl>${e2e.baseUrl}</e2e.baseUrl>
+                <e2e.remoteUrl>${e2e.remoteUrl}</e2e.remoteUrl>
+                <e2e.headless>${e2e.headless}</e2e.headless>
+                <e2e.screenshotDir>${project.build.directory}/selenium-screenshots</e2e.screenshotDir>
+              </systemPropertyVariables>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

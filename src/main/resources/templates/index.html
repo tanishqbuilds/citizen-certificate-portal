@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Certificates without the queue')}"></head>
+<body>
+<th:block th:replace="~{fragments/layout :: chrome('home')}"></th:block>
+
+<main id="main">
+  <div class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+      <a th:href="@{/track}" class="eyebrow glass liquid fade-up" data-testid="hero-eyebrow">
+        <span class="dot-tag">Live</span> Track any request in real time
+        <svg class="i"><use href="#i-arrow-right"/></svg>
+      </a>
+      <h1 class="display fade-up d1">Government certificates, <span class="serif">without the queue.</span></h1>
+      <p class="lede fade-up d2">Apply for birth, income, domicile and marriage certificates online. Upload one document,
+        get a tracking ID, and follow every step until it is issued.</p>
+      <div class="hero-cta fade-up d3">
+        <a th:href="@{/apply}" class="btn btn-primary btn-lg" data-testid="cta-apply">Apply for a certificate <svg class="i i-shift"><use href="#i-arrow-right"/></svg></a>
+        <a th:href="@{/track}" class="btn btn-glass btn-lg liquid" data-testid="cta-track"><svg class="i"><use href="#i-search"/></svg> Track a request</a>
+      </div>
+      <div class="hero-meta fade-up d4">
+        <span><svg class="i"><use href="#i-check"/></svg> No office visits</span>
+        <span><svg class="i"><use href="#i-check"/></svg> Validated before it is submitted</span>
+        <span><svg class="i"><use href="#i-check"/></svg> Verifiable digital certificate</span>
+      </div>
+
+      <!-- Product showcase built from real UI primitives -->
+      <div class="showcase glass rise" aria-hidden="true">
+        <div class="showcase-inner">
+          <div class="showcase-bar">
+            <span class="lights"><i></i><i></i><i></i></span>
+            <svg class="i i-sm"><use href="#i-lock"/></svg> sanad.local/track
+          </div>
+          <div class="showcase-pane">
+            <span class="subtle" style="font-size:12.5px">Income certificate · Aarav Sharma</span>
+            <div class="ticket mono">CCR-2026-7K4QXZ</div>
+            <span class="status status-UNDER_REVIEW status-lg">Under review</span>
+            <div class="stepper" style="margin-top:28px">
+              <div class="s done"><span class="knob"><svg class="i"><use href="#i-check"/></svg></span><strong>Submitted</strong><span>12 Oct, 10:42</span></div>
+              <div class="s current"><span class="knob"></span><strong>Under review</strong><span>Officer assigned</span></div>
+              <div class="s"><span class="knob"></span><strong>Decision</strong><span>≈ 5 working days</span></div>
+            </div>
+          </div>
+          <div class="showcase-pane">
+            <span class="section-label">Activity</span>
+            <ul class="timeline">
+              <li><span class="dot UNDER_REVIEW"></span><div class="t-title">Review started</div><div class="t-meta">officer · 2 min ago</div>
+                <div class="t-note">Income proof matches declared annual income.</div></li>
+              <li><span class="dot SUBMITTED"></span><div class="t-title">Document verified</div><div class="t-meta">system · PDF · SHA-256 recorded</div></li>
+              <li><span class="dot SUBMITTED"></span><div class="t-title">Request submitted</div><div class="t-meta">citizen · 12 Oct, 10:42</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+      <article class="feature glass" data-reveal>
+        <div class="icon-tile"><svg class="i"><use href="#i-shield"/></svg></div>
+        <h3>Validated at the door</h3>
+        <p>ID checksums, PIN codes and document signatures are checked before a request ever reaches an officer.</p>
+      </article>
+      <article class="feature glass" data-reveal>
+        <div class="icon-tile"><svg class="i"><use href="#i-activity"/></svg></div>
+        <h3>Transparent status</h3>
+        <p>Every change — submitted, under review, approved — lands on a timeline the citizen can see.</p>
+      </article>
+      <article class="feature glass" data-reveal>
+        <div class="icon-tile"><svg class="i"><use href="#i-inbox"/></svg></div>
+        <h3>Focused officer queue</h3>
+        <p>Filter, open, decide. Rejections always carry a reason, and every action is audited.</p>
+      </article>
+      <article class="feature glass" data-reveal>
+        <div class="icon-tile"><svg class="i"><use href="#i-hash"/></svg></div>
+        <h3>Verifiable output</h3>
+        <p>Issued certificates carry a unique number and a SHA-256 verification hash.</p>
+      </article>
+    </section>
+
+    <!-- Certificate types -->
+    <section class="section">
+      <div class="section-head" data-reveal>
+        <div>
+          <span class="section-kicker">Certificates</span>
+          <h2 class="section-title">Four certificates.<br><span class="serif muted">One simple flow.</span></h2>
+        </div>
+        <p>Each request needs one supporting document — PDF, PNG or JPEG, up to 2 MB.</p>
+      </div>
+      <div class="types">
+        <a th:href="@{/apply(type='BIRTH')}" class="type-tile glass" data-reveal>
+          <div class="icon-tile"><svg class="i"><use href="#i-baby"/></svg></div>
+          <h3>Birth</h3><p>Proof of date and place of birth for school admission, passports and records.</p>
+          <div class="meta"><span>Hospital record</span><span>7 days</span></div>
+        </a>
+        <a th:href="@{/apply(type='INCOME')}" class="type-tile glass" data-reveal>
+          <div class="icon-tile"><svg class="i"><use href="#i-wallet"/></svg></div>
+          <h3>Income</h3><p>Annual family income declaration for scholarships, subsidies and fee waivers.</p>
+          <div class="meta"><span>Salary slip / ITR</span><span>5 days</span></div>
+        </a>
+        <a th:href="@{/apply(type='DOMICILE')}" class="type-tile glass" data-reveal>
+          <div class="icon-tile"><svg class="i"><use href="#i-home"/></svg></div>
+          <h3>Domicile</h3><p>Proof of permanent residence in the state for admissions and recruitment.</p>
+          <div class="meta"><span>Address proof</span><span>10 days</span></div>
+        </a>
+        <a th:href="@{/apply(type='MARRIAGE')}" class="type-tile glass" data-reveal>
+          <div class="icon-tile"><svg class="i"><use href="#i-heart"/></svg></div>
+          <h3>Marriage</h3><p>Registration of marriage for visas, name changes and joint applications.</p>
+          <div class="meta"><span>Marriage photo / invite</span><span>14 days</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section">
+      <div class="section-head" data-reveal>
+        <div>
+          <span class="section-kicker">How it works</span>
+          <h2 class="section-title">From form to certificate in three steps.</h2>
+        </div>
+      </div>
+      <ol class="steps" style="padding:0;margin:0;list-style:none">
+        <li class="step glass" data-reveal><span class="num">01</span><h3>Apply</h3><p>Pick a certificate, fill in your details and attach one document. Errors are caught instantly.</p></li>
+        <li class="step glass" data-reveal><span class="num">02</span><h3>Track</h3><p>Use your tracking ID and email to follow the request through review — no phone calls needed.</p></li>
+        <li class="step glass" data-reveal><span class="num">03</span><h3>Receive</h3><p>Once approved, open and print your certificate with its verification hash.</p></li>
+      </ol>
+    </section>
+
+    <!-- CTA band -->
+    <section class="cta-band gradient-surface" data-reveal>
+      <h2>Ready when you are.</h2>
+      <p>It takes about three minutes. Keep one document handy.</p>
+      <div class="row" style="justify-content:center">
+        <a th:href="@{/apply}" class="btn btn-primary btn-lg">Start an application <svg class="i i-shift"><use href="#i-arrow-right"/></svg></a>
+        <a th:href="@{/officer/login}" class="btn btn-glass btn-lg">I'm an officer</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
