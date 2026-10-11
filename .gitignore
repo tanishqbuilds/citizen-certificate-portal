@@ -34,3 +34,6 @@ __pycache__/
 !.env.example
 ci/jenkins/secrets/
 infra/ansible/.ssh/
+
+# Evidence logs are deliverables
+!docs/evidence/**/*.log

@@ -1,0 +1,35 @@
+*   204e4cd (HEAD -> release/1.0.0, origin/develop, develop) Merge pull request #18 from feature/CCR-8-officer-review-workflow
+|\  
+| * cb23291 (origin/feature/CCR-8-officer-review-workflow, feature/CCR-8-officer-review-workflow) refactor(officer): detect anonymous users by type and flag truncated queues
+| * ff81763 test(api): verify an approved certificate end to end
+| *   bb45e4a Merge branch 'develop' into feature/CCR-8-officer-review-workflow
+| |\  
+| |/  
+|/|   
+* |   efe779e Merge pull request #17 from feature/CCR-13-status-api
+|\ \  
+| * | 3c03e4f (origin/feature/CCR-13-status-api, feature/CCR-13-status-api) feat(api): add read-only JSON API for types, status and verification
+|/ /  
+| * 1ac924f test(officer): cover sign-in, queue, decisions and certificate access
+| * aff14da feat(certificate): add printable certificate with verification hash
+| * d543630 feat(officer): add review queue with KPIs and the decision workflow
+| * baf3dfe feat(security): add officer form login and protect /officer/**
+| * 8bf070b feat(domain): add review, approve and reject transitions
+|/  
+*   cb3f3f2 Merge pull request #16 from feature/CCR-3-citizen-request-submission
+|\  
+| * 2b87f5c (origin/feature/CCR-3-citizen-request-submission, feature/CCR-3-citizen-request-submission) docs(evidence): add citizen journey screenshots for the feature PR
+| * 18fcf05 fix(ui): show one message per field and count invalid fields, not errors
+| * cecef29 fix(validation): evaluate ages in IST instead of the JVM default zone
+| * 41e1335 fix(apply): delete the stored document when the request cannot be saved
+| * 2aa4c6f feat(track): add status tracking with progress stepper and timeline
+| * e7f3097 feat(apply): add certificate application form and acknowledgement
+| * 4053685 fix(security): resolve CSRF tokens eagerly to avoid committed-response errors
+| * e65f0a5 feat(documents): validate uploads by magic bytes and store with SHA-256
+| * dc7b371 feat(validation): validate applicant data and type-specific rules
+| * bda3b54 feat(domain): add certificate request aggregate, audit trail and schema V1
+|/  
+* f48b0cc (tag: v0.1.0, origin/main, main) docs: add SRS summary, architecture, data model and API list
+* 4bcb806 build: add Spring Boot 4 skeleton with Maven wrapper and design system
+* c6b4010 docs: add problem definition, stakeholders and frozen MVP scope
+* 2c7d1b2 chore: initialize repository with governance files

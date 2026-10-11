@@ -30,6 +30,9 @@ spring:
 server:
   port: 8080
   shutdown: graceful
+  tomcat:
+    # Keep reading oversized uploads so the user gets a friendly page instead of a connection reset.
+    max-swallow-size: 20MB
   error:
     whitelabel:
       enabled: false

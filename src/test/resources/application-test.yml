@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:ccrp-test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1
+app:
+  environment: test
+  data-dir: target/test-data
+  officer:
+    password: Test@12345
+logging:
+  level:
+    root: WARN
+    com.sanad.portal: INFO

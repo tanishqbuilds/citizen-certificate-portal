@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${status == 404} ? 'Page not found' : 'Something went wrong')}"></head>
+<body>
+<th:block th:replace="~{fragments/layout :: chrome('')}"></th:block>
+<main id="main">
+  <div class="container error-page">
+    <div class="error-code fade-up" th:text="${status}">404</div>
+    <h1 class="fade-up d1" style="font-size:28px;margin:8px 0 10px" data-testid="error-title"
+        th:text="${status == 404} ? 'This page wandered off.' : (${status == 403} ? 'You don’t have access to this page.' : 'Something went wrong on our side.')">This page wandered off.</h1>
+    <p class="muted fade-up d2" th:text="${status == 404} ? 'The link may be old, or the request may not exist.' : 'Please try again in a moment. If it keeps happening, quote the time below.'">…</p>
+    <p class="subtle mono fade-up d2" style="font-size:12px;margin-top:10px" th:if="${status != 404}" th:text="${timestamp}">time</p>
+    <div class="row fade-up d3" style="justify-content:center;margin-top:28px">
+      <a class="btn btn-primary" th:href="@{/}">Back to home</a>
+      <a class="btn btn-glass" th:href="@{/track}">Track a request</a>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

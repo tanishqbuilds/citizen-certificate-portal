@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${request != null} ? ${request.trackingId} : 'Track a request')}"></head>
+<body>
+<th:block th:replace="~{fragments/layout :: chrome('track')}"></th:block>
+
+<main id="main">
+  <div class="container">
+
+    <!-- ============ Lookup form ============ -->
+    <th:block th:if="${request == null}">
+      <header class="page-head fade-up" style="text-align:center;display:flex;flex-direction:column;align-items:center">
+        <span class="eyebrow glass"><span class="dot-tag">Status</span> Real-time, no phone calls</span>
+        <h1>Where's my <span class="serif">certificate?</span></h1>
+        <p class="lede">Enter the tracking ID from your acknowledgement and the email you applied with.</p>
+      </header>
+
+      <form class="card glass stack fade-up d1" style="max-width:560px;margin:0 auto" th:action="@{/track}" th:object="${trackForm}" method="post" novalidate data-testid="track-form">
+        <div class="alert alert-error" th:if="${lookupError != null}" role="alert" data-testid="lookup-error">
+          <svg class="i"><use href="#i-alert"/></svg><div><strong th:text="${lookupError}">Not found</strong></div>
+        </div>
+        <div class="alert alert-info" th:if="${lookupInfo != null}" role="status">
+          <svg class="i"><use href="#i-lock"/></svg><div><strong th:text="${lookupInfo}">Confirm email</strong></div>
+        </div>
+        <div class="field" th:classappend="${#fields.hasErrors('trackingId')} ? 'has-error'">
+          <label for="trackingId">Tracking ID</label>
+          <input class="input mono" th:field="*{trackingId}" placeholder="CCR-2026-7K4QXZ" autocomplete="off" autocapitalize="characters" spellcheck="false">
+          <p class="field-error" th:if="${#fields.hasErrors('trackingId')}" th:text="${#fields.errors('trackingId')[0]}" data-testid="error-trackingId"></p>
+        </div>
+        <div class="field" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+          <label for="email">Email used on the application</label>
+          <input class="input" type="email" th:field="*{email}" placeholder="you@example.com" autocomplete="email">
+          <p class="field-error" th:if="${#fields.hasErrors('email')}" th:text="${#fields.errors('email')[0]}" data-testid="error-email"></p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" data-testid="track-submit">
+          <svg class="i"><use href="#i-search"/></svg> Check status
+        </button>
+      </form>
+    </th:block>
+
+    <!-- ============ Result ============ -->
+    <th:block th:if="${request != null}" th:with="s=${request.status.name()}">
+      <header class="page-head fade-up">
+        <a class="btn btn-ghost btn-sm" th:href="@{/track}" style="margin-left:-12px"><svg class="i"><use href="#i-chevron-left"/></svg> Track another</a>
+        <div class="row-between" style="margin-top:14px;align-items:flex-end">
+          <div>
+            <span class="subtle" th:text="${request.certificateType.label} + ' · ' + ${request.applicantName}">Income certificate · Aarav</span>
+            <h1 class="mono" style="font-family:var(--font-mono);font-weight:500;letter-spacing:-.02em;margin:8px 0 0" data-testid="result-tracking-id" th:text="${request.trackingId}">CCR-2026-7K4QXZ</h1>
+          </div>
+          <span class="status status-lg" th:classappend="'status-' + ${s}" data-testid="result-status" th:text="${request.status.label}">Submitted</span>
+        </div>
+      </header>
+
+      <div class="split">
+        <div class="stack">
+          <section class="card glass fade-up d1">
+            <div class="card-head"><div><h2>Progress</h2><p th:text="'Last updated ' + ${@fmt.relative(request.updatedAt)}">Last updated just now</p></div></div>
+            <div class="stepper" data-testid="stepper">
+              <div class="s done">
+                <span class="knob"><svg class="i"><use href="#i-check"/></svg></span>
+                <strong>Submitted</strong><span th:text="${@fmt.dateTime(request.submittedAt)}">date</span>
+              </div>
+              <div class="s" th:classappend="${s == 'SUBMITTED'} ? '' : (${s == 'UNDER_REVIEW'} ? 'current' : 'done')">
+                <span class="knob"><svg class="i" th:if="${request.status.final}"><use href="#i-check"/></svg></span>
+                <strong>Under review</strong><span th:text="${s == 'SUBMITTED'} ? 'Waiting for an officer' : 'Officer assigned'">Waiting</span>
+              </div>
+              <div class="s" th:classappend="${s == 'APPROVED'} ? 'done ok' : (${s == 'REJECTED'} ? 'done bad' : '')">
+                <span class="knob">
+                  <svg class="i" th:if="${s == 'APPROVED'}"><use href="#i-check"/></svg>
+                  <svg class="i" th:if="${s == 'REJECTED'}"><use href="#i-x"/></svg>
+                </span>
+                <strong th:text="${request.status.final} ? ${request.status.label} : 'Decision'">Decision</strong>
+                <span th:text="${request.status.final} ? ${@fmt.dateTime(request.decidedAt)} : 'Within ' + ${request.certificateType.slaDays} + ' working days'">≈ 5 days</span>
+              </div>
+            </div>
+
+            <div class="alert alert-success" style="margin-top:24px" th:if="${s == 'APPROVED'}" data-testid="approved-banner">
+              <svg class="i"><use href="#i-shield"/></svg>
+              <div>
+                <strong>Your certificate has been issued.</strong>
+                <p>Certificate number <span class="mono" th:text="${request.certificateNumber}">SND-INC-2026-000001</span></p>
+                <a class="btn btn-success btn-sm" style="margin-top:12px" th:href="@{/certificate/{id}(id=${request.trackingId})}" data-testid="view-certificate">
+                  <svg class="i"><use href="#i-file"/></svg> View certificate
+                </a>
+              </div>
+            </div>
+            <div class="alert alert-error" style="margin-top:24px" th:if="${s == 'REJECTED'}" data-testid="rejected-banner">
+              <svg class="i"><use href="#i-alert"/></svg>
+              <div>
+                <strong>Your request was not approved.</strong>
+                <p data-testid="rejection-reason" th:text="${request.decisionRemarks}">Reason</p>
+                <a class="btn btn-glass btn-sm" style="margin-top:12px" th:href="@{/apply(type=${request.certificateType.name()})}">Apply again</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="card glass fade-up d2">
+            <div class="card-head"><div><h2>Activity</h2><p>Every change to your request, newest first.</p></div></div>
+            <ul class="timeline" data-testid="timeline">
+              <li th:each="e : ${request.historyNewestFirst}">
+                <span class="dot" th:classappend="${e.toStatus.name()}"></span>
+                <div class="t-title" th:text="${e.fromStatus == null} ? 'Request submitted' : ${e.toStatus.label}">Submitted</div>
+                <div class="t-meta" th:text="${e.actor == 'citizen' ? 'You' : 'Reviewing officer'} + ' · ' + ${@fmt.dateTime(e.occurredAt)}">You · date</div>
+                <div class="t-note" th:if="${e.remarks != null and e.fromStatus != null}" th:text="${e.remarks}">note</div>
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <aside class="stack sticky fade-up d3">
+          <div class="card card-sm glass">
+            <div class="section-label" style="margin-bottom:6px">Request</div>
+            <dl class="kv" style="grid-template-columns:100px 1fr">
+              <dt>Type</dt><dd th:text="${request.certificateType.label}">Income</dd>
+              <dt>Applicant</dt><dd th:text="${request.applicantName}">Aarav</dd>
+              <dt>National ID</dt><dd class="mono" th:text="${request.nationalIdMasked}">XXXX XXXX 0124</dd>
+              <dt>Document</dt><dd th:text="${request.documentName}">doc.pdf</dd>
+              <dt>Submitted</dt><dd th:text="${@fmt.date(request.submittedAt)}">date</dd>
+            </dl>
+          </div>
+          <div class="card card-sm glass">
+            <div class="section-label" style="margin-bottom:10px">Need help?</div>
+            <p class="muted" style="font-size:13.5px">Decisions usually arrive within <strong th:text="${request.certificateType.slaDays} + ' working days'">5 working days</strong>. Quote your tracking ID in any correspondence.</p>
+          </div>
+        </aside>
+      </div>
+    </th:block>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

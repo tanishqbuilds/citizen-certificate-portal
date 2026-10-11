@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Officer sign in')}"></head>
+<body>
+<th:block th:replace="~{fragments/layout :: chrome('officer')}"></th:block>
+<main id="main">
+  <div class="container auth-wrap">
+    <form class="auth-card glass stack fade-up" th:action="@{/officer/login}" method="post" data-testid="login-form">
+      <div class="icon-tile" style="width:44px;height:44px;border-radius:13px"><svg class="i"><use href="#i-shield"/></svg></div>
+      <div>
+        <h1>Officer sign in</h1>
+        <p class="muted" style="font-size:14px">Review and decide certificate requests.</p>
+      </div>
+      <div class="alert alert-error" th:if="${param.error != null}" role="alert" data-testid="login-error">
+        <svg class="i"><use href="#i-alert"/></svg><div><strong>Incorrect username or password.</strong></div>
+      </div>
+      <div class="alert alert-success" th:if="${param.signedOut != null}" role="status" data-testid="signed-out">
+        <svg class="i"><use href="#i-check"/></svg><div><strong>You have been signed out.</strong></div>
+      </div>
+      <div class="field">
+        <label for="username">Username</label>
+        <input class="input" id="username" name="username" autocomplete="username" required autofocus>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input class="input" id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg btn-block" data-testid="login-submit">Sign in <svg class="i i-shift"><use href="#i-arrow-right"/></svg></button>
+      <div class="demo-creds" th:if="${build?.environment == 'local' or build?.environment == 'e2e'}">
+        <svg class="i i-sm"><use href="#i-lock"/></svg> Demo account:
+        <span class="kbd">officer</span> / <span class="kbd">Officer@123</span>
+        <span class="subtle">(local &amp; e2e only)</span>
+      </div>
+    </form>
+  </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
