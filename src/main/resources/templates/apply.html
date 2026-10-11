@@ -149,7 +149,7 @@
         <hr class="divider" style="margin:4px 0">
 
         <div class="field" th:classappend="${#fields.hasErrors('declaration')} ? 'has-error'">
-          <label class="checkbox" for="declaration">
+          <label class="checkbox">
             <input type="checkbox" th:field="*{declaration}">
             <span class="box"><svg class="i"><use href="#i-check"/></svg></span>
             <span>I confirm the information is true and the document is genuine. False declarations can lead to rejection.</span>

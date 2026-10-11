@@ -1,0 +1,7 @@
+# Test data for the Selenium journeys. National IDs carry a valid Verhoeff check digit.
+# key|certificateType|name|dateOfBirth|emailLocalPart|phone|nationalId|address|district|pinCode|purpose|annualIncome|spouseName|document
+income|INCOME|Aarav Sharma|1998-04-12|aarav.sharma|9876543210|2345 6789 0124|Flat 4B, Lotus Residency, MG Road|Pune|411001|Required for a post-graduate scholarship application.|450000||income-proof.pdf
+birth|BIRTH|Meera Iyer|2001-11-03|meera.iyer|9123456780|9876 5432 1012|12, Lake View Apartments, Ring Road|Chennai|600004|School admission for the new academic year.|||income-proof.pdf
+domicile|DOMICILE|Kabir Singh|1995-02-20|kabir.singh|8123456789|4567 8901 2341|House 7, Civil Lines|Jaipur|302001|State quota for engineering admission.|||address-proof.png
+marriage|MARRIAGE|Ananya Rao|1993-07-15|ananya.rao|7012345678|5647 3829 1015|22, Indiranagar 2nd Stage|Bengaluru|560038|Spouse visa application at the consulate.||Rohan Rao|income-proof.pdf
+invalid|INCOME|A1|2099-01-01|not-an-email|12345|2345 6789 0123|short|Pune|011001|too short|||not-really-a-pdf.pdf
