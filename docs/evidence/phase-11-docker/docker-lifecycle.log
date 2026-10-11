@@ -1,0 +1,203 @@
+
+## 0. Toolchain
+$ docker version --format 'client {{.Client.Version}} · server {{.Server.Version}}'
+client 29.6.0 · server 29.6.0
+$ ls -lh target/citizen-certificate-portal-*.war
+-rw-rw-r-- 1 tanishq tanishq 60M Oct 11 21:34 target/citizen-certificate-portal-1.2.0-SNAPSHOT.war
+
+## 1. Build the image (multi-stage, layered, non-root)
+$ docker build --build-arg VERSION=1.2.0-SNAPSHOT --build-arg REVISION=cda2f5c --build-arg CREATED=2026-10-11T16:04:58Z -t sanad-ccrp:1.2.0-SNAPSHOT .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.73kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 2.9s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#3 DONE 1.9s
+
+#4 [internal] load metadata for docker.io/library/eclipse-temurin:21.0.12.1_1-jre-noble
+#4 DONE 2.6s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 145B done
+#5 DONE 0.0s
+
+#6 [layers 1/4] FROM docker.io/library/eclipse-temurin:21.0.12.1_1-jre-noble@sha256:000fd431958bc81a24abe1e8e5f0f0fd3ae365a594bd50aadb20696805f9408c
+#6 resolve docker.io/library/eclipse-temurin:21.0.12.1_1-jre-noble@sha256:000fd431958bc81a24abe1e8e5f0f0fd3ae365a594bd50aadb20696805f9408c 0.0s done
+#6 ...
+
+#7 [internal] load build context
+#7 transferring context: 62.69MB 0.4s done
+#7 DONE 0.5s
+
+#6 [layers 1/4] FROM docker.io/library/eclipse-temurin:21.0.12.1_1-jre-noble@sha256:000fd431958bc81a24abe1e8e5f0f0fd3ae365a594bd50aadb20696805f9408c
+#6 DONE 11.2s
+
+#6 [layers 1/4] FROM docker.io/library/eclipse-temurin:21.0.12.1_1-jre-noble@sha256:000fd431958bc81a24abe1e8e5f0f0fd3ae365a594bd50aadb20696805f9408c
+#6 DONE 11.3s
+
+#8 [layers 2/4] WORKDIR /build
+#8 DONE 0.4s
+
+#9 [stage-1 2/7] RUN groupadd --system --gid 10001 ccrp  && useradd --system --uid 10001 --gid ccrp --home-dir /app --shell /usr/sbin/nologin ccrp  && mkdir -p /var/lib/ccrp  && chown ccrp:ccrp /var/lib/ccrp
+#9 0.599 useradd warning: ccrp's uid 10001 is greater than SYS_UID_MAX 999
+#9 DONE 0.6s
+
+#10 [layers 3/4] COPY target/citizen-certificate-portal-*.war app.war
+#10 DONE 0.2s
+
+#11 [stage-1 3/7] WORKDIR /app
+#11 DONE 0.1s
+
+#12 [layers 4/4] RUN java -Djarmode=tools -jar app.war extract --layers --launcher --destination extracted
+#12 DONE 1.5s
+
+#13 [stage-1 4/7] COPY --from=layers /build/extracted/dependencies/ ./
+#13 DONE 0.2s
+
+#14 [stage-1 5/7] COPY --from=layers /build/extracted/spring-boot-loader/ ./
+#14 DONE 0.1s
+
+#15 [stage-1 6/7] COPY --from=layers /build/extracted/snapshot-dependencies/ ./
+#15 DONE 0.1s
+
+#16 [stage-1 7/7] COPY --from=layers /build/extracted/application/ ./
+#16 DONE 0.1s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 2.7s done
+#17 exporting manifest sha256:0c041ab8bb641273bcc52e52dc844d91d8cbb5b308474827cb5fbfd73dedf93d 0.0s done
+#17 exporting config sha256:b69e7a81c5d2efd740cc803b4c9838de82b7ea36ecd6b740b2c161fd812b158e 0.0s done
+#17 exporting attestation manifest sha256:0cb0a2a156e06da32296ee42aab09a7a420a88b3c65e5da6b54817c6321f3db8 0.0s done
+#17 exporting manifest list sha256:86c21e217f45d2612c03c05f76edee14322f8d4e0fb93ab6b4bf349e11ee3946 0.0s done
+#17 naming to docker.io/library/sanad-ccrp:1.2.0-SNAPSHOT done
+#17 unpacking to docker.io/library/sanad-ccrp:1.2.0-SNAPSHOT
+#17 unpacking to docker.io/library/sanad-ccrp:1.2.0-SNAPSHOT 0.4s done
+#17 DONE 3.3s
+
+View build details: docker-desktop://dashboard/build/default/default/hjlgs8gyt1i27zfdll7wz4kzg
+
+## 2. Tag
+$ docker tag sanad-ccrp:1.2.0-SNAPSHOT sanad-ccrp:cda2f5c
+$ docker tag sanad-ccrp:1.2.0-SNAPSHOT sanad-ccrp:latest
+$ docker images sanad-ccrp --format 'table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.Size}}'
+REPOSITORY   TAG              IMAGE ID       SIZE
+sanad-ccrp   1.2.0-SNAPSHOT   86c21e217f45   532MB
+sanad-ccrp   cda2f5c          86c21e217f45   532MB
+sanad-ccrp   latest           86c21e217f45   532MB
+
+## 3. Inspect the image
+$ docker image inspect sanad-ccrp:1.2.0-SNAPSHOT --format 'user={{.Config.User}} ports={{json .Config.ExposedPorts}} volumes={{json .Config.Volumes}} entrypoint={{json .Config.Entrypoint}}'
+user=ccrp ports={"8080/tcp":{}} volumes={"/var/lib/ccrp":{}} entrypoint=["java","org.springframework.boot.loader.launch.WarLauncher"]
+$ docker image inspect sanad-ccrp:1.2.0-SNAPSHOT --format '{{range $k, $v := .Config.Labels}}{{$k}}={{$v}}{{println}}{{end}}' | grep opencontainers
+org.opencontainers.image.created=2026-10-11T16:04:58Z
+org.opencontainers.image.description=Apply for, review and issue government certificates online
+org.opencontainers.image.revision=cda2f5c
+org.opencontainers.image.source=https://github.com/tanishqbuilds/citizen-certificate-portal
+org.opencontainers.image.title=Sanad — Citizen Certificate Request Portal
+org.opencontainers.image.vendor=Sanad (academic DevOps project)
+org.opencontainers.image.version=1.2.0-SNAPSHOT
+$ docker history sanad-ccrp:1.2.0-SNAPSHOT --format 'table {{.Size}}\t{{.CreatedBy}}' | head -14 | cut -c1-120
+SIZE      CREATED BY
+0B        ENTRYPOINT ["java" "org.springframework.boot…
+0B        HEALTHCHECK {Test:[CMD-SHELL curl -fsS http:…
+0B        EXPOSE [8080/tcp]
+0B        VOLUME [/var/lib/ccrp]
+0B        USER ccrp
+0B        ENV APP_DATA_DIR=/var/lib/ccrp APP_ENVIRONME…
+590kB     COPY /build/extracted/application/ ./ # buil…
+4.1kB     COPY /build/extracted/snapshot-dependencies/…
+696kB     COPY /build/extracted/spring-boot-loader/ ./…
+62.5MB    COPY /build/extracted/dependencies/ ./ # bui…
+8.19kB    WORKDIR /app
+53.2kB    RUN |3 VERSION=1.2.0-SNAPSHOT REVISION=cda2f…
+0B        LABEL org.opencontainers.image.title=Sanad —…
+
+## 4. Run: port mapping 8086→8080, named volume, env configuration, restart policy
+$ docker volume create ccrp-demo-data
+ccrp-demo-data
+$ docker run -d --name ccrp-demo -p 8086:8080 -e APP_OFFICER_PASSWORD=******** -e APP_ENVIRONMENT=docker -v ccrp-demo-data:/var/lib/ccrp --restart unless-stopped sanad-ccrp:1.2.0-SNAPSHOT
+a42d8056daf3459b9e58cbc9b6c7c85d09ae5de4cf91dfd3d527ffa6dc1ec224
+health: healthy
+$ docker ps --filter name=ccrp-demo --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'
+NAMES       IMAGE                       STATUS                    PORTS
+ccrp-demo   sanad-ccrp:1.2.0-SNAPSHOT   Up 12 seconds (healthy)   0.0.0.0:8086->8080/tcp, [::]:8086->8080/tcp
+
+## 5. Use the running container
+$ curl -s http://localhost:8086/actuator/health
+{"groups":["liveness","readiness"],"status":"UP"}$ curl -s http://localhost:8086/actuator/info | jq -c '{env: .app.environment, version: .build.version, commit: .git.commit.id}'
+{"env":"docker","version":"1.2.0-SNAPSHOT","commit":"cda2f5c"}
+submitted application → CCR-2026-WETB8V
+
+## 6. Logs, exec, stats
+$ docker logs --tail 8 ccrp-demo | cut -c1-160
+2026-10-11T16:05:34.334Z  INFO 1 --- [ccrp] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-10-11T16:05:34.437Z  INFO 1 --- [ccrp] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/
+2026-10-11T16:05:34.449Z  INFO 1 --- [ccrp] [           main] com.sanad.portal.PortalApplication       : Started PortalApplication in 9.174 seconds (process run
+2026-10-11T16:05:34.957Z  INFO 1 --- [ccrp] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServle
+2026-10-11T16:05:34.958Z  INFO 1 --- [ccrp] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-11T16:05:34.959Z  INFO 1 --- [ccrp] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-11T16:05:37.817Z  INFO 1 --- [ccrp] [nio-8080-exec-8] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-WETB8V (419 bytes, PDF, sh
+2026-10-11T16:05:37.913Z  INFO 1 --- [ccrp] [nio-8080-exec-8] c.s.p.service.CertificateRequestService  : Request CCR-2026-WETB8V submitted (BIRTH)
+$ docker exec ccrp-demo id
+uid=10001(ccrp) gid=10001(ccrp) groups=10001(ccrp)
+$ docker exec ccrp-demo sh -c 'ls -la /var/lib/ccrp && du -sh /var/lib/ccrp/*'
+total 16
+drwxr-xr-x 4 ccrp ccrp 4096 Oct 11 16:05 .
+drwxr-xr-x 1 root root 4096 Oct 11 16:05 ..
+drwxr-xr-x 2 ccrp ccrp 4096 Oct 11 16:05 db
+drwxr-xr-x 3 ccrp ccrp 4096 Oct 11 16:05 documents
+36K	/var/lib/ccrp/db
+12K	/var/lib/ccrp/documents
+$ docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}' ccrp-demo
+NAME        CPU %     MEM USAGE / LIMIT
+ccrp-demo   0.24%     435.9MiB / 22.82GiB
+
+## 7. Stop (SIGTERM → graceful shutdown), start, restart
+$ docker stop ccrp-demo
+ccrp-demo
+$ docker ps -a --filter name=ccrp-demo --format 'table {{.Names}}\t{{.Status}}'
+NAMES       STATUS
+ccrp-demo   Exited (143) Less than a second ago
+$ docker logs --tail 4 ccrp-demo | cut -c1-160
+2026-10-11T16:05:39.260Z  INFO 1 --- [ccrp] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-10-11T16:05:39.269Z  INFO 1 --- [ccrp] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit '
+2026-10-11T16:05:39.273Z  INFO 1 --- [ccrp] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-11T16:05:39.277Z  INFO 1 --- [ccrp] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+$ docker start ccrp-demo
+ccrp-demo
+health: healthy
+$ docker restart ccrp-demo
+ccrp-demo
+health: healthy
+$ docker inspect --format 'restarts={{.RestartCount}} started={{.State.StartedAt}} health={{.State.Health.Status}}' ccrp-demo
+restarts=0 started=2026-10-11T16:05:52.438138919Z health=healthy
+
+## 8. Remove the container, then recreate it from the same image and volume: data survives
+$ docker rm -f ccrp-demo
+ccrp-demo
+$ docker ps -a --filter name=ccrp-demo --format '{{.Names}}' | wc -l
+0
+$ docker run -d --name ccrp-demo -p 8086:8080 -e APP_OFFICER_PASSWORD=******** -v ccrp-demo-data:/var/lib/ccrp sanad-ccrp:1.2.0-SNAPSHOT
+fdba69529160dac131de15e9ced871a535a9524b63052dd26735a87943f76768
+health: healthy
+$ curl -s -X POST http://localhost:8086/api/v1/status -H 'Content-Type: application/json' -d '{"trackingId":"CCR-2026-WETB8V","email":"meera.iyer@example.com"}' | jq -c '{trackingId, status, certificateType}'
+{"trackingId":"CCR-2026-WETB8V","status":"SUBMITTED","certificateType":"BIRTH"}
+
+## 9. Clean up
+$ docker rm -f ccrp-demo
+ccrp-demo
+$ docker volume rm ccrp-demo-data
+ccrp-demo-data
+$ docker rmi sanad-ccrp:cda2f5c
+Untagged: sanad-ccrp:cda2f5c
+$ docker images sanad-ccrp --format 'table {{.Repository}}\t{{.Tag}}\t{{.Size}}'
+REPOSITORY   TAG              SIZE
+sanad-ccrp   1.2.0-SNAPSHOT   532MB
+sanad-ccrp   latest           532MB
