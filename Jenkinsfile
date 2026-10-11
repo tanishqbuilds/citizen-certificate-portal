@@ -32,10 +32,13 @@ pipeline {
                     def scmVars = checkout scm
                     env.GIT_COMMIT = scmVars.GIT_COMMIT
                     env.GIT_SHORT = env.GIT_COMMIT.take(7)
+                    // Parameters declared here only exist after the job's first run; never rely on them being set.
+                    env.TARGET_ENV = params.TARGET_ENV ?: 'staging'
+                    env.DEPLOY = (params.DEPLOY == null || params.DEPLOY) ? 'true' : 'false'
                     env.APP_VERSION = sh(returnStdout: true,
                             script: './mvnw -q $MAVEN_ARGS help:evaluate -Dexpression=project.version -DforceStdout').trim()
                     currentBuild.displayName = "#${env.BUILD_NUMBER} · ${env.APP_VERSION} · ${env.GIT_SHORT}"
-                    currentBuild.description = "TARGET_ENV=${params.TARGET_ENV}"
+                    currentBuild.description = "TARGET_ENV=${env.TARGET_ENV}"
                 }
                 githubStatus('pending', "Build #${env.BUILD_NUMBER} running")
             }
@@ -65,7 +68,7 @@ pipeline {
         }
 
         stage('Deploy to Tomcat') {
-            when { expression { params.DEPLOY } }
+            when { environment name: 'DEPLOY', value: 'true' }
             steps {
                 withCredentials([
                         usernamePassword(credentialsId: 'tomcat-deployer', usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD'),
@@ -76,7 +79,7 @@ pipeline {
         }
 
         stage('Smoke test') {
-            when { expression { params.DEPLOY } }
+            when { environment name: 'DEPLOY', value: 'true' }
             steps {
                 sh 'scripts/smoke-test.sh "$TOMCAT_URL/certportal-$TARGET_ENV" "$APP_VERSION" "$TARGET_ENV"'
             }
@@ -85,7 +88,7 @@ pipeline {
 
     post {
         success {
-            githubStatus('success', params.DEPLOY ? "Deployed ${env.APP_VERSION} to Tomcat ${params.TARGET_ENV}" : "Build ${env.APP_VERSION} passed")
+            githubStatus('success', env.DEPLOY == 'true' ? "Deployed ${env.APP_VERSION} to Tomcat ${env.TARGET_ENV}" : "Build ${env.APP_VERSION} passed")
         }
         unsuccessful {
             githubStatus('failure', "Build #${env.BUILD_NUMBER} failed")

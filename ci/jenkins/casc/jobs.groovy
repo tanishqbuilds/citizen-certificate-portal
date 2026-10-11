@@ -42,6 +42,11 @@ pipelineJob('ccrp-pipeline') {
     displayName('CCRP · Delivery pipeline (Jenkinsfile)')
     description('Pipeline as code: checkout → build & test → package → deploy to Tomcat → smoke test. Definition: Jenkinsfile in the repository.')
     logRotator { numToKeep(30); artifactNumToKeep(10) }
+    // Declared here as well as in the Jenkinsfile so the very first (polled) build already has them.
+    parameters {
+        choiceParam('TARGET_ENV', ['staging', 'production'], 'Tomcat environment: /certportal-<env>')
+        booleanParam('DEPLOY', true, 'Deploy to Tomcat after a green build')
+    }
     properties {
         pipelineTriggers {
             triggers {
