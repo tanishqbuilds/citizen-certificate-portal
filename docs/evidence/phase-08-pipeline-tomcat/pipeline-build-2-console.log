@@ -1,0 +1,339 @@
+[2026-10-11T15:18:10.231Z] Started by an SCM change
+[2026-10-11T15:18:11.340Z] Obtained Jenkinsfile from git https://github.com/tanishqbuilds/citizen-certificate-portal.git
+[2026-10-11T15:18:13.859Z] [Pipeline] Start of Pipeline
+[2026-10-11T15:18:15.565Z] [Pipeline] node
+[2026-10-11T15:18:15.599Z] Running on Jenkins in /var/jenkins_home/jobs/ccrp-pipeline/workspace
+[2026-10-11T15:18:15.957Z] [Pipeline] {
+[2026-10-11T15:18:16.105Z] [Pipeline] withEnv
+[2026-10-11T15:18:16.112Z] [Pipeline] {
+[2026-10-11T15:18:16.160Z] [Pipeline] timestamps
+[2026-10-11T15:18:16.161Z] The timestamps step is unnecessary when timestamps are enabled for all Pipeline builds.
+[2026-10-11T15:18:16.167Z] [Pipeline] {
+[2026-10-11T15:18:16.209Z] [Pipeline] ansiColor
+[2026-10-11T15:18:16.220Z] [Pipeline] {
+[2026-10-11T15:18:16.233Z] 
+[2026-10-11T15:18:16.291Z] [Pipeline] timeout
+[2026-10-11T15:18:16.296Z] Timeout set to expire in 30 min
+[2026-10-11T15:18:16.302Z] [Pipeline] {
+[2026-10-11T15:18:16.383Z] [Pipeline] stage
+[2026-10-11T15:18:16.393Z] [Pipeline] { (Checkout)
+[2026-10-11T15:18:16.543Z] [Pipeline] script
+[2026-10-11T15:18:16.561Z] [Pipeline] {
+[2026-10-11T15:18:16.624Z] [Pipeline] checkout
+[2026-10-11T15:18:16.635Z] The recommended git tool is: git
+[2026-10-11T15:18:16.635Z] No credentials specified
+[2026-10-11T15:18:16.636Z] Cloning the remote Git repository
+[2026-10-11T15:18:16.639Z] Cloning repository https://github.com/tanishqbuilds/citizen-certificate-portal.git
+[2026-10-11T15:18:16.643Z]  > git init /var/jenkins_home/jobs/ccrp-pipeline/workspace # timeout=10
+[2026-10-11T15:18:16.655Z] Fetching upstream changes from https://github.com/tanishqbuilds/citizen-certificate-portal.git
+[2026-10-11T15:18:16.655Z]  > git --version # timeout=10
+[2026-10-11T15:18:16.661Z]  > git --version # 'git version 2.47.3'
+[2026-10-11T15:18:16.662Z]  > git fetch --tags --force --progress -- https://github.com/tanishqbuilds/citizen-certificate-portal.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-10-11T15:18:20.677Z]  > git config remote.origin.url https://github.com/tanishqbuilds/citizen-certificate-portal.git # timeout=10
+[2026-10-11T15:18:20.685Z]  > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-10-11T15:18:20.699Z] Avoid second fetch
+[2026-10-11T15:18:20.700Z]  > git rev-parse refs/remotes/origin/develop^{commit} # timeout=10
+[2026-10-11T15:18:20.707Z] Checking out Revision 6e5e42101d0df7af8486c2ee7ac0f98af8c56ebf (refs/remotes/origin/develop)
+[2026-10-11T15:18:20.707Z]  > git config core.sparsecheckout # timeout=10
+[2026-10-11T15:18:20.714Z]  > git checkout -f 6e5e42101d0df7af8486c2ee7ac0f98af8c56ebf # timeout=10
+[2026-10-11T15:18:20.777Z] Commit message: "Merge pull request #24 from ci/pipeline-parameter-defaults"
+[2026-10-11T15:18:20.778Z]  > git rev-list --no-walk cb1eac59ff1ede84031f27a5ae8324daf94112ed # timeout=10
+[2026-10-11T15:18:20.914Z] [Pipeline] sh
+[2026-10-11T15:18:21.214Z] + ./mvnw -q -B -ntp help:evaluate -Dexpression=project.version -DforceStdout
+[2026-10-11T15:18:25.427Z] [Pipeline] }
+[2026-10-11T15:18:25.472Z] [Pipeline] // script
+[2026-10-11T15:18:25.526Z] [Pipeline] withCredentials
+[2026-10-11T15:18:25.586Z] Masking supported pattern matches of $GH_TOKEN
+[2026-10-11T15:18:25.603Z] [Pipeline] {
+[2026-10-11T15:18:25.643Z] [Pipeline] withEnv
+[2026-10-11T15:18:25.652Z] [Pipeline] {
+[2026-10-11T15:18:25.730Z] [Pipeline] sh
+[2026-10-11T15:18:26.000Z] + set +x
+[2026-10-11T15:18:26.922Z] [Pipeline] }
+[2026-10-11T15:18:26.956Z] [Pipeline] // withEnv
+[2026-10-11T15:18:26.970Z] [Pipeline] }
+[2026-10-11T15:18:27.006Z] [Pipeline] // withCredentials
+[2026-10-11T15:18:27.026Z] [Pipeline] }
+[2026-10-11T15:18:27.061Z] [Pipeline] // stage
+[2026-10-11T15:18:27.087Z] [Pipeline] stage
+[2026-10-11T15:18:27.092Z] [Pipeline] { (Build & unit tests)
+[2026-10-11T15:18:27.140Z] [Pipeline] sh
+[2026-10-11T15:18:27.408Z] + ./mvnw -B -ntp clean verify
+[2026-10-11T15:18:29.896Z] [INFO] Scanning for projects...
+[2026-10-11T15:18:29.896Z] [INFO] 
+[2026-10-11T15:18:29.896Z] [INFO] ----------------< com.sanad:citizen-certificate-portal >----------------
+[2026-10-11T15:18:29.896Z] [INFO] Building Sanad — Citizen Certificate Request Portal 1.1.0-SNAPSHOT
+[2026-10-11T15:18:29.896Z] [INFO]   from pom.xml
+[2026-10-11T15:18:29.896Z] [INFO] --------------------------------[ war ]---------------------------------
+[2026-10-11T15:18:30.809Z] [INFO] 
+[2026-10-11T15:18:30.809Z] [INFO] --- clean:3.5.0:clean (default-clean) @ citizen-certificate-portal ---
+[2026-10-11T15:18:30.809Z] [INFO] 
+[2026-10-11T15:18:30.809Z] [INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ citizen-certificate-portal ---
+[2026-10-11T15:18:31.060Z] [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[2026-10-11T15:18:31.060Z] [INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[2026-10-11T15:18:31.060Z] [INFO] 
+[2026-10-11T15:18:31.060Z] [INFO] --- git-commit-id:10.0.1:revision (default) @ citizen-certificate-portal ---
+[2026-10-11T15:18:31.311Z] [INFO] dotGitDirectory '/var/jenkins_home/jobs/ccrp-pipeline/workspace/.git'
+[2026-10-11T15:18:31.562Z] [INFO] Using environment variable based branch name. GIT_BRANCH = null
+[2026-10-11T15:18:31.562Z] [INFO] Detected that running on CI environment, but using repository branch, no GIT_BRANCH detected.
+[2026-10-11T15:18:31.562Z] [INFO] Collected git.branch with value 6e5e42101d0df7af8486c2ee7ac0f98af8c56ebf
+[2026-10-11T15:18:31.562Z] [INFO] Collected git.commit.id.abbrev with value 6e5e421
+[2026-10-11T15:18:31.562Z] [INFO] Collected git.commit.time with value 2026-10-11T15:16:51Z
+[2026-10-11T15:18:31.562Z] [INFO] Collected git.tags with value 
+[2026-10-11T15:18:31.562Z] [INFO] including property 'git.tags' in results
+[2026-10-11T15:18:31.562Z] [INFO] including property 'git.commit.id.abbrev' in results
+[2026-10-11T15:18:31.562Z] [INFO] including property 'git.branch' in results
+[2026-10-11T15:18:31.562Z] [INFO] including property 'git.commit.time' in results
+[2026-10-11T15:18:31.562Z] [INFO] Writing properties file [/var/jenkins_home/jobs/ccrp-pipeline/workspace/target/classes/git.properties] (for project Sanad — Citizen Certificate Request Portal)...
+[2026-10-11T15:18:31.562Z] [INFO] 
+[2026-10-11T15:18:31.562Z] [INFO] --- jacoco:0.8.15:prepare-agent (prepare-agent) @ citizen-certificate-portal ---
+[2026-10-11T15:18:31.813Z] [INFO] argLine set to -javaagent:/var/jenkins_home/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/var/jenkins_home/jobs/ccrp-pipeline/workspace/target/jacoco.exec
+[2026-10-11T15:18:31.813Z] [INFO] 
+[2026-10-11T15:18:31.813Z] [INFO] --- spring-boot:4.1.1:build-info (build-info) @ citizen-certificate-portal ---
+[2026-10-11T15:18:32.064Z] [INFO] 
+[2026-10-11T15:18:32.064Z] [INFO] --- resources:3.5.0:resources (default-resources) @ citizen-certificate-portal ---
+[2026-10-11T15:18:32.064Z] [INFO] Copying 2 resources from src/main/resources to target/classes
+[2026-10-11T15:18:32.064Z] [INFO] Copying 14 resources from src/main/resources to target/classes
+[2026-10-11T15:18:32.064Z] [INFO] 
+[2026-10-11T15:18:32.064Z] [INFO] --- compiler:3.15.0:compile (default-compile) @ citizen-certificate-portal ---
+[2026-10-11T15:18:32.064Z] [INFO] Recompiling the module because of changed source code.
+[2026-10-11T15:18:32.316Z] [INFO] Compiling 36 source files with javac [debug parameters release 21] to target/classes
+[2026-10-11T15:18:34.180Z] [INFO] 
+[2026-10-11T15:18:34.180Z] [INFO] --- resources:3.5.0:testResources (default-testResources) @ citizen-certificate-portal ---
+[2026-10-11T15:18:34.180Z] [INFO] Copying 1 resource from src/test/resources to target/test-classes
+[2026-10-11T15:18:34.180Z] [INFO] 
+[2026-10-11T15:18:34.180Z] [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ citizen-certificate-portal ---
+[2026-10-11T15:18:34.180Z] [INFO] Recompiling the module because of changed dependency.
+[2026-10-11T15:18:34.180Z] [INFO] Compiling 11 source files with javac [debug parameters release 21] to target/test-classes
+[2026-10-11T15:18:34.731Z] [INFO] 
+[2026-10-11T15:18:34.731Z] [INFO] --- surefire:3.5.6:test (default-test) @ citizen-certificate-portal ---
+[2026-10-11T15:18:34.982Z] [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[2026-10-11T15:18:34.982Z] [INFO] 
+[2026-10-11T15:18:34.982Z] [INFO] -------------------------------------------------------
+[2026-10-11T15:18:34.982Z] [INFO]  T E S T S
+[2026-10-11T15:18:34.982Z] [INFO] -------------------------------------------------------
+[2026-10-11T15:18:36.845Z] [INFO] Running com.sanad.portal.web.CitizenFlowIntegrationTest
+[2026-10-11T15:18:37.096Z] 15:18:36.832 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sanad.portal.web.CitizenFlowIntegrationTest]: CitizenFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-11T15:18:37.347Z] 15:18:37.076 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sanad.portal.PortalApplication for test class com.sanad.portal.web.CitizenFlowIntegrationTest
+[2026-10-11T15:18:37.598Z] 15:18:37.290 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sanad.portal.web.CitizenFlowIntegrationTest]: CitizenFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-11T15:18:37.598Z] 15:18:37.295 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sanad.portal.PortalApplication for test class com.sanad.portal.web.CitizenFlowIntegrationTest
+[2026-10-11T15:18:38.149Z] 
+[2026-10-11T15:18:38.149Z]   .   ____          _            __ _ _
+[2026-10-11T15:18:38.149Z]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[2026-10-11T15:18:38.149Z] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[2026-10-11T15:18:38.149Z]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[2026-10-11T15:18:38.149Z]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[2026-10-11T15:18:38.149Z]  =========|_|==============|___/=/_/_/_/
+[2026-10-11T15:18:38.149Z] 
+[2026-10-11T15:18:38.149Z]  :: Spring Boot ::                (v4.1.1)
+[2026-10-11T15:18:38.149Z] 
+[2026-10-11T15:18:38.400Z] 2026-10-11T15:18:38.115Z  INFO 2230 --- [ccrp] [           main] c.s.p.web.CitizenFlowIntegrationTest     : Starting CitizenFlowIntegrationTest using Java 21.0.12.1 with PID 2230 (started by jenkins in /var/jenkins_home/jobs/ccrp-pipeline/workspace)
+[2026-10-11T15:18:38.400Z] 2026-10-11T15:18:38.118Z  INFO 2230 --- [ccrp] [           main] c.s.p.web.CitizenFlowIntegrationTest     : The following 1 profile is active: "test"
+[2026-10-11T15:18:42.525Z] 2026-10-11T15:18:42.237Z  WARN 2230 --- [ccrp] [           main] o.f.c.internal.database.base.Database    : Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+[2026-10-11T15:18:50.554Z] 2026-10-11T15:18:49.734Z  INFO 2230 --- [ccrp] [           main] c.s.p.web.CitizenFlowIntegrationTest     : Started CitizenFlowIntegrationTest in 12.308 seconds (process running for 14.835)
+[2026-10-11T15:18:50.554Z] Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+[2026-10-11T15:18:50.554Z] WARNING: A Java agent has been loaded dynamically (/var/jenkins_home/.m2/repository/net/bytebuddy/byte-buddy-agent/1.18.11/byte-buddy-agent-1.18.11.jar)
+[2026-10-11T15:18:50.554Z] WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+[2026-10-11T15:18:50.554Z] WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+[2026-10-11T15:18:50.554Z] WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[2026-10-11T15:18:50.805Z] 2026-10-11T15:18:50.655Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-DHWZGY (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:51.055Z] 2026-10-11T15:18:50.745Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-DHWZGY submitted (INCOME)
+[2026-10-11T15:18:51.967Z] 2026-10-11T15:18:51.773Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-TWTCX6 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:51.967Z] 2026-10-11T15:18:51.777Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-TWTCX6 submitted (INCOME)
+[2026-10-11T15:18:51.967Z] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.39 s -- in com.sanad.portal.web.CitizenFlowIntegrationTest
+[2026-10-11T15:18:51.967Z] [INFO] Running com.sanad.portal.web.StatusApiIntegrationTest
+[2026-10-11T15:18:51.967Z] 2026-10-11T15:18:51.882Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-CGAERJ (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:51.967Z] 2026-10-11T15:18:51.887Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-CGAERJ submitted (INCOME)
+[2026-10-11T15:18:52.218Z] 2026-10-11T15:18:52.072Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-A5G368 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:52.218Z] 2026-10-11T15:18:52.075Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-A5G368 submitted (INCOME)
+[2026-10-11T15:18:52.218Z] 2026-10-11T15:18:52.091Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-A5G368 under review by officer
+[2026-10-11T15:18:52.218Z] 2026-10-11T15:18:52.126Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-A5G368 approved by officer — certificate SND-INC-2026-000004
+[2026-10-11T15:18:52.218Z] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.296 s -- in com.sanad.portal.web.StatusApiIntegrationTest
+[2026-10-11T15:18:52.218Z] [INFO] Running com.sanad.portal.web.ViewFormatterTest
+[2026-10-11T15:18:52.469Z] [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.092 s -- in com.sanad.portal.web.ViewFormatterTest
+[2026-10-11T15:18:52.469Z] [INFO] Running com.sanad.portal.web.OfficerWorkflowIntegrationTest
+[2026-10-11T15:18:52.469Z] 
+[2026-10-11T15:18:52.469Z]   .   ____          _            __ _ _
+[2026-10-11T15:18:52.469Z]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[2026-10-11T15:18:52.469Z] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[2026-10-11T15:18:52.469Z]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[2026-10-11T15:18:52.469Z]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[2026-10-11T15:18:52.469Z]  =========|_|==============|___/=/_/_/_/
+[2026-10-11T15:18:52.470Z] 
+[2026-10-11T15:18:52.470Z]  :: Spring Boot ::                (v4.1.1)
+[2026-10-11T15:18:52.470Z] 
+[2026-10-11T15:18:52.470Z] 2026-10-11T15:18:52.299Z  INFO 2230 --- [ccrp] [           main] c.s.p.w.OfficerWorkflowIntegrationTest   : Starting OfficerWorkflowIntegrationTest using Java 21.0.12.1 with PID 2230 (started by jenkins in /var/jenkins_home/jobs/ccrp-pipeline/workspace)
+[2026-10-11T15:18:52.470Z] 2026-10-11T15:18:52.299Z  INFO 2230 --- [ccrp] [           main] c.s.p.w.OfficerWorkflowIntegrationTest   : The following 1 profile is active: "test"
+[2026-10-11T15:18:53.021Z] 2026-10-11T15:18:52.683Z  WARN 2230 --- [ccrp] [           main] o.f.c.internal.database.base.Database    : Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+[2026-10-11T15:18:53.272Z] 2026-10-11T15:18:53.190Z  INFO 2230 --- [ccrp] [           main] c.s.p.w.OfficerWorkflowIntegrationTest   : Started OfficerWorkflowIntegrationTest in 0.923 seconds (process running for 18.291)
+[2026-10-11T15:18:53.272Z] 2026-10-11T15:18:53.217Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-CQRP6C (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:53.272Z] 2026-10-11T15:18:53.221Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-CQRP6C submitted (INCOME)
+[2026-10-11T15:18:53.523Z] 2026-10-11T15:18:53.452Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-57FXJ4 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:53.523Z] 2026-10-11T15:18:53.460Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-57FXJ4 submitted (INCOME)
+[2026-10-11T15:18:53.774Z] 2026-10-11T15:18:53.503Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-6Q5AEH (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:53.774Z] 2026-10-11T15:18:53.509Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-6Q5AEH submitted (INCOME)
+[2026-10-11T15:18:53.774Z] 2026-10-11T15:18:53.557Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-CKUZ5P (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:53.774Z] 2026-10-11T15:18:53.563Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-CKUZ5P submitted (INCOME)
+[2026-10-11T15:18:53.774Z] 2026-10-11T15:18:53.599Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-HAWVH3 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:53.774Z] 2026-10-11T15:18:53.604Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-HAWVH3 submitted (INCOME)
+[2026-10-11T15:18:54.025Z] 2026-10-11T15:18:53.846Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-ZXX69N (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:54.025Z] 2026-10-11T15:18:53.850Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-ZXX69N submitted (INCOME)
+[2026-10-11T15:18:54.025Z] 2026-10-11T15:18:53.858Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-ZXX69N under review by officer
+[2026-10-11T15:18:54.025Z] 2026-10-11T15:18:53.882Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-ZXX69N rejected by officer
+[2026-10-11T15:18:54.025Z] 2026-10-11T15:18:53.927Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-SZ99QK (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:54.025Z] 2026-10-11T15:18:53.930Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-SZ99QK submitted (INCOME)
+[2026-10-11T15:18:54.276Z] 2026-10-11T15:18:53.956Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-VQZPVR (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:54.276Z] 2026-10-11T15:18:53.960Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-VQZPVR submitted (INCOME)
+[2026-10-11T15:18:54.276Z] 2026-10-11T15:18:53.971Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-VQZPVR under review by officer
+[2026-10-11T15:18:54.276Z] 2026-10-11T15:18:53.985Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-VQZPVR approved by officer — certificate SND-INC-2026-000012
+[2026-10-11T15:18:54.276Z] 2026-10-11T15:18:54.046Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-8ZQT64 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:54.276Z] 2026-10-11T15:18:54.050Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-8ZQT64 submitted (INCOME)
+[2026-10-11T15:18:54.276Z] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.820 s -- in com.sanad.portal.web.OfficerWorkflowIntegrationTest
+[2026-10-11T15:18:54.276Z] [INFO] Running com.sanad.portal.domain.CertificateRequestLifecycleTest
+[2026-10-11T15:18:54.276Z] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.037 s -- in com.sanad.portal.domain.CertificateRequestLifecycleTest
+[2026-10-11T15:18:54.276Z] [INFO] Running com.sanad.portal.PortalApplicationTests
+[2026-10-11T15:18:54.277Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.084 s -- in com.sanad.portal.PortalApplicationTests
+[2026-10-11T15:18:54.277Z] [INFO] Running com.sanad.portal.service.VerhoeffTest
+[2026-10-11T15:18:54.277Z] [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.sanad.portal.service.VerhoeffTest
+[2026-10-11T15:18:54.277Z] [INFO] Running com.sanad.portal.service.CertificateRequestServiceTest
+[2026-10-11T15:18:55.622Z] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.091 s -- in com.sanad.portal.service.CertificateRequestServiceTest
+[2026-10-11T15:18:55.622Z] [INFO] Running com.sanad.portal.service.DocumentStorageServiceTest
+[2026-10-11T15:18:55.622Z] 2026-10-11T15:18:55.440Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-ABCDEG (16 bytes, PNG, sha256=02a3e298f1533f62558c58e4c70edcab9af5a50d62d925fd5390942020fb0fb8)
+[2026-10-11T15:18:55.622Z] 2026-10-11T15:18:55.454Z  INFO 2230 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-ABCDEF (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[2026-10-11T15:18:55.622Z] [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.144 s -- in com.sanad.portal.service.DocumentStorageServiceTest
+[2026-10-11T15:18:55.622Z] [INFO] Running com.sanad.portal.service.NationalIdsTest
+[2026-10-11T15:18:55.622Z] [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in com.sanad.portal.service.NationalIdsTest
+[2026-10-11T15:18:55.873Z] [INFO] 
+[2026-10-11T15:18:55.873Z] [INFO] Results:
+[2026-10-11T15:18:55.873Z] [INFO] 
+[2026-10-11T15:18:55.873Z] [INFO] Tests run: 65, Failures: 0, Errors: 0, Skipped: 0
+[2026-10-11T15:18:55.873Z] [INFO] 
+[2026-10-11T15:18:55.873Z] [INFO] 
+[2026-10-11T15:18:55.873Z] [INFO] --- jacoco:0.8.15:report (report) @ citizen-certificate-portal ---
+[2026-10-11T15:18:55.873Z] [INFO] Loading execution data file /var/jenkins_home/jobs/ccrp-pipeline/workspace/target/jacoco.exec
+[2026-10-11T15:18:56.124Z] [INFO] Analyzed bundle 'Sanad — Citizen Certificate Request Portal' with 46 classes
+[2026-10-11T15:18:56.375Z] [INFO] 
+[2026-10-11T15:18:56.375Z] [INFO] --- war:3.5.1:war (default-war) @ citizen-certificate-portal ---
+[2026-10-11T15:18:56.626Z] [INFO] Packaging webapp
+[2026-10-11T15:18:56.626Z] [INFO] Assembling webapp [citizen-certificate-portal] in [/var/jenkins_home/jobs/ccrp-pipeline/workspace/target/citizen-certificate-portal-1.1.0-SNAPSHOT]
+[2026-10-11T15:18:56.626Z] [INFO] Processing war project
+[2026-10-11T15:18:56.878Z] [INFO] Building war: /var/jenkins_home/jobs/ccrp-pipeline/workspace/target/citizen-certificate-portal-1.1.0-SNAPSHOT.war
+[2026-10-11T15:18:57.790Z] [INFO] 
+[2026-10-11T15:18:57.790Z] [INFO] --- spring-boot:4.1.1:repackage (repackage) @ citizen-certificate-portal ---
+[2026-10-11T15:18:58.341Z] [INFO] Replacing main artifact /var/jenkins_home/jobs/ccrp-pipeline/workspace/target/citizen-certificate-portal-1.1.0-SNAPSHOT.war with repackaged archive, adding nested dependencies in BOOT-INF/.
+[2026-10-11T15:18:58.341Z] [INFO] The original artifact has been renamed to /var/jenkins_home/jobs/ccrp-pipeline/workspace/target/citizen-certificate-portal-1.1.0-SNAPSHOT.war.original
+[2026-10-11T15:18:58.341Z] [INFO] ------------------------------------------------------------------------
+[2026-10-11T15:18:58.341Z] [INFO] BUILD SUCCESS
+[2026-10-11T15:18:58.341Z] [INFO] ------------------------------------------------------------------------
+[2026-10-11T15:18:58.341Z] [INFO] Total time:  28.861 s
+[2026-10-11T15:18:58.341Z] [INFO] Finished at: 2026-10-11T15:18:58Z
+[2026-10-11T15:18:58.341Z] [INFO] ------------------------------------------------------------------------
+[2026-10-11T15:18:58.397Z] Post stage
+[2026-10-11T15:18:58.483Z] [Pipeline] junit
+[2026-10-11T15:18:58.490Z] Recording test results
+[2026-10-11T15:18:58.510Z] [Checks API] No suitable checks publisher found.
+[2026-10-11T15:18:58.520Z] [Pipeline] recordCoverage
+[2026-10-11T15:18:58.655Z] [Coverage] Recording coverage results
+[2026-10-11T15:18:58.655Z] [Coverage] Creating parser for JaCoCo Coverage Reports
+[2026-10-11T15:18:58.655Z] [Coverage] Searching for all files in '/var/jenkins_home/jobs/ccrp-pipeline/workspace' that match the pattern 'target/site/jacoco/jacoco.xml'
+[2026-10-11T15:18:58.655Z] [Coverage] Traversing of symbolic links: enabled
+[2026-10-11T15:18:58.655Z] [Coverage] -> found 1 file
+[2026-10-11T15:18:58.655Z] [Coverage] Successfully parsed file '/var/jenkins_home/jobs/ccrp-pipeline/workspace/target/site/jacoco/jacoco.xml'
+[2026-10-11T15:18:58.655Z] [Coverage] Module Coverage: 100.00% (1/1)
+[2026-10-11T15:18:58.655Z] [Coverage] Package Coverage: 100.00% (8/8)
+[2026-10-11T15:18:58.655Z] [Coverage] File Coverage: 100.00% (33/33)
+[2026-10-11T15:18:58.655Z] [Coverage] Class Coverage: 100.00% (46/46)
+[2026-10-11T15:18:58.655Z] [Coverage] Method Coverage: 91.16% (227/249)
+[2026-10-11T15:18:58.655Z] [Coverage] Line Coverage: 90.50% (610/674)
+[2026-10-11T15:18:58.655Z] [Coverage] Branch Coverage: 66.42% (182/274)
+[2026-10-11T15:18:58.655Z] [Coverage] Instruction Coverage: 91.72% (4064/4431)
+[2026-10-11T15:18:58.655Z] [Coverage] Lines of Code: 674
+[2026-10-11T15:18:58.655Z] [Coverage] Cyclomatic Complexity: 387
+[2026-10-11T15:18:58.655Z] [Coverage] Successfully processed file 'target/site/jacoco/jacoco.xml'
+[2026-10-11T15:18:58.676Z] [Coverage] Resolving source code files...
+[2026-10-11T15:18:58.676Z] [Coverage] Searching for source code files in '/var/jenkins_home/jobs/ccrp-pipeline/workspace/src/main/java'
+[2026-10-11T15:18:58.676Z] [Coverage] -> resolved absolute paths for all 36 source files
+[2026-10-11T15:18:58.676Z] [Coverage] Making paths of 36 source code files relative to workspace root...
+[2026-10-11T15:18:58.772Z] [Coverage] Obtaining result action of reference build
+[2026-10-11T15:18:58.772Z] [Coverage] Reference build recorder is not configured
+[2026-10-11T15:18:58.772Z] [Coverage] -> Found no reference build
+[2026-10-11T15:18:58.772Z] [Coverage] No quality gates have been set - skipping
+[2026-10-11T15:18:58.772Z] [Coverage] Executing source code painting...
+[2026-10-11T15:18:58.772Z] [Coverage] Finished coverage processing - adding the action to the build...
+[2026-10-11T15:18:58.801Z] [Pipeline] }
+[2026-10-11T15:18:58.829Z] [Pipeline] // stage
+[2026-10-11T15:18:58.849Z] [Pipeline] stage
+[2026-10-11T15:18:58.853Z] [Pipeline] { (Package)
+[2026-10-11T15:18:58.886Z] [Pipeline] sh
+[2026-10-11T15:18:59.147Z] + cp target/citizen-certificate-portal-1.1.0-SNAPSHOT.war target/ccrp.war
+[2026-10-11T15:18:59.147Z] + sha256sum target/citizen-certificate-portal-1.1.0-SNAPSHOT.war
+[2026-10-11T15:18:59.147Z] + tee target/SHA256SUMS
+[2026-10-11T15:18:59.147Z] 4dc617b5bf567b78393dd2862e18d8a824bc8612cfb9080fdb8659796451dd58  target/citizen-certificate-portal-1.1.0-SNAPSHOT.war
+[2026-10-11T15:18:59.170Z] [Pipeline] archiveArtifacts
+[2026-10-11T15:18:59.177Z] Archiving artifacts
+[2026-10-11T15:18:59.212Z] Recording fingerprints
+[2026-10-11T15:18:59.339Z] [Pipeline] }
+[2026-10-11T15:18:59.361Z] [Pipeline] // stage
+[2026-10-11T15:18:59.380Z] [Pipeline] stage
+[2026-10-11T15:18:59.385Z] [Pipeline] { (Deploy to Tomcat)
+[2026-10-11T15:18:59.509Z] [Pipeline] withCredentials
+[2026-10-11T15:18:59.532Z] Masking supported pattern matches of $TOMCAT_PASSWORD or $OFFICER_PASSWORD
+[2026-10-11T15:18:59.538Z] [Pipeline] {
+[2026-10-11T15:18:59.555Z] [Pipeline] sh
+[2026-10-11T15:18:59.815Z] + scripts/deploy-tomcat.sh target/ccrp.war staging
+[2026-10-11T15:18:59.815Z] ==> Deploying ccrp.war (1.1.0-SNAPSHOT) to http://ccrp-tomcat:8080/certportal-staging
+[2026-10-11T15:18:59.816Z] ==> Undeploying the running version of /certportal-staging
+[2026-10-11T15:19:00.066Z] OK - Undeployed application at context path [/certportal-staging]
+[2026-10-11T15:19:00.066Z] ==> Manager deploy (context descriptor + WAR)
+[2026-10-11T15:19:08.092Z] OK - Deployed application at context path [/certportal-staging]
+[2026-10-11T15:19:08.092Z] ==> Waiting for /certportal-staging to report healthy
+[2026-10-11T15:19:08.092Z] Healthy after ~2s
+[2026-10-11T15:19:08.092Z] /certportal-staging:running:1:certportal-staging
+[2026-10-11T15:19:08.105Z] [Pipeline] }
+[2026-10-11T15:19:08.126Z] [Pipeline] // withCredentials
+[2026-10-11T15:19:08.136Z] [Pipeline] }
+[2026-10-11T15:19:08.157Z] [Pipeline] // stage
+[2026-10-11T15:19:08.176Z] [Pipeline] stage
+[2026-10-11T15:19:08.182Z] [Pipeline] { (Smoke test)
+[2026-10-11T15:19:08.209Z] [Pipeline] sh
+[2026-10-11T15:19:08.468Z] + scripts/smoke-test.sh http://ccrp-tomcat:8080/certportal-staging 1.1.0-SNAPSHOT staging
+[2026-10-11T15:19:08.468Z]   GET /actuator/health                     UP
+[2026-10-11T15:19:08.468Z]   GET /actuator/info                       version=1.1.0-SNAPSHOT environment=staging commit=6e5e421
+[2026-10-11T15:19:08.719Z]   GET /                                    200, content OK
+[2026-10-11T15:19:08.719Z]   GET /apply                               200, form renders
+[2026-10-11T15:19:08.719Z]   GET /officer (anonymous)                 302 → sign-in
+[2026-10-11T15:19:08.719Z] Smoke test passed for http://ccrp-tomcat:8080/certportal-staging
+[2026-10-11T15:19:08.734Z] [Pipeline] }
+[2026-10-11T15:19:08.756Z] [Pipeline] // stage
+[2026-10-11T15:19:08.781Z] [Pipeline] stage
+[2026-10-11T15:19:08.785Z] [Pipeline] { (Declarative: Post Actions)
+[2026-10-11T15:19:08.826Z] [Pipeline] withCredentials
+[2026-10-11T15:19:08.832Z] Masking supported pattern matches of $GH_TOKEN
+[2026-10-11T15:19:08.844Z] [Pipeline] {
+[2026-10-11T15:19:08.863Z] [Pipeline] withEnv
+[2026-10-11T15:19:08.867Z] [Pipeline] {
+[2026-10-11T15:19:08.889Z] [Pipeline] sh
+[2026-10-11T15:19:09.148Z] + set +x
+[2026-10-11T15:19:10.068Z] [Pipeline] }
+[2026-10-11T15:19:10.101Z] [Pipeline] // withEnv
+[2026-10-11T15:19:10.114Z] [Pipeline] }
+[2026-10-11T15:19:10.137Z] [Pipeline] // withCredentials
+[2026-10-11T15:19:10.161Z] [Pipeline] cleanWs
+[2026-10-11T15:19:10.170Z] [WS-CLEANUP] Deleting project workspace...
+[2026-10-11T15:19:10.172Z] [WS-CLEANUP] Deferred wipeout is used...
+[2026-10-11T15:19:10.182Z] [WS-CLEANUP] done
+[2026-10-11T15:19:10.192Z] [Pipeline] }
+[2026-10-11T15:19:10.214Z] [Pipeline] // stage
+[2026-10-11T15:19:10.226Z] [Pipeline] }
+[2026-10-11T15:19:10.247Z] [Pipeline] // timeout
+[2026-10-11T15:19:10.260Z] [Pipeline] }
+[2026-10-11T15:19:10.265Z] 
+[2026-10-11T15:19:10.284Z] [Pipeline] // ansiColor
+[2026-10-11T15:19:10.296Z] [Pipeline] }
+[2026-10-11T15:19:10.318Z] [Pipeline] // timestamps
+[2026-10-11T15:19:10.329Z] [Pipeline] }
+[2026-10-11T15:19:10.349Z] [Pipeline] // withEnv
+[2026-10-11T15:19:10.359Z] [Pipeline] }
+[2026-10-11T15:19:10.383Z] [Pipeline] // node
+[2026-10-11T15:19:10.393Z] [Pipeline] End of Pipeline
+[2026-10-11T15:19:10.769Z] Finished: SUCCESS
