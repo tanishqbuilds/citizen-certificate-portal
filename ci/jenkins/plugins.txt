@@ -1,0 +1,17 @@
+# Pinned top-level plugins for Jenkins 2.580.1 LTS (dependencies are resolved by jenkins-plugin-cli).
+# To update: check Manage Jenkins > Plugins on a running controller, bump versions here, rebuild the image.
+configuration-as-code:2134.ve13a_2fc90835
+job-dsl:3732.v9a_c49a_61a_313
+workflow-aggregator:608.v67378e9d3db_1
+pipeline-stage-view:2.41
+pipeline-graph-view:1053.v9df19e6ceed2
+git:5.11.0
+junit:1437.v12280a_c49b_50
+htmlpublisher:429
+timestamper:1.30
+ws-cleanup:0.49
+credentials-binding:728.v902a_273b_8947
+pipeline-utility-steps:3.810.va_7672d206740
+build-timeout:1.41
+ansicolor:542.v03d235fee02d
+coverage:3.3436.v3f0591159a_dd

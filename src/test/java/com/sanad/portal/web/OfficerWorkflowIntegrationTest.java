@@ -29,12 +29,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/** CCR-8 … CCR-12 through the full stack. */
-@SpringBootTest
+/**
+ * CCR-8 … CCR-12 through the full stack.
+ * <p>
+ * The officer password is pinned with a test property: those outrank OS environment variables, so the
+ * test is unaffected by an {@code APP_OFFICER_PASSWORD} exported on the build machine (e.g. Jenkins).
+ */
+@SpringBootTest(properties = "app.officer.password=" + OfficerWorkflowIntegrationTest.PASSWORD)
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 class OfficerWorkflowIntegrationTest {
 
+    static final String PASSWORD = "Test@12345";
     static final RequestPostProcessor OFFICER = user("officer").roles("OFFICER");
 
     @Autowired
@@ -62,7 +68,7 @@ class OfficerWorkflowIntegrationTest {
 
     @Test
     void formLoginWithConfiguredCredentials() throws Exception {
-        mvc.perform(formLogin("/officer/login").user("officer").password("Test@12345"))
+        mvc.perform(formLogin("/officer/login").user("officer").password(PASSWORD))
                 .andExpect(authenticated().withRoles("OFFICER"))
                 .andExpect(redirectedUrl("/officer"));
         mvc.perform(formLogin("/officer/login").user("officer").password("wrong-password"))

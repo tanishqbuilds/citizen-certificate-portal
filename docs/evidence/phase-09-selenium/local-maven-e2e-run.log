@@ -1,0 +1,309 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------< com.sanad:citizen-certificate-portal >----------------
+[INFO] Building Sanad — Citizen Certificate Request Portal 1.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ citizen-certificate-portal ---
+[INFO] Deleting /home/tanishq/AI/DevOps/target
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ citizen-certificate-portal ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- git-commit-id:10.0.1:revision (default) @ citizen-certificate-portal ---
+[INFO] dotGitDirectory '/home/tanishq/AI/DevOps/.git'
+[INFO] Collected git.branch with value feature/CCR-14-selenium-e2e
+[INFO] Collected git.commit.id.abbrev with value 479f090
+[INFO] Collected git.commit.time with value 2026-10-11T20:52:30+05:30
+[INFO] Collected git.tags with value 
+[INFO] including property 'git.tags' in results
+[INFO] including property 'git.commit.id.abbrev' in results
+[INFO] including property 'git.branch' in results
+[INFO] including property 'git.commit.time' in results
+[INFO] Writing properties file [/home/tanishq/AI/DevOps/target/classes/git.properties] (for project Sanad — Citizen Certificate Request Portal)...
+[INFO] 
+[INFO] --- jacoco:0.8.15:prepare-agent (prepare-agent) @ citizen-certificate-portal ---
+[INFO] argLine set to -javaagent:/home/tanishq/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/home/tanishq/AI/DevOps/target/jacoco.exec
+[INFO] 
+[INFO] --- spring-boot:4.1.1:build-info (build-info) @ citizen-certificate-portal ---
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ citizen-certificate-portal ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 14 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ citizen-certificate-portal ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 36 source files with javac [debug parameters release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ citizen-certificate-portal ---
+[INFO] Copying 5 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ citizen-certificate-portal ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 31 source files with javac [debug parameters release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ citizen-certificate-portal ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.sanad.portal.web.CitizenFlowIntegrationTest
+21:08:01.470 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sanad.portal.web.CitizenFlowIntegrationTest]: CitizenFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:08:01.717 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sanad.portal.PortalApplication for test class com.sanad.portal.web.CitizenFlowIntegrationTest
+21:08:01.916 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.sanad.portal.web.CitizenFlowIntegrationTest]: CitizenFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:08:01.920 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.sanad.portal.PortalApplication for test class com.sanad.portal.web.CitizenFlowIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-11T21:08:02.674+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.web.CitizenFlowIntegrationTest     : Starting CitizenFlowIntegrationTest using Java 21.0.12.1 with PID 387368 (started by tanishq in /home/tanishq/AI/DevOps)
+2026-10-11T21:08:02.676+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.web.CitizenFlowIntegrationTest     : The following 1 profile is active: "test"
+2026-10-11T21:08:05.602+05:30  WARN 387368 --- [ccrp] [           main] o.f.c.internal.database.base.Database    : Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2026-10-11T21:08:11.042+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.web.CitizenFlowIntegrationTest     : Started CitizenFlowIntegrationTest in 9.004 seconds (process running for 11.237)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/home/tanishq/.m2/repository/net/bytebuddy/byte-buddy-agent/1.18.11/byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-10-11T21:08:11.873+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-ZST588 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:11.949+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-ZST588 submitted (INCOME)
+2026-10-11T21:08:12.877+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-MKZ8PP (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:12.881+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-MKZ8PP submitted (INCOME)
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.86 s -- in com.sanad.portal.web.CitizenFlowIntegrationTest
+[INFO] Running com.sanad.portal.web.OfficerWorkflowIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-11T21:08:13.017+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.w.OfficerWorkflowIntegrationTest   : Starting OfficerWorkflowIntegrationTest using Java 21.0.12.1 with PID 387368 (started by tanishq in /home/tanishq/AI/DevOps)
+2026-10-11T21:08:13.018+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.w.OfficerWorkflowIntegrationTest   : The following 1 profile is active: "test"
+2026-10-11T21:08:13.440+05:30  WARN 387368 --- [ccrp] [           main] o.f.c.internal.database.base.Database    : Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2026-10-11T21:08:13.925+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.w.OfficerWorkflowIntegrationTest   : Started OfficerWorkflowIntegrationTest in 0.954 seconds (process running for 14.12)
+2026-10-11T21:08:13.963+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-W35TJ2 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:13.968+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-W35TJ2 submitted (INCOME)
+2026-10-11T21:08:14.104+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-6SQU39 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.108+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-6SQU39 submitted (INCOME)
+2026-10-11T21:08:14.134+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-CVS5AC (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.138+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-CVS5AC submitted (INCOME)
+2026-10-11T21:08:14.182+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-Q2R4C8 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.186+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-Q2R4C8 submitted (INCOME)
+2026-10-11T21:08:14.211+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-VCUEZH (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.214+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-VCUEZH submitted (INCOME)
+2026-10-11T21:08:14.426+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-ZAGA64 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.429+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-ZAGA64 submitted (INCOME)
+2026-10-11T21:08:14.439+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-ZAGA64 under review by officer
+2026-10-11T21:08:14.483+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-ZAGA64 rejected by officer
+2026-10-11T21:08:14.525+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-3CTCVW (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.529+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-3CTCVW submitted (INCOME)
+2026-10-11T21:08:14.550+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-2HERRW (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.554+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2HERRW submitted (INCOME)
+2026-10-11T21:08:14.563+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2HERRW under review by officer
+2026-10-11T21:08:14.576+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-2HERRW approved by officer — certificate SND-INC-2026-000010
+2026-10-11T21:08:14.619+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-7274Y9 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.623+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-7274Y9 submitted (INCOME)
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.686 s -- in com.sanad.portal.web.OfficerWorkflowIntegrationTest
+[INFO] Running com.sanad.portal.web.StatusApiIntegrationTest
+2026-10-11T21:08:14.666+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-GADUA6 (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.670+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-GADUA6 submitted (INCOME)
+2026-10-11T21:08:14.830+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-FGPANG (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+2026-10-11T21:08:14.834+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-FGPANG submitted (INCOME)
+2026-10-11T21:08:14.844+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-FGPANG under review by officer
+2026-10-11T21:08:14.858+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.CertificateRequestService  : Request CCR-2026-FGPANG approved by officer — certificate SND-INC-2026-000013
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.239 s -- in com.sanad.portal.web.StatusApiIntegrationTest
+[INFO] Running com.sanad.portal.web.ViewFormatterTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.069 s -- in com.sanad.portal.web.ViewFormatterTest
+[INFO] Running com.sanad.portal.PortalApplicationTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.075 s -- in com.sanad.portal.PortalApplicationTests
+[INFO] Running com.sanad.portal.service.DocumentStorageServiceTest
+2026-10-11T21:08:15.057+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-ABCDEG (16 bytes, PNG, sha256=02a3e298f1533f62558c58e4c70edcab9af5a50d62d925fd5390942020fb0fb8)
+2026-10-11T21:08:15.061+05:30  INFO 387368 --- [ccrp] [           main] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-ABCDEF (77 bytes, PDF, sha256=56c2ac043c28d3543275a6f50b593a6beb0b6888ed8159ac02e3e7f4a32ccb26)
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 s -- in com.sanad.portal.service.DocumentStorageServiceTest
+[INFO] Running com.sanad.portal.service.VerhoeffTest
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.sanad.portal.service.VerhoeffTest
+[INFO] Running com.sanad.portal.service.NationalIdsTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.sanad.portal.service.NationalIdsTest
+[INFO] Running com.sanad.portal.service.CertificateRequestServiceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.813 s -- in com.sanad.portal.service.CertificateRequestServiceTest
+[INFO] Running com.sanad.portal.domain.CertificateRequestLifecycleTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.062 s -- in com.sanad.portal.domain.CertificateRequestLifecycleTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 65, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.15:report (report) @ citizen-certificate-portal ---
+[INFO] Loading execution data file /home/tanishq/AI/DevOps/target/jacoco.exec
+[INFO] Analyzed bundle 'Sanad — Citizen Certificate Request Portal' with 46 classes
+[INFO] 
+[INFO] --- war:3.5.1:war (default-war) @ citizen-certificate-portal ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [citizen-certificate-portal] in [/home/tanishq/AI/DevOps/target/citizen-certificate-portal-1.1.0-SNAPSHOT]
+[INFO] Processing war project
+[INFO] Building war: /home/tanishq/AI/DevOps/target/citizen-certificate-portal-1.1.0-SNAPSHOT.war
+[INFO] 
+[INFO] --- spring-boot:4.1.1:repackage (repackage) @ citizen-certificate-portal ---
+[INFO] Replacing main artifact /home/tanishq/AI/DevOps/target/citizen-certificate-portal-1.1.0-SNAPSHOT.war with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /home/tanishq/AI/DevOps/target/citizen-certificate-portal-1.1.0-SNAPSHOT.war.original
+[INFO] 
+[INFO] --- spring-boot:4.1.1:start (start-app-for-e2e) @ citizen-certificate-portal ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-11T21:08:19.353+05:30  INFO 387804 --- [ccrp] [           main] com.sanad.portal.PortalApplication       : Starting PortalApplication using Java 21.0.12.1 with PID 387804 (/home/tanishq/AI/DevOps/target/classes started by tanishq in /home/tanishq/AI/DevOps)
+2026-10-11T21:08:19.356+05:30  INFO 387804 --- [ccrp] [           main] com.sanad.portal.PortalApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-10-11T21:08:20.282+05:30  INFO 387804 --- [ccrp] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-11T21:08:20.346+05:30  INFO 387804 --- [ccrp] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40 ms. Found 1 JPA repository interface.
+2026-10-11T21:08:21.139+05:30  INFO 387804 --- [ccrp] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 18080 (http)
+2026-10-11T21:08:21.155+05:30  INFO 387804 --- [ccrp] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-11T21:08:21.155+05:30  INFO 387804 --- [ccrp] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-11T21:08:21.191+05:30  INFO 387804 --- [ccrp] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1790 ms
+2026-10-11T21:08:21.544+05:30  INFO 387804 --- [ccrp] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-11T21:08:21.732+05:30  INFO 387804 --- [ccrp] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:/home/tanishq/AI/DevOps/target/e2e-data/db/ccrp user=SA
+2026-10-11T21:08:21.734+05:30  INFO 387804 --- [ccrp] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-11T21:08:21.748+05:30  INFO 387804 --- [ccrp] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:file:/home/tanishq/AI/DevOps/target/e2e-data/db/ccrp (H2 2.4)
+2026-10-11T21:08:21.795+05:30  WARN 387804 --- [ccrp] [           main] o.f.c.internal.database.base.Database    : Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2026-10-11T21:08:21.819+05:30  INFO 387804 --- [ccrp] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-10-11T21:08:21.823+05:30  INFO 387804 --- [ccrp] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.013s)
+2026-10-11T21:08:21.831+05:30  INFO 387804 --- [ccrp] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-10-11T21:08:21.872+05:30  INFO 387804 --- [ccrp] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-10-11T21:08:21.883+05:30  INFO 387804 --- [ccrp] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - create certificate requests"
+2026-10-11T21:08:21.913+05:30  INFO 387804 --- [ccrp] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.018s)
+2026-10-11T21:08:22.002+05:30  INFO 387804 --- [ccrp] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-11T21:08:22.042+05:30  INFO 387804 --- [ccrp] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-11T21:08:22.356+05:30  INFO 387804 --- [ccrp] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-11T21:08:22.432+05:30  INFO 387804 --- [ccrp] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:file:/home/tanishq/AI/DevOps/target/e2e-data/db/ccrp]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: ccrp/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-11T21:08:23.189+05:30  INFO 387804 --- [ccrp] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-11T21:08:23.210+05:30  INFO 387804 --- [ccrp] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-11T21:08:23.284+05:30  INFO 387804 --- [ccrp] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-11T21:08:24.377+05:30  INFO 387804 --- [ccrp] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name officers
+2026-10-11T21:08:24.549+05:30  INFO 387804 --- [ccrp] [           main] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page template: index
+2026-10-11T21:08:24.971+05:30  INFO 387804 --- [ccrp] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-10-11T21:08:25.074+05:30  INFO 387804 --- [ccrp] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 18080 (http) with context path '/'
+2026-10-11T21:08:25.083+05:30  INFO 387804 --- [ccrp] [           main] com.sanad.portal.PortalApplication       : Started PortalApplication in 6.122 seconds (process running for 6.614)
+[INFO] 
+[INFO] --- failsafe:3.5.6:integration-test (default) @ citizen-certificate-portal ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[WARNING] System property [e2e.captureAll] overwritten by user properties from Maven session
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running TC-06 Officer access control
+Oct 11, 2026 9:08:28 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+2026-10-11T21:08:28.294+05:30  INFO 387804 --- [ccrp] [io-18080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-11T21:08:28.294+05:30  INFO 387804 --- [ccrp] [io-18080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-11T21:08:28.296+05:30  INFO 387804 --- [ccrp] [io-18080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+[e2e] screenshot saved: /home/tanishq/AI/DevOps/target/selenium-screenshots/passed/AccessControlJourney_officerAreaIsProtected_20261011-210833.png
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.509 s -- in TC-06 Officer access control
+[INFO] Running TC-01 Citizen submits a certificate application
+Oct 11, 2026 9:08:34 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+[e2e] screenshot saved: /home/tanishq/AI/DevOps/target/selenium-screenshots/passed/CitizenApplicationJourney_conditionalFieldsFollowTheCertificateType_20261011-210836.png
+Oct 11, 2026 9:08:38 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+2026-10-11T21:08:42.448+05:30  INFO 387804 --- [ccrp] [io-18080-exec-8] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-Z6FV8M (419 bytes, PDF, sha256=f3f252cfbd44cff6694713f96da78913961ef4bd853b40d95131656a36583c77)
+2026-10-11T21:08:42.508+05:30  INFO 387804 --- [ccrp] [io-18080-exec-8] c.s.p.service.CertificateRequestService  : Request CCR-2026-Z6FV8M submitted (INCOME)
+[e2e] screenshot saved: /home/tanishq/AI/DevOps/target/selenium-screenshots/passed/CitizenApplicationJourney_citizenAppliesAndSeesSubmittedStatus_20261011-210844.png
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.19 s -- in TC-01 Citizen submits a certificate application
+[INFO] Running TC-02 Server-side validation of data and documents
+Oct 11, 2026 9:08:45 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+[e2e] screenshot saved: /home/tanishq/AI/DevOps/target/selenium-screenshots/passed/ApplicationValidationJourney_invalidApplicationIsRejectedWithFieldMessages_20261011-210848.png
+Oct 11, 2026 9:08:50 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+[e2e] screenshot saved: /home/tanishq/AI/DevOps/target/selenium-screenshots/passed/ApplicationValidationJourney_singleInvalidFieldIsPinpointed_20261011-210853.png
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.415 s -- in TC-02 Server-side validation of data and documents
+[INFO] Running TC-05 Officer rejects with a mandatory reason
+Oct 11, 2026 9:08:55 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+2026-10-11T21:08:57.346+05:30  INFO 387804 --- [ccrp] [io-18080-exec-6] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-WBNDVT (419 bytes, PDF, sha256=f3f252cfbd44cff6694713f96da78913961ef4bd853b40d95131656a36583c77)
+2026-10-11T21:08:57.350+05:30  INFO 387804 --- [ccrp] [io-18080-exec-6] c.s.p.service.CertificateRequestService  : Request CCR-2026-WBNDVT submitted (MARRIAGE)
+Oct 11, 2026 9:08:59 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+2026-10-11T21:09:03.259+05:30  INFO 387804 --- [ccrp] [io-18080-exec-8] c.s.p.service.CertificateRequestService  : Request CCR-2026-WBNDVT under review by officer
+2026-10-11T21:09:05.364+05:30  INFO 387804 --- [ccrp] [io-18080-exec-4] c.s.p.service.CertificateRequestService  : Request CCR-2026-WBNDVT rejected by officer
+[e2e] screenshot saved: /home/tanishq/AI/DevOps/target/selenium-screenshots/passed/OfficerRejectionJourney_rejectionReasonReachesTheCitizen_20261011-210906.png
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.71 s -- in TC-05 Officer rejects with a mandatory reason
+[INFO] Running TC-04 Officer approves and the citizen receives a certificate
+Oct 11, 2026 9:09:08 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+2026-10-11T21:09:10.526+05:30  INFO 387804 --- [ccrp] [io-18080-exec-5] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-WXUKGU (419 bytes, PDF, sha256=f3f252cfbd44cff6694713f96da78913961ef4bd853b40d95131656a36583c77)
+2026-10-11T21:09:10.532+05:30  INFO 387804 --- [ccrp] [io-18080-exec-5] c.s.p.service.CertificateRequestService  : Request CCR-2026-WXUKGU submitted (INCOME)
+Oct 11, 2026 9:09:13 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+2026-10-11T21:09:17.447+05:30  INFO 387804 --- [ccrp] [io-18080-exec-7] c.s.p.service.CertificateRequestService  : Request CCR-2026-WXUKGU under review by officer
+2026-10-11T21:09:19.325+05:30  INFO 387804 --- [ccrp] [io-18080-exec-5] c.s.p.service.CertificateRequestService  : Request CCR-2026-WXUKGU approved by officer — certificate SND-INC-2026-000003
+[e2e] screenshot saved: /home/tanishq/AI/DevOps/target/selenium-screenshots/passed/OfficerApprovalJourney_approvalIssuesACertificate_20261011-210922.png
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.30 s -- in TC-04 Officer approves and the citizen receives a certificate
+[INFO] Running TC-03 Citizen tracks a request
+Oct 11, 2026 9:09:23 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+2026-10-11T21:09:25.784+05:30  INFO 387804 --- [ccrp] [io-18080-exec-7] c.s.p.service.DocumentStorageService     : Stored document for CCR-2026-MH9YYY (178 bytes, PNG, sha256=fcb5b06cb5f0d4dece5267566d2876a6914a69600f4fd12be269b97d53bb7bdb)
+2026-10-11T21:09:25.788+05:30  INFO 387804 --- [ccrp] [io-18080-exec-7] c.s.p.service.CertificateRequestService  : Request CCR-2026-MH9YYY submitted (DOMICILE)
+Oct 11, 2026 9:09:26 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 151
+[e2e] screenshot saved: /home/tanishq/AI/DevOps/target/selenium-screenshots/passed/StatusTrackingJourney_trackingRequiresMatchingEmail_20261011-210932.png
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.40 s -- in TC-03 Citizen tracks a request
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:4.1.1:stop (stop-app-after-e2e) @ citizen-certificate-portal ---
+[INFO] Stopping application...
+2026-10-11T21:09:33.468+05:30  INFO 387804 --- [ccrp] [on(4)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2026-10-11T21:09:33.471+05:30  INFO 387804 --- [ccrp] [on(4)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-11T21:09:33.476+05:30  INFO 387804 --- [ccrp] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-10-11T21:09:33.480+05:30  INFO 387804 --- [ccrp] [on(4)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-10-11T21:09:33.482+05:30  INFO 387804 --- [ccrp] [on(4)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-10-11T21:09:33.522+05:30  INFO 387804 --- [ccrp] [on(4)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+[INFO] 
+[INFO] --- surefire-report:3.6.0:failsafe-report-only (e2e-html-report) @ citizen-certificate-portal ---
+[WARNING] Unable to find a URL to the parent project. The parent menu will NOT be added.
+[INFO] Rendering content with org.apache.maven.skins:maven-fluido-skin:jar:2.0.0-M9 skin
+[INFO] 
+[INFO] --- failsafe:3.5.6:verify (default) @ citizen-certificate-portal ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:39 min
+[INFO] Finished at: 2026-10-11T21:09:34+05:30
+[INFO] ------------------------------------------------------------------------
