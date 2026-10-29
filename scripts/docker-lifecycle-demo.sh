@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 LOG=${1:-target/docker-lifecycle.log}
 VERSION=$(./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout)
 REVISION=$(git rev-parse --short HEAD)
-IMAGE=sanad-ccrp
+IMAGE=getdocs-ccrp
 NAME=ccrp-demo
 PORT=8086
 VOLUME=ccrp-demo-data

@@ -1,4 +1,4 @@
-# Sanad — Citizen Certificate Request Portal
+# GetDocs — Citizen Certificate Request Portal
 
 Citizens apply online for Birth, Income, Domicile and Marriage certificates, upload one document and track the
 request with a tracking ID. Officers review it and approve (issuing a verifiable certificate) or reject it with a reason.

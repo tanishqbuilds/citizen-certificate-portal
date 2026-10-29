@@ -179,7 +179,7 @@ ok: [ccrp-node-1] => msg: ccrp-node-1 healthy · version 1.0.0 · commit df0f8cf
 # crash recovery (journalctl -u ccrp)
 ccrp.service: Main process exited, code=killed, status=9/KILL
 ccrp.service: Scheduled restart job, restart counter is at 1.
-Started ccrp.service - Sanad — Citizen Certificate Request Portal.
+Started ccrp.service - GetDocs — Citizen Certificate Request Portal.
 ```
 
 **Recovery levels covered**

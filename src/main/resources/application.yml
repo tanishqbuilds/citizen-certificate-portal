@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Sanad — Citizen Certificate Request Portal
+# GetDocs — Citizen Certificate Request Portal
 # Defaults are safe for local development. Every key can be overridden by an
 # environment variable (relaxed binding), e.g. APP_ENVIRONMENT, APP_DATA_DIR,
 # APP_OFFICER_PASSWORD, SERVER_PORT.
@@ -65,7 +65,7 @@ management:
 
 info:
   app:
-    name: Sanad — Citizen Certificate Request Portal
+    name: GetDocs — Citizen Certificate Request Portal
     environment: ${app.environment}
 
 app:

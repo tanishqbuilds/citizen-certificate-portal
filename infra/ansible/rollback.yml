@@ -1,7 +1,7 @@
 ---
 # Return to the previously deployed release (or a specific one with -e rollback_to=x.y.z).
 #   scripts/ansible.sh rollback.yml
-- name: Roll back the Sanad portal
+- name: Roll back the GetDocs portal
   hosts: portal_nodes
   become: true
   vars_files:

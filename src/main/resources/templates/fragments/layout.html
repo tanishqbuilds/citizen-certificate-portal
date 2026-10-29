@@ -5,7 +5,7 @@
 <head th:fragment="head(title)">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title th:text="${title} + ' · Sanad'">Sanad</title>
+  <title th:text="${title} + ' · GetDocs'">GetDocs</title>
   <meta name="description" content="Apply for government certificates online, upload one document and track every step until it is issued.">
   <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#07080a" media="(prefers-color-scheme: dark)">
@@ -79,9 +79,9 @@
 
   <div class="nav-wrap">
     <nav class="nav glass liquid" aria-label="Primary">
-      <a class="brand" th:href="@{/}" aria-label="Sanad home">
+      <a class="brand" th:href="@{/}" aria-label="GetDocs home">
         <svg class="brand-mark" aria-hidden="true"><use href="#i-logo"/></svg>
-        Sanad <small>Certificate Portal</small>
+        GetDocs <small>Certificate Portal</small>
       </a>
       <div class="nav-links">
         <a class="nav-link" th:href="@{/apply}" th:classappend="${active == 'apply'} ? 'is-active'" data-testid="nav-apply">Apply</a>
@@ -115,7 +115,7 @@
     <div class="stack" style="gap:6px">
       <span class="row" style="gap:8px">
         <svg class="i" style="width:18px;height:18px" aria-hidden="true"><use href="#i-logo"/></svg>
-        <strong style="color:var(--text);font-weight:600">Sanad</strong> — Citizen Certificate Request Portal
+        <strong style="color:var(--text);font-weight:600">GetDocs</strong> — Citizen Certificate Request Portal
       </span>
       <span>Academic DevOps project. Not an official government service; certificates issued here have no legal validity.</span>
     </div>

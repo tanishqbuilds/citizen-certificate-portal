@@ -26,7 +26,7 @@
 
 ### 1.1 Purpose and scope
 
-Sanad lets a citizen request one of four certificates (Birth, Income, Domicile, Marriage), attach one
+GetDocs lets a citizen request one of four certificates (Birth, Income, Domicile, Marriage), attach one
 supporting document and follow the request until an officer approves or rejects it. Scope is frozen to
 the 15 MVP items in [01-problem-definition.md](01-problem-definition.md#11-mvp-scope-freeze).
 
@@ -80,7 +80,7 @@ flowchart LR
     officer(["🧑‍💼 Officer"])
     operator(["🛠 Operator"])
 
-    subgraph Sanad["Sanad — Citizen Certificate Request Portal"]
+    subgraph GetDocs["GetDocs — Citizen Certificate Request Portal"]
         UC1(["UC-1 Submit certificate request"])
         UC2(["UC-2 Validate data & document"])
         UC3(["UC-3 Receive tracking ID"])
@@ -168,7 +168,7 @@ flowchart LR
     dev["Developer<br/>git push"] --> gh["GitHub<br/>main · develop · feature/*"]
     gh -->|SCM poll| jenkins["Jenkins (Docker)<br/>Jenkinsfile"]
     jenkins -->|mvnw verify| war["ccrp.war<br/>(archived artefact)"]
-    jenkins -->|docker build| img["sanad-ccrp:&lt;version&gt;"]
+    jenkins -->|docker build| img["getdocs-ccrp:&lt;version&gt;"]
     img -->|ephemeral| staging["Staging container"]
     selenium["Selenium Grid<br/>(Chrome)"] -->|E2E journeys| staging
     img -->|docker push| reg[("Registry<br/>localhost:5000")]
@@ -385,7 +385,7 @@ $ java -jar target/citizen-certificate-portal-0.1.0-SNAPSHOT.war &
 $ curl -s localhost:8080/actuator/health
 {"groups":["liveness","readiness"],"status":"UP"}
 $ curl -s localhost:8080/actuator/info
-{"app":{"name":"Sanad — Citizen Certificate Request Portal","environment":"local"},
+{"app":{"name":"GetDocs — Citizen Certificate Request Portal","environment":"local"},
  "git":{"branch":"main","commit":{"id":"2c7d1b2",…}},
  "build":{"artifact":"citizen-certificate-portal","version":"0.1.0-SNAPSHOT",…}}
 ```

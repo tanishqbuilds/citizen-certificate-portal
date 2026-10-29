@@ -40,11 +40,11 @@
 ## 2. Image details
 
 ```text
-$ docker image inspect sanad-ccrp:1.2.0-SNAPSHOT
+$ docker image inspect getdocs-ccrp:1.2.0-SNAPSHOT
 user=ccrp ports={"8080/tcp":{}} volumes={"/var/lib/ccrp":{}}
 entrypoint=["java","org.springframework.boot.loader.launch.WarLauncher"]
 
-$ docker history sanad-ccrp:1.2.0-SNAPSHOT
+$ docker history getdocs-ccrp:1.2.0-SNAPSHOT
 590kB     COPY /build/extracted/application/ ./
 4.1kB     COPY /build/extracted/snapshot-dependencies/
 696kB     COPY /build/extracted/spring-boot-loader/ ./
@@ -75,8 +75,8 @@ stateDiagram-v2
 
 | Step | Command | Observed |
 |---|---|---|
-| Build | `docker build --build-arg VERSION=… --build-arg REVISION=… -t sanad-ccrp:1.2.0-SNAPSHOT .` | 2-stage build |
-| Tag | `docker tag … sanad-ccrp:<sha>`, `…:latest` | 3 tags, same image ID |
+| Build | `docker build --build-arg VERSION=… --build-arg REVISION=… -t getdocs-ccrp:1.2.0-SNAPSHOT .` | 2-stage build |
+| Tag | `docker tag … getdocs-ccrp:<sha>`, `…:latest` | 3 tags, same image ID |
 | Run | `docker run -d --name ccrp-demo -p 8086:8080 -e APP_OFFICER_PASSWORD=… -v ccrp-demo-data:/var/lib/ccrp --restart unless-stopped` | `healthy` |
 | Use | `curl /actuator/health`, submit an application | `UP`, tracking ID issued |
 | Inspect | `docker logs`, `docker exec … id` (uid 10001), `docker stats` (≈ 436 MiB) | |
@@ -113,8 +113,8 @@ Key properties:
 | `latest` | | Moving pointer to the last image that passed the gate |
 
 ```text
-$ curl -s http://localhost:5000/v2/sanad-ccrp/tags/list
-{"name":"sanad-ccrp","tags":["1.2.0-SNAPSHOT-b12","1.2.0-SNAPSHOT-b13","git-249c529","latest"]}
+$ curl -s http://localhost:5000/v2/getdocs-ccrp/tags/list
+{"name":"getdocs-ccrp","tags":["1.2.0-SNAPSHOT-b12","1.2.0-SNAPSHOT-b13","git-249c529","latest"]}
 ```
 
 The registry is `registry:3.1.2` in the CI stack (volume `registry_data`). Docker trusts `localhost` registries without TLS; a shared registry would need TLS and authentication. Docker Hub would need only a `docker login` with a Jenkins credential.
@@ -128,8 +128,8 @@ The registry is `registry:3.1.2` in the CI stack (volume `registry_data`). Docke
 3. Waits for `healthy`. If the container is unhealthy or times out, it prints the logs, **restarts the previous image** and exits 1.
 
 ```text
-==> Deploying localhost:5000/sanad-ccrp:1.2.0-SNAPSHOT-b13 as ccrp-prod on :8085 (previous: …:1.2.0-SNAPSHOT-b12)
-==> Healthy: localhost:5000/sanad-ccrp:1.2.0-SNAPSHOT-b13 · started 2026-10-11T16:24:…
+==> Deploying localhost:5000/getdocs-ccrp:1.2.0-SNAPSHOT-b13 as ccrp-prod on :8085 (previous: …:1.2.0-SNAPSHOT-b12)
+==> Healthy: localhost:5000/getdocs-ccrp:1.2.0-SNAPSHOT-b13 · started 2026-10-11T16:24:…
 ```
 
 The automatic rollback is demonstrated in Phase 14 ([12-container-auto-rollback.log](evidence/phase-14-reliability/12-container-auto-rollback.log)).
@@ -149,9 +149,9 @@ The automatic rollback is demonstrated in Phase 14 ([12-container-auto-rollback.
 
 | Task | Command |
 |---|---|
-| Build locally | `./mvnw -DskipTests package && docker build -t sanad-ccrp:local .` |
-| Run locally | `docker run -d -p 8086:8080 -e APP_OFFICER_PASSWORD=ChangeMe123 -v ccrp-data:/var/lib/ccrp sanad-ccrp:local` |
+| Build locally | `./mvnw -DskipTests package && docker build -t getdocs-ccrp:local .` |
+| Run locally | `docker run -d -p 8086:8080 -e APP_OFFICER_PASSWORD=ChangeMe123 -v ccrp-data:/var/lib/ccrp getdocs-ccrp:local` |
 | What is in production | `docker inspect ccrp-prod --format '{{.Config.Image}} {{index .Config.Labels "org.opencontainers.image.revision"}}'` |
-| Redeploy a known-good image | `OFFICER_PASSWORD=… scripts/deploy-container.sh localhost:5000/sanad-ccrp:<tag>` |
-| Registry contents | `curl -s localhost:5000/v2/sanad-ccrp/tags/list` |
+| Redeploy a known-good image | `OFFICER_PASSWORD=… scripts/deploy-container.sh localhost:5000/getdocs-ccrp:<tag>` |
+| Registry contents | `curl -s localhost:5000/v2/getdocs-ccrp/tags/list` |
 | Logs | `docker logs -f ccrp-prod` |

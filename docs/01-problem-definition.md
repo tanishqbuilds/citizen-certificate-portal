@@ -1,4 +1,4 @@
-# Problem Definition — Sanad Citizen Certificate Request Portal (CCRP)
+# Problem Definition — GetDocs Citizen Certificate Request Portal (CCRP)
 
 | Field | Value |
 |---|---|
@@ -47,7 +47,7 @@ Several states operate e-district and service-delivery portals that address part
 
 ## 2. Problem statement
 
-> Citizens who need a government certificate must make repeated in-person visits, cannot see where their application stands, and risk lost or incomplete paperwork; officers process applications from manual registers with no consolidated queue or audit trail. **Sanad** provides a web portal where a citizen applies online with one validated supporting document, receives a tracking ID and follows the status, while an officer reviews a filtered queue, approves or rejects with a recorded reason, and the system issues a digitally verifiable certificate — with every status change audited and the whole application delivered through an automated, tested, containerised and reproducibly provisioned pipeline.
+> Citizens who need a government certificate must make repeated in-person visits, cannot see where their application stands, and risk lost or incomplete paperwork; officers process applications from manual registers with no consolidated queue or audit trail. **GetDocs** provides a web portal where a citizen applies online with one validated supporting document, receives a tracking ID and follows the status, while an officer reviews a filtered queue, approves or rejects with a recorded reason, and the system issues a digitally verifiable certificate — with every status change audited and the whole application delivered through an automated, tested, containerised and reproducibly provisioned pipeline.
 
 ## 3. Target users and personas
 
@@ -82,7 +82,7 @@ Several states operate e-district and service-delivery portals that address part
 
 ## 4. Pain points
 
-| # | Pain point | Who | Current impact (qualitative) | How Sanad addresses it | Task |
+| # | Pain point | Who | Current impact (qualitative) | How GetDocs addresses it | Task |
 |---|---|---|---|---|---|
 | P1 | Repeated in-person visits | Citizen | Lost time and wages, travel cost | Online submission from any device | CCR-3 |
 | P2 | Errors found late (invalid ID, missing fields) | Citizen, Officer | Rework, rejected applications | Strict server-side validation at submission | CCR-4 |
@@ -215,7 +215,7 @@ The following are explicitly excluded from the MVP:
 
 | Term | Meaning |
 |---|---|
-| CCRP | Citizen Certificate Request Portal (product name: Sanad) |
+| CCRP | Citizen Certificate Request Portal (product name: GetDocs) |
 | Tracking ID | Applicant-facing reference, format `CCR-2026-XXXXXX` |
 | Certificate number | Issued on approval, format `SND-<TYPE-CODE>-2026-NNNNNN` |
 | Verhoeff | Checksum algorithm used by 12-digit Aadhaar-style identifiers |

@@ -1,5 +1,5 @@
 ---
-# Deploys the Sanad portal as a systemd service with versioned releases:
+# Deploys the GetDocs portal as a systemd service with versioned releases:
 #   /opt/ccrp/releases/<version>/ccrp.war   immutable, checksum-verified downloads
 #   /opt/ccrp/current -> releases/<version> the running release
 #   /opt/ccrp/.previous_release             what rollback.yml returns to

@@ -121,7 +121,7 @@ public class DocumentStorageService {
             log.info("Stored document for {} ({} bytes, {}, sha256={})", trackingId, file.getSize(), kind, hash);
             return new CertificateRequest.Document(
                     sanitize(file.getOriginalFilename()), kind.contentType, file.getSize(), hash,
-                    root.relativize(target).toString());
+                    root.relativize(target).toString().replace('\\', '/'));
         } catch (IOException e) {
             throw new UncheckedIOException("Could not store document for " + trackingId, e);
         } catch (NoSuchAlgorithmException e) {

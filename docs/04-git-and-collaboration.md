@@ -170,7 +170,7 @@ Merge commit `bb45e4a`, then a cross-feature test (`ff81763`) that approves a re
 git checkout -b release/1.0.0 develop
 ./mvnw versions:set -DnewVersion=1.0.0 -DgenerateBackupPoms=false
 # CHANGELOG.md, docs → PR release/1.0.0 → main
-git tag -a v1.0.0 -m "Sanad v1.0.0 — MVP"
+git tag -a v1.0.0 -m "GetDocs v1.0.0 — MVP"
 git push origin v1.0.0
 git checkout develop && git merge --no-ff main          # back-merge
 ./mvnw versions:set -DnewVersion=1.1.0-SNAPSHOT         # next development iteration

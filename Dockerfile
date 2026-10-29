@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
-# Sanad — Citizen Certificate Request Portal
+# GetDocs — Citizen Certificate Request Portal
 #
 # Build once, deploy many: the image packages the WAR that already passed the test suite
 # (./mvnw verify, or the Jenkins pipeline) instead of recompiling it inside Docker.
 #
 #   ./mvnw -DskipTests package
-#   docker build -t sanad-ccrp:local --build-arg VERSION=$(./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout) .
-#   docker run -d -p 8086:8080 -e APP_OFFICER_PASSWORD=ChangeMe123 -v ccrp-data:/var/lib/ccrp sanad-ccrp:local
+#   docker build -t getdocs-ccrp:local --build-arg VERSION=$(./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout) .
+#   docker run -d -p 8086:8080 -e APP_OFFICER_PASSWORD=ChangeMe123 -v ccrp-data:/var/lib/ccrp getdocs-ccrp:local
 
 ARG JAVA_IMAGE=eclipse-temurin:21-jre
 
@@ -35,13 +35,13 @@ FROM ${JAVA_IMAGE}
 ARG VERSION=dev
 ARG REVISION=unknown
 ARG CREATED=unknown
-LABEL org.opencontainers.image.title="Sanad — Citizen Certificate Request Portal" \
+LABEL org.opencontainers.image.title="GetDocs — Citizen Certificate Request Portal" \
       org.opencontainers.image.description="Apply for, review and issue government certificates online" \
       org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.revision="${REVISION}" \
       org.opencontainers.image.created="${CREATED}" \
       org.opencontainers.image.source="https://github.com/tanishqbuilds/citizen-certificate-portal" \
-      org.opencontainers.image.vendor="Sanad (academic DevOps project)"
+      org.opencontainers.image.vendor="GetDocs (academic DevOps project)"
 
 # Unprivileged user; the data directory (H2 database + uploaded documents) is the only writable path.
 RUN groupadd --system --gid 10001 ccrp \

@@ -1,4 +1,4 @@
-# Jenkins controller for Sanad — reproducible, configured entirely as code.
+# Jenkins controller for GetDocs — reproducible, configured entirely as code.
 FROM jenkins/jenkins:2.580.1-lts-jdk21
 
 USER root

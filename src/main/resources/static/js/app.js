@@ -1,4 +1,4 @@
-/* Sanad — progressive enhancement. Every page works without this file. */
+/* GetDocs — progressive enhancement. Every page works without this file. */
 (function () {
   "use strict";
 

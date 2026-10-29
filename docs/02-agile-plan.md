@@ -1,4 +1,4 @@
-# Agile Plan and DevOps Workflow — Sanad CCRP
+# Agile Plan and DevOps Workflow — GetDocs CCRP
 
 | Field | Value |
 |---|---|
@@ -405,7 +405,7 @@ flowchart LR
 | Code | Git, GitHub, PR template | Feature branches, reviewed PRs |
 | Build | Maven wrapper, Jenkins | `ccrp-<version>.war` |
 | Test | JUnit 5, MockMvc, Selenium 4 + Grid, Maven Failsafe | Surefire/Failsafe reports, failure screenshots |
-| Release | Git tags, Docker multi-stage build, local registry | `localhost:5000/sanad-ccrp:<version>` |
+| Release | Git tags, Docker multi-stage build, local registry | `localhost:5000/getdocs-ccrp:<version>` |
 | Deploy | Jenkins pipeline, Tomcat 11, Docker | Running WAR on Tomcat, running container |
 | Operate | Ansible inventory, roles, playbooks | Provisioned node, rollback playbook |
 | Monitor | Spring Boot Actuator | `/actuator/health`, `/actuator/info` |
@@ -422,7 +422,7 @@ flowchart TD
     D --> E["Deploy ephemeral staging container"]
     E --> F{"Selenium E2E quality gate<br/>via Selenium Grid"}
     F -- "fail" --> X["Stop pipeline<br/>archive screenshots, mark build FAILED"]
-    F -- "pass" --> G["Push versioned image<br/>localhost:5000/sanad-ccrp:version"]
+    F -- "pass" --> G["Push versioned image<br/>localhost:5000/getdocs-ccrp:version"]
     G --> H["Deploy WAR to Tomcat 11<br/>parameter TARGET_ENV"]
     H --> I["Deploy production container"]
     I --> J{"Health check<br/>/actuator/health = UP"}

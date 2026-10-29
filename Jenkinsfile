@@ -1,4 +1,4 @@
-// Sanad — Citizen Certificate Request Portal
+// GetDocs — Citizen Certificate Request Portal
 // Delivery pipeline (pipeline as code). Job definition: ci/jenkins/casc/jobs.groovy → ccrp-pipeline.
 //
 //   Checkout → Build & unit tests → Package WAR → Build image → Deploy staging container
@@ -30,7 +30,7 @@ pipeline {
     environment {
         TOMCAT_URL = 'http://ccrp-tomcat:8080'
         MAVEN_ARGS = '-B -ntp'
-        IMAGE_REPO = "${env.REGISTRY ?: 'localhost:5000'}/sanad-ccrp"
+        IMAGE_REPO = "${env.REGISTRY ?: 'localhost:5000'}/getdocs-ccrp"
         PROD_CONTAINER = 'ccrp-prod'
         PROD_PORT = '8085'
     }
@@ -151,7 +151,7 @@ pipeline {
                     docker push -q "$IMAGE"
                     docker push -q "$IMAGE_REPO:git-$GIT_SHORT"
                     docker push -q "$IMAGE_REPO:latest"
-                    echo "registry tags:"; curl -fsS http://ccrp-registry:5000/v2/sanad-ccrp/tags/list | jq -c .
+                    echo "registry tags:"; curl -fsS http://ccrp-registry:5000/v2/getdocs-ccrp/tags/list | jq -c .
                 '''
             }
         }

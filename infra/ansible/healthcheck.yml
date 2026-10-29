@@ -1,7 +1,7 @@
 ---
 # Read-only health and version check of every node.
 #   scripts/ansible.sh healthcheck.yml
-- name: Check Sanad portal health
+- name: Check GetDocs portal health
   hosts: portal_nodes
   gather_facts: false
   tasks:

@@ -1,7 +1,7 @@
-# Jenkins Configuration as Code for the Sanad CI controller.
+# Jenkins Configuration as Code for the GetDocs CI controller.
 # Secrets come from environment variables (ci/.env, never committed).
 jenkins:
-  systemMessage: "Sanad CI · configured as code from ci/jenkins/casc/jenkins.yaml"
+  systemMessage: "GetDocs CI · configured as code from ci/jenkins/casc/jenkins.yaml"
   numExecutors: 2
   mode: NORMAL
   labelString: "built-in docker maven"
@@ -10,7 +10,7 @@ jenkins:
       allowsSignup: false
       users:
         - id: "${JENKINS_ADMIN_ID:-admin}"
-          name: "Sanad CI Administrator"
+          name: "GetDocs CI Administrator"
           password: "${JENKINS_ADMIN_PASSWORD}"
   authorizationStrategy:
     loggedInUsersCanDoAnything:
@@ -55,7 +55,7 @@ credentials:
 unclassified:
   location:
     url: "http://localhost:8090/"
-    adminAddress: "Sanad CI <ci@sanad.local>"
+    adminAddress: "GetDocs CI <ci@getdocs.local>"
   timestamper:
     allPipelines: true
   buildDiscarders:

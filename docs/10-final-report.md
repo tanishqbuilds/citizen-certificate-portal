@@ -29,7 +29,7 @@ flowchart LR
     dev["Developer"] -->|PR → develop| gh["GitHub"]
     gh -->|poll| j["Jenkins"]
     j -->|mvnw verify| t["65 unit/integration tests"]
-    j -->|docker build| img["sanad-ccrp image"]
+    j -->|docker build| img["getdocs-ccrp image"]
     img --> stg["staging container"]
     sel["Selenium Grid"] -->|8 journeys| stg
     j -->|gate passed: push| reg[("registry :5000")]

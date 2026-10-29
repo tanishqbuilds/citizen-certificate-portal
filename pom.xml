@@ -16,7 +16,7 @@
   <version>1.2.0</version>
   <packaging>war</packaging>
 
-  <name>Sanad — Citizen Certificate Request Portal</name>
+  <name>GetDocs — Citizen Certificate Request Portal</name>
   <description>Citizens request certificates online; officers review, approve or reject them.</description>
 
   <properties>

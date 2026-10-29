@@ -1,4 +1,4 @@
-// Job DSL — every Jenkins job for Sanad is defined here, nothing is clicked together in the UI.
+// Job DSL — every Jenkins job for GetDocs is defined here, nothing is clicked together in the UI.
 def repo = System.getenv('CCRP_REPO_URL') ?: 'https://github.com/tanishqbuilds/citizen-certificate-portal.git'
 
 // Phase 7: classic CI job. Polls develop, runs the Maven build with tests, archives the WAR.
