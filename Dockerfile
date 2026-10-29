@@ -8,13 +8,26 @@
 #   docker build -t sanad-ccrp:local --build-arg VERSION=$(./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout) .
 #   docker run -d -p 8086:8080 -e APP_OFFICER_PASSWORD=ChangeMe123 -v ccrp-data:/var/lib/ccrp sanad-ccrp:local
 
-ARG JAVA_IMAGE=eclipse-temurin:21.0.12.1_1-jre-noble
+# syntax=docker/dockerfile:1
 
-# ---- 1. Split the executable WAR into Spring Boot layers (best Docker layer caching) ----
-FROM ${JAVA_IMAGE} AS layers
+# ---- 1. Build the Spring Boot WAR ----
+FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /build
-COPY target/citizen-certificate-portal-*.war app.war
-RUN java -Djarmode=tools -jar app.war extract --layers --launcher --destination extracted
+
+COPY pom.xml .
+COPY src ./src
+
+RUN mvn -DskipTests clean package
+
+# ---- 2. Split the executable WAR into Spring Boot layers ----
+FROM eclipse-temurin:21-jre AS layers
+WORKDIR /build
+
+COPY --from=build /build/target/citizen-certificate-portal-*.war app.war
+
+RUN java -Djarmode=tools -jar app.war extract \
+    --layers --launcher --destination extracted
+
 
 # ---- 2. Runtime image ----
 FROM ${JAVA_IMAGE}
