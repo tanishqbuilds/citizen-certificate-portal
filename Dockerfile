@@ -9,7 +9,7 @@
 #   docker run -d -p 8086:8080 -e APP_OFFICER_PASSWORD=ChangeMe123 -v ccrp-data:/var/lib/ccrp sanad-ccrp:local
 
 # syntax=docker/dockerfile:1
-
+ARG JAVA_IMAGE=eclipse-temurin:21-jre
 # ---- 1. Build the Spring Boot WAR ----
 FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /build
