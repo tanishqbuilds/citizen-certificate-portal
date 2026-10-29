@@ -104,7 +104,7 @@ Several states operate e-district and service-delivery portals that address part
 | Department head (issuing authority) | Business owner (hypothetical) | Throughput, accountability, compliance | High | Approves workflow rules and certificate format |
 | Third-party verifiers (banks, schools) | Secondary users | Quick authenticity check | Low | Use the verification page |
 | Project owner — Tanishq | Product Owner, Scrum Master, Developer, DevOps | Deliver MVP and complete DevOps lifecycle | High | Full-time, all ceremonies |
-| Faculty guide | Academic supervisor | Learning outcomes, phase deliverables, evaluation | High | Phase reviews, sign-off, viva |
+| Faculty guide | Academic supervisor | Learning outcomes, phase deliverables, evaluation | High | Phase reviews, sign-off, final evaluation |
 | Data protection / IT security function | Compliance (hypothetical) | Lawful processing of personal data (DPDP Act 2023) | Medium | Review of data handling and access control |
 
 ## 6. Objectives (SMART)
@@ -196,7 +196,7 @@ The following 15 tasks constitute the frozen MVP scope. Any addition requires a 
 | CCR-14 | Selenium E2E suite for critical journeys | Selenium 4 + JUnit 5, Page Object Model, screenshots on failure, failsafe, Grid in CI, quality gate | 9, 10 |
 | CCR-15 | Containerised CI/CD & provisioning (Jenkins → Docker → Ansible) | Jenkins CaC + Jenkinsfile, Tomcat deploy, multi-stage Docker image, registry push, Ansible provisioning, health check, rollback | 7, 8, 11, 12, 13, 14, 15 |
 
-Phases 1, 2 and 15 (problem definition, Agile planning, final release and viva) are covered by documentation deliverables rather than individual stories.
+Phases 1, 2 and 15 (problem definition, Agile planning, final release and project demonstration) are covered by documentation deliverables rather than individual stories.
 
 ## 12. Out of scope
 

@@ -106,14 +106,3 @@ Final environment state ([final-environments.txt](evidence/phase-15-final/final-
 6. Observability: Prometheus metrics (Micrometer), Grafana, centralised logs.
 7. Kubernetes manifests / Helm with rolling updates; Ansible for VM fleets.
 8. DigiLocker/e-KYC integration and QR-code certificate verification.
-
-## 8. Viva quick reference
-
-| Question | Answer |
-|---|---|
-| Why Spring Boot + Maven? | The brief requires Maven/Gradle/Ant and Tomcat; one WAR runs on Tomcat, standalone and in Docker |
-| How does the gate stop deployment? | Failsafe fails the stage, and declarative pipeline skips every later stage |
-| What is "build once, deploy many"? | The tested WAR goes into the image; the tested image is pushed and deployed |
-| How is idempotency shown? | Second `site.yml` run reports `changed=0` |
-| How does rollback work? | Ansible: symlink to the previous release + health check. Docker: previous image restarted automatically |
-| Where are secrets? | Jenkins credentials (JCasC from env), ansible-vault, git-ignored `ci/.env` |
