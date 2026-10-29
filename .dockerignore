@@ -1,3 +1,12 @@
-# Allow-list: the build context contains only the tested WAR.
-*
-!target/citizen-certificate-portal-*.war
+# Exclude build output, git history, and non-essential files from the Docker build context
+target/
+.git/
+.github/
+.idea/
+.vscode/
+ci/
+docs/
+infra/
+scripts/
+*.md
+Jenkinsfile
